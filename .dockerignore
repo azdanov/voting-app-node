@@ -1,0 +1,6 @@
+node_modules/
+public/
+dist/
+.rpt2_cache
+.vscode
+.idea
