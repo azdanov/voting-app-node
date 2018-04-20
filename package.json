@@ -10,12 +10,20 @@
   "engines": {
     "node": ">=9.0.0"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "run-p test lint-staged",
+      "pre-push": "yarn test",
+      "pre-build": "npm run clean"
+    }
+  },
   "lint-staged": {
-    "src/**/*.{ts,js,json,css,scss}": ["npm run format", "git add"]
+    "src/**/*.{ts,js,json,css,scss}": [
+      "yarn format",
+      "git add"
+    ]
   },
   "scripts": {
-    "precommit": "lint-staged",
-    "prebuild": "npm run clean",
     "build": "rollup -c",
     "start": "node ./public/index.js",
     "watch": "rollup -c -w",
@@ -29,7 +37,8 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
-    "morgan": "^1.9.0"
+    "morgan": "^1.9.0",
+    "winston": "^2.4.1"
   },
   "devDependencies": {
     "@types/body-parser": "^1.16.8",
