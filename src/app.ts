@@ -1,6 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 import { logger } from './utilities';
 
@@ -9,6 +10,7 @@ const app = express();
 app.use(morgan('combined', { stream: logger.stream }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 const router = express.Router();
 
