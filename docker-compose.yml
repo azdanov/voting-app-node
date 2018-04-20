@@ -1,15 +1,18 @@
 version: "3"
 services:
   web:
-    build: .
+    build:
+      context: ./.
+      dockerfile: ./Dockerfile
+    image: implaier/voting-app:latest
     ports:
     - "3000:3000"
-    depends_on:
+    links:
     - mongo
   mongo:
     image: mongo
     ports:
-    - "27017:27017"
+    - "27117:27017"
     volumes:
     - data-volume:/data/db
 volumes:
