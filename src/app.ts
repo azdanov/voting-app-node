@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 
 import { logger } from './utilities';
+import routes from './routes';
 
 const app = express();
 
@@ -12,15 +13,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-const router = express.Router();
-
-router.get('/', (req, res, next) => {
+// sanity check route
+app.get('/test', (req, res, next) => {
   res.json({
     message: 'Hello World!',
   });
 });
 
-app.use('/', router);
+app.use('/', routes);
 
 // catch-all error handler
 app.use((err, req, res, next) => {
