@@ -3,7 +3,7 @@ import { Logger, transports } from 'winston';
 const { NODE_ENV } = process.env;
 
 const level =
-  NODE_ENV === 'testing' ? 'error' : NODE_ENV === 'production' ? 'info' : 'debug';
+  NODE_ENV === 'test' ? 'error' : NODE_ENV === 'production' ? 'info' : 'debug';
 
 export const logger = new Logger({
   transports: [
