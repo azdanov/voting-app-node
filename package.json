@@ -24,7 +24,7 @@
     "start": "node ./bundle/index.js",
     "watch": "rollup -c -w",
     "dev": "nodemon",
-    "clean": "rimraf ./bundle ./dist",
+    "clean": "rimraf ./public/dist ./build",
     "format": "prettier --write src/**/*.{js,ts,json,css,scss}",
     "build:ts": "tsc -p tsconfig.json",
     "watch:ts": "tsc -w -p tsconfig.json",

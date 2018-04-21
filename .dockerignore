@@ -1,6 +1,6 @@
 node_modules/
-dist/
-bundle/
+build/
+public/dist/
 .rpt2_cache/
 .vscode/
 .idea/
