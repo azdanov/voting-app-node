@@ -172,5 +172,5 @@ $RECYCLE.BIN/
 
 # Various
 .rpt2_cache/
-public/
 dist/
+bundle/
