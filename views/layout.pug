@@ -8,6 +8,28 @@ html(lang="en")
     link(rel="shortcut icon", type="image/png", href="/images/icons/ballot.png")
     title= `${title} | ${siteName}`
   body
+    block header
+      nav.navbar.is-transparent
+        .navbar-brand
+          a.navbar-item(href="/")
+            img(src="/images/icons/logo.png", alt="Voting App")
+          .navbar-burger.burger(data-target="navbarExampleTransparentExample")
+            span
+            span
+            span
+        #navbarExampleTransparentExample.navbar-menu
+          .navbar-end
+            a.navbar-item(href="/")
+              span Home
+            .navbar-item
+              .field
+                p.control
+                  a.button.is-primary(href="/login")
+                    span.icon
+                      i.fas.fa-sign-in-alt(aria-hidden="true")
+                    span Login
     .content
       block content
         p This is the default!
+    block scripts
+      script(src="https://use.fontawesome.com/releases/v5.0.7/js/all.js")

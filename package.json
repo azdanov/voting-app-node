@@ -11,7 +11,10 @@
     "node": ">=9.0.0"
   },
   "lint-staged": {
-    "src/**/*.{ts,js,json,css,scss}": ["yarn format", "git add"]
+    "src/**/*.{ts,js,json,css,scss}": [
+      "yarn format",
+      "git add"
+    ]
   },
   "scripts": {
     "precommit": "yarn lint-staged",
@@ -23,8 +26,7 @@
     "dev": "nodemon",
     "clean": "rimraf ./public/dist ./build",
     "format": "prettier --write src/**/*.{js,ts,json,css,scss}",
-    "build:scss":
-      "node-sass --source-map public/dist/ src/styles/style.scss public/dist/style.css",
+    "build:scss": "node-sass --source-map public/dist/ src/styles/style.scss public/dist/style.css",
     "watch:scss": "node-sass -w -r src/styles/style.scss public/dist/style.css",
     "test": "jest"
   },
@@ -61,6 +63,7 @@
     "@types/supertest": "^2.0.4",
     "@types/validator": "^9.4.0",
     "@types/winston": "^2.3.9",
+    "bulma": "^0.7.1",
     "debug": "^3.1.0",
     "husky": "^0.14.3",
     "jest": "^22.4.3",
