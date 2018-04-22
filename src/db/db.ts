@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { logger } from '../utilities';
 
-export const connect = (database?: string) => {
+export const connect = (database: string | null) => {
   if (!database) {
     logger.error('Please specify a database to connect to.');
     process.exit(1);
