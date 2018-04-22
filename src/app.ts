@@ -58,7 +58,7 @@ app.use('/', routes);
 
 // catch-all error handler
 app.use((err, req, res, next) => {
-  logger.error('unhandled application error: ', err);
+  logger.error('Unhandled error: ', err);
   res.status(500).send(err);
 });
 

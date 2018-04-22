@@ -10,7 +10,7 @@ const port = normalizePort(process.env.PORT || 3000);
 
 app.set('port', port);
 
-connect(process.env.DATABASE);
+connect(process.env.DATABASE || null);
 const server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
