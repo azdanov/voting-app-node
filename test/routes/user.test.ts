@@ -1,7 +1,9 @@
 import { promisify } from 'bluebird';
 import crypto from 'crypto';
+import { Mockgoose } from 'mockgoose';
 import mongoose, { PassportLocalModel } from 'mongoose';
 import supertest from 'supertest';
+
 import app from '../../src/app';
 
 require('dotenv').config();
@@ -14,12 +16,21 @@ if (!db) {
 
 describe('User', () => {
   let User: PassportLocalModel<mongoose.Document>;
-
+  let mockgoose: Mockgoose;
   beforeAll(async () => {
-    await mongoose.connect(db || '');
+    mockgoose = new Mockgoose(mongoose);
+
+    await mockgoose.prepareStorage();
+
+    if (typeof process.env.DATABASE === 'string') {
+      await mongoose.connect(process.env.DATABASE);
+    } else {
+      throw new Error('Please specify a database for testing');
+    }
   });
 
   afterAll(async () => {
+    await mockgoose.helper.reset();
     await mongoose.connection.close();
   });
 
