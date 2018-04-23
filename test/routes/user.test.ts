@@ -6,6 +6,8 @@ import supertest from 'supertest';
 
 import app from '../../src/app';
 
+jest.setTimeout(12000);
+
 require('dotenv').config();
 
 const db = process.env.DATABASE;
