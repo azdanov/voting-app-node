@@ -1,0 +1,36 @@
+extends _layout
+
+block content
+  .container
+    .columns
+    .column.is-three-fifths.is-offset-one-fifth
+      form(action="/register", method="post")
+        .field
+          label.label Name
+          .control.has-icons-left
+            input.input(type="text", placeholder="Full Name", name="name", required)
+            span.icon.is-small.is-left
+              i.fas.fa-user
+        .field
+          label.label Email
+            .control.has-icons-left
+              input.input(type="email", placeholder="Email", name="email", required)
+              span.icon.is-small.is-left
+                i.fas.fa-at
+        .field
+          label.label Password
+            .control.has-icons-left
+              input.input(type="password", placeholder="Password", name="password", required)
+              span.icon.is-small.is-left
+                i.fas.fa-key
+        .field
+          label.label Repeat password
+            .control.has-icons-left
+              input.input(type="password", placeholder="Repeat password", name="passwordRepeat", required)
+              span.icon.is-small.is-left
+                i.fas.fa-key
+        .field.is-grouped.is-pulled-right
+          .control
+            button.button.is-text Cancel
+          .control
+            button.button.is-primary Register

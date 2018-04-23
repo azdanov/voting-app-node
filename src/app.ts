@@ -16,21 +16,12 @@ const MongoStore = connectMongo(expressSession);
 
 app.set('views', path.join(__dirname, '..', 'views'));
 app.set('view engine', 'pug');
-app.use(express.static(path.join(__dirname, '..', 'public')));
 
+app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(morgan('combined', { stream: logStream }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-
-// setup addons for pug
-app.use((req, res, next) => {
-  res.locals.h = pugHelpers;
-  res.locals.siteName = process.env.SITE_NAME;
-  res.locals.user = req.user || null;
-  res.locals.currentPath = req.path;
-  next();
-});
 
 app.use(
   expressSession({
@@ -46,6 +37,15 @@ app.use(passport.session());
 
 createUser();
 setupPassport();
+
+// setup addons for pug
+app.use((req, res, next) => {
+  res.locals.h = pugHelpers;
+  res.locals.siteName = process.env.SITE_NAME;
+  res.locals.user = req.user || null;
+  res.locals.currentPath = req.path;
+  next();
+});
 
 // sanity check route
 app.get('/test', (req, res, next) => {
