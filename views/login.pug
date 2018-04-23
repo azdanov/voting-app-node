@@ -1,4 +1,24 @@
 extends _layout
 
 block content
-  p Login Form
+  .container
+    .columns
+    .column.is-half.is-offset-one-quarter
+      form(action="/login", method="post")
+        .field
+          label.label Email
+            .control.has-icons-left
+              input.input(type="email", placeholder="Email", name="email", required)
+              span.icon.is-small.is-left
+                i.fas.fa-at
+        .field
+          label.label Password
+            .control.has-icons-left
+              input.input(type="password", placeholder="Password", name="password", required)
+              span.icon.is-small.is-left
+                i.fas.fa-key
+        .field.is-grouped.is-pulled-right
+          .control
+            a.button.is-text(href="/register") Register
+          .control
+            button.button.is-primary Login

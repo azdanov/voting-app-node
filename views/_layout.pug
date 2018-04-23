@@ -9,26 +9,39 @@ html(lang="en")
     title= `${title} | ${siteName}`
   body
     block header
-      nav.navbar.is-transparent
+      nav.navbar
         .navbar-brand
           a.navbar-item(href="/")
             img(src="/images/icons/logo.png", alt="Voting App")
-          .navbar-burger.burger(data-target="navbarExampleTransparentExample")
+          .navbar-burger.burger(data-target="navMenu")
             span
             span
             span
-        #navbarExampleTransparentExample.navbar-menu
+        #navMenu.navbar-menu
           .navbar-end
             a.navbar-item(href="/")
               span Home
-            .navbar-item
-              .field
-                p.control
-                  a.button.is-primary(href="/login")
-                    span.icon
-                      i.fas.fa-sign-in-alt(aria-hidden="true")
-                    span Login
-    .content
+            if user
+              a.navbar-item(href="/profile")
+                | Profile
+              .navbar-item
+                .field
+                  p.control
+                    a.button.is-primary(href="/logout")
+                      span.icon
+                        i.fas.fa-sign-out-alt(aria-hidden="true")
+                      span Logout
+            else
+              a.navbar-item(href="/register")
+                span Register
+              .navbar-item
+                .field
+                  p.control
+                    a.button.is-primary(href="/login")
+                      span.icon
+                        i.fas.fa-sign-in-alt(aria-hidden="true")
+                      span Login
+    .section
       block content
         p This is the default!
     block scripts
