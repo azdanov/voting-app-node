@@ -14,6 +14,8 @@ if (!db) {
   process.exit(1);
 }
 
+jest.setTimeout(12000);
+
 describe('User', () => {
   let User: PassportLocalModel<mongoose.Document>;
   let mockgoose: Mockgoose;

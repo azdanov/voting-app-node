@@ -7,4 +7,4 @@ services:
   - mongodb
 cache: yarn
 script:
-  - yarn test
+  - yarn test --maxWorkers 4
