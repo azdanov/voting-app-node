@@ -9,7 +9,7 @@ html(lang="en")
     title= `${title} | ${siteName}`
   body
     block header
-      nav.navbar
+      nav.navbar.is-light
         .navbar-brand
           a.navbar-item(href="/")
             img(src="/images/icons/logo.png", alt="Voting App")
@@ -46,3 +46,4 @@ html(lang="en")
         p This is the default!
     block scripts
       script(src="https://use.fontawesome.com/releases/v5.0.7/js/all.js")
+      script(src="/scripts/script.js")
