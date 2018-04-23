@@ -40,31 +40,55 @@ describe('POST /login', () => {
     mongoose.disconnect(done);
   });
 
-  it('should return 400 Bad Request without username', () => {
+  it('should return "302 Found" without username', () => {
     return supertest(app)
       .post('/login')
       .send({ password: truePassword })
-      .expect(400);
+      .expect(302)
+      .expect('Content-Type', /text\/plain/)
+      .expect('Content-Length', '28')
+      .expect(response => {
+        expect(response.text).toBe('Found. Redirecting to /login');
+        expect(response.redirect).toBeTruthy();
+      });
   });
 
-  it('should return 400 Bad Request without password', () => {
+  it('should return "302 Found" without password', () => {
     return supertest(app)
       .post('/login')
       .send({ email: trueEmail })
-      .expect(400);
+      .expect(302)
+      .expect('Content-Type', /text\/plain/)
+      .expect('Content-Length', '28')
+      .expect(response => {
+        expect(response.text).toBe('Found. Redirecting to /login');
+        expect(response.redirect).toBeTruthy();
+      });
   });
 
-  it('should return 401 Unauthorized without proper user', () => {
+  it('should return "302 Found" without proper user', () => {
     return supertest(app)
       .post('/login')
       .send({ email: falseEmail, password: falsePassword })
-      .expect(401);
+      .expect(302)
+      .expect('Content-Type', /text\/plain/)
+      .expect('Content-Length', '28')
+      .expect(response => {
+        expect(response.text).toBe('Found. Redirecting to /login');
+        expect(response.redirect).toBeTruthy();
+      });
   });
 
-  it('should return 200 OK with proper user', () => {
+  it('should return "302 Found" with proper user', () => {
     return supertest(app)
       .post('/login')
       .send({ email: trueEmail, password: truePassword })
-      .expect(200);
+      .expect(302)
+      .expect('Content-Type', /text\/plain/)
+      .expect('Content-Length', '23')
+      .expect(response => {
+        expect(response.text).toBe('Found. Redirecting to /');
+        expect(response.redirect).toBeTruthy();
+      });
   });
 });

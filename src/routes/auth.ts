@@ -1,3 +1,6 @@
 import passport from 'passport';
 
-export const login = passport.authenticate('local');
+export const login = passport.authenticate('local', {
+  failureRedirect: '/login',
+  successRedirect: '/',
+});
