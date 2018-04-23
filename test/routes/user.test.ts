@@ -11,7 +11,11 @@ describe('GET /login', () => {
   it('should return 200 OK', () => {
     return supertest(app)
       .get('/login')
-      .expect(200);
+      .expect(200)
+      .expect('Content-Type', /text\/html/)
+      .expect(response => {
+        expect(response.ok).toBeTruthy();
+      });
   });
 });
 
