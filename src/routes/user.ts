@@ -1,7 +1,6 @@
-import mongoose from 'mongoose';
-import { check, validationResult } from 'express-validator/check';
-import { promisify } from 'util';
 import express from 'express';
+import { check, validationResult } from 'express-validator/check';
+import mongoose from 'mongoose';
 
 export const loginForm = (req: express.Request, res: express.Response) => {
   res.render('login', { title: 'Login' });
@@ -43,7 +42,7 @@ export const register = (
   const User = mongoose.model('User');
   const user = new User({ email: req.body.email, name: req.body.name });
 
-  User.register(user, req.body.password, (error, user) => {
+  User.register(user, req.body.password, () => {
     next();
   });
 };

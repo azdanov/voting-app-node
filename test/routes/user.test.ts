@@ -1,19 +1,25 @@
+import { promisify } from 'bluebird';
+import crypto from 'crypto';
 import mongoose, { PassportLocalModel } from 'mongoose';
 import supertest from 'supertest';
-import crypto from 'crypto';
-import { promisify } from 'bluebird';
 import app from '../../src/app';
 
 require('dotenv').config();
+
+const db = process.env.DATABASE;
+
+if (!db) {
+  process.exit(1);
+}
 
 describe('User', () => {
   let User: PassportLocalModel<mongoose.Document>;
 
   beforeAll(async () => {
-    await mongoose.connect(process.env.DATABASE);
+    await mongoose.connect(db || '');
   });
 
-  afterAll(async done => {
+  afterAll(async () => {
     await mongoose.connection.close();
   });
 

@@ -174,3 +174,4 @@ $RECYCLE.BIN/
 .rpt2_cache/
 build/
 public/dist/
+.idea/

@@ -48,7 +48,7 @@ app.use((req, res, next) => {
 });
 
 // sanity check route
-app.get('/test', (req, res, next) => {
+app.get('/test', (req, res) => {
   res.json({
     message: 'Hello World!',
   });

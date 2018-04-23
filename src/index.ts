@@ -1,10 +1,10 @@
 import http from 'http';
 
 import app from './app';
+import { connect } from './db';
 import { normalizePort, onError, onListening } from './utilities';
 
 require('dotenv').config();
-import { connect } from './db';
 
 const port = normalizePort(process.env.PORT || 3000);
 

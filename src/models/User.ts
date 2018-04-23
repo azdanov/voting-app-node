@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import validator from 'validator';
 import passportLocalMongoose from 'passport-local-mongoose';
+import validator from 'validator';
 
 const Schema = mongoose.Schema;
 

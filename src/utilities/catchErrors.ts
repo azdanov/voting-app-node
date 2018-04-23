@@ -1,5 +1,3 @@
-import { logger } from './logger';
-
 // Catch async/await errors instead of using a try block
 export const catchErrors = fn => {
   return function(req, res, next) {

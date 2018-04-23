@@ -1,5 +1,5 @@
-import passport from 'passport';
 import express from 'express';
+import passport from 'passport';
 
 export const login = passport.authenticate('local', {
   failureRedirect: '/login',

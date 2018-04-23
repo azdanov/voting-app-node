@@ -4,13 +4,19 @@ import { logger } from './logger';
 export function normalizePort(val: number | string): number | string | boolean {
   const port: number = typeof val === 'string' ? Number.parseInt(val, 10) : val;
 
-  if (Number.isNaN(port)) return val;
-  if (port >= 0) return port;
+  if (Number.isNaN(port)) {
+    return val;
+  }
+  if (port >= 0) {
+    return port;
+  }
   return false;
 }
 
 export function onError(this: http.Server, error: NodeJS.ErrnoException): void {
-  if (error.syscall !== 'listen') throw error;
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
 
   const address = this.address();
 

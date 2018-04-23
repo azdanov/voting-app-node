@@ -1,9 +1,8 @@
 import express from 'express';
 
-import { loginForm, registerForm, validateRegister, register } from './user';
-import { homePage } from './home';
 import { login, logout } from './auth';
-import { catchErrors } from '../utilities';
+import { homePage } from './home';
+import { loginForm, register, registerForm, validateRegister } from './user';
 
 const router = express.Router();
 

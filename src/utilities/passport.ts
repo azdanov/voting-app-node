@@ -1,5 +1,5 @@
-import passport from 'passport';
 import mongoose from 'mongoose';
+import passport from 'passport';
 
 export function setupPassport() {
   const user = mongoose.model('User');
