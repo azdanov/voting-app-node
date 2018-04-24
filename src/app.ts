@@ -1,20 +1,30 @@
 import bodyParser from 'body-parser';
-import connectMongo from 'connect-mongo';
+import connectFlash from 'connect-flash';
+import connectRedis from 'connect-redis';
 import cors from 'cors';
 import express from 'express';
 import expressSession from 'express-session';
-import mongoose from 'mongoose';
 import morgan from 'morgan';
 import passport from 'passport';
 import path from 'path';
-import connectFlash from 'connect-flash';
+import redis from 'redis';
 
 import { createUser } from './models';
 import routes from './routes';
 import { logger, logStream, pugHelpers, setupPassport } from './utilities';
 
 const app = express();
-const MongoStore = connectMongo(expressSession);
+let store: expressSession.Store | undefined = undefined;
+if (process.env.NODE_ENV !== 'test') {
+  const redisClient = redis.createClient();
+
+  store = new (connectRedis(expressSession))({
+    host: 'localhost',
+    port: 6379,
+    client: redisClient,
+    ttl: 260,
+  });
+}
 
 app.set('views', path.join(__dirname, '..', 'views'));
 app.set('view engine', 'pug');
@@ -28,10 +38,10 @@ app.use(connectFlash());
 
 app.use(
   expressSession({
+    store,
     secret: process.env.SECRET || 'secret',
     resave: false,
     saveUninitialized: false,
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
   }),
 );
 
