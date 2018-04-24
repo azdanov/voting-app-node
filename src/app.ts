@@ -8,6 +8,8 @@ import morgan from 'morgan';
 import passport from 'passport';
 import path from 'path';
 import redis from 'redis';
+import cookieParser from 'cookie-parser';
+import csurf from 'csurf';
 
 import { createUser } from './models';
 import routes from './routes';
@@ -33,6 +35,8 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(morgan('combined', { stream: logStream }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser(process.env.SECRET || 'secret'));
+app.use(csurf({ cookie: true }));
 app.use(cors());
 app.use(connectFlash());
 
@@ -69,6 +73,15 @@ app.get('/test', (req, res) => {
 });
 
 app.use('/', routes);
+
+app.use((err, req, res, next) => {
+  if (err.code !== 'EBADCSRFTOKEN') {
+    next(err);
+    return;
+  }
+
+  res.redirect('/');
+});
 
 // catch-all error handler
 app.use((err, req, res, next) => {

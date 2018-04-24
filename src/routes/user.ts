@@ -3,10 +3,12 @@ import { check, validationResult } from 'express-validator/check';
 import mongoose from 'mongoose';
 
 export const loginForm = (req: express.Request, res: express.Response) => {
+  res.locals.csrfToken = req.csrfToken();
   res.render('login', { title: 'Login' });
 };
 
 export const registerForm = (req: express.Request, res: express.Response) => {
+  res.locals.csrfToken = req.csrfToken();
   res.render('register', { title: 'Register' });
 };
 
