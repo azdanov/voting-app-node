@@ -36,7 +36,7 @@ describe('User', () => {
     await mongoose.connection.close();
   });
 
-  describe('GET /login', () => {
+  describe.only('GET /login', () => {
     it('should return 200 OK', () => {
       return supertest(app)
         .get('/login')
