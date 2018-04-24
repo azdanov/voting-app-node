@@ -203,7 +203,7 @@ describe('User', () => {
         });
     });
 
-    it('should return "422 Unprocessable Entity" without an email', () => {
+    it('should return "302 Found" without an email', () => {
       return supertest(app)
         .post('/register')
         .send({
@@ -211,13 +211,13 @@ describe('User', () => {
           password: truePassword,
           passwordRepeat: truePassword,
         })
-        .expect(422)
+        .expect(302)
         .expect(response => {
-          expect(response.text).toMatch(/must be an email/);
+          expect(response.text).toBe('Found. Redirecting to /register');
         });
     });
 
-    it('should return "422 Unprocessable Entity" without a name', () => {
+    it('should return "302 Found" without a name', () => {
       return supertest(app)
         .post('/register')
         .send({
@@ -225,13 +225,13 @@ describe('User', () => {
           password: truePassword,
           passwordRepeat: truePassword,
         })
-        .expect(422)
+        .expect(302)
         .expect(response => {
-          expect(response.text).toMatch(/must have a name/);
+          expect(response.text).toBe('Found. Redirecting to /register');
         });
     });
 
-    it('should return "422 Unprocessable Entity" without a password', () => {
+    it('should return "302 Found" without a password', () => {
       return supertest(app)
         .post('/register')
         .send({
@@ -239,12 +239,9 @@ describe('User', () => {
           name: trueName,
           passwordRepeat: truePassword,
         })
-        .expect(422)
+        .expect(302)
         .expect(response => {
-          expect(response.text).toMatch(
-            /passwords must be at least 5 chars long and contain one number/,
-          );
-          expect(response.text).toMatch(/passwords do not match/);
+          expect(response.text).toBe('Found. Redirecting to /register');
         });
     });
   });

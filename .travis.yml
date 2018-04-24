@@ -5,6 +5,7 @@ env:
   - DATABASE=mongodb://localhost/voting-app
 services:
   - mongodb
+  - redis
 cache: yarn
 script:
   - yarn test --maxWorkers 4
