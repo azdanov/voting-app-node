@@ -14,5 +14,6 @@ export default {
     'path',
     'winston',
     'mongoose',
+    'connect-flash',
   ],
 };

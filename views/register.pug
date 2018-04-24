@@ -21,13 +21,13 @@ block content
           .field
             label.label Password
               .control.has-icons-left
-                input.input(type="password", placeholder="Password", name="password", required)
+                input.input(type="password", placeholder="Password", name="password", minlength="5", required)
                 span.icon.is-small.is-left
                   i.fas.fa-key
           .field
             label.label Repeat password
               .control.has-icons-left
-                input.input(type="password", placeholder="Repeat password", name="passwordRepeat", required)
+                input.input(type="password", placeholder="Repeat password", name="passwordRepeat", minlength="5", required)
                 span.icon.is-small.is-left
                   i.fas.fa-key
           .field.is-grouped.is-pulled-right
