@@ -11,20 +11,21 @@ export const registerForm = (req: express.Request, res: express.Response) => {
 };
 
 export const validateRegister = [
-  check('email', 'must be an email')
+  check('email', 'Email is incorrect')
     .isEmail()
+    .withMessage('Must be a correct email')
     .trim()
     .normalizeEmail(),
-  check('name', 'must have a name')
+  check('name', 'Name is incorrect')
     .exists()
     .trim()
     .isString(),
-  check('password', 'passwords must be at least 5 chars long and contain one number')
+  check('password', 'Password must be at least 5 characters long and contain one number')
     .exists()
-    .matches(/\d/)
     .isLength({ min: 5 })
+    .matches(/^.*(?=.{5,})(?=.*[a-zA-Z]).*$/)
     .trim(),
-  check('passwordRepeat', 'passwords do not match')
+  check('passwordRepeat', 'Passwords do not match')
     .exists()
     .custom((passwordRepeat, { req }) => passwordRepeat === req.body.password),
 ];
@@ -34,9 +35,16 @@ export const register = (
   res: express.Response,
   next: express.NextFunction,
 ) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.mapped() });
+  const validations = validationResult(req);
+
+  if (!validations.isEmpty()) {
+    const errors: any = validations.mapped();
+    for (const error in errors) {
+      if (errors.hasOwnProperty(error)) {
+        req.flash('error', errors[error].msg);
+      }
+    }
+    return res.status(422).redirect('/register');
   }
 
   const User = mongoose.model('User');
