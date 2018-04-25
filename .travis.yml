@@ -3,13 +3,14 @@ node_js:
   - "9"
 env:
   - DATABASE=mongodb://localhost/voting-app-testing
+  - SITE_NAME=Voting App
 services:
   - mongodb
   - redis-server
 cache: yarn
 before_script:
   - yarn build
-  - yarn start -- --silent &
+  - yarn start --silent &
 script:
   - yarn test --maxWorkers 4
   - $(npm bin)/cypress run --record --key 1153505b-f176-448c-ba80-2d46068d5c56
