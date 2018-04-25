@@ -2,10 +2,11 @@ language: node_js
 node_js:
   - "8"
 env:
-  - DATABASE=mongodb://localhost/voting-app
+  - DATABASE=mongodb://localhost/voting-app-testing
 services:
   - mongodb
-  - redis
+  - redis-server
 cache: yarn
 script:
   - yarn test --maxWorkers 4
+  - $(npm bin)/cypress run --record

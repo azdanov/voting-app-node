@@ -65,21 +65,16 @@ app.use((req, res, next) => {
   next();
 });
 
-// sanity check route
-app.get('/test', (req, res) => {
-  res.json({
-    message: 'Hello World!',
-  });
-});
-
 app.use('/', routes);
 
+// handle missing csrf token
 app.use((err, req, res, next) => {
   if (err.code !== 'EBADCSRFTOKEN') {
     next(err);
     return;
   }
 
+  res.status(409);
   res.redirect('/');
 });
 
