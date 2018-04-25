@@ -28,10 +28,10 @@ if (process.env.NODE_ENV !== 'test') {
   });
 }
 
-app.set('views', path.join(__dirname, '..', 'views'));
+app.set('views', path.join(process.cwd(), 'views'));
 app.set('view engine', 'pug');
 
-app.use(express.static(path.join(__dirname, '..', 'public')));
+app.use(express.static(path.join(process.cwd(), 'public')));
 app.use(morgan('combined', { stream: logStream }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

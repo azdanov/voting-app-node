@@ -18,7 +18,7 @@
     "prepush": "yarn test",
     "prebuild": "yarn clean",
     "build": "run-p rollup build:scss",
-    "start": "node ./bundle/index.js",
+    "start": "node ./public/dist/index.js",
     "rollup": "rollup -c",
     "dev": "npm-run-all build:scss --parallel watch:**",
     "watch:ts": "nodemon",
