@@ -4,6 +4,7 @@
   "viewportHeight": 720,
   "env": {
     "node_env": "test",
+    "database": "mongodb://localhost/voting-app-testing",
     "email": "testing@test.com",
     "name": "testing",
     "password": "test123"

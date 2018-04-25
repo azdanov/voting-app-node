@@ -1,6 +1,6 @@
 describe('Voting App', () => {
   beforeEach(() => {
-    cy.clearCookies;
+    cy.clearCookies();
   });
 
   it('should assert that /test is working', () => {
@@ -34,21 +34,46 @@ describe('Voting App', () => {
     });
   });
 
-  it('should be able to login on /login', () => {
-    cy.exec('npm run db:reset; npm run db:seed', { timeout: 20000 });
+  it('should not be able to login on /login', () => {
+    cy
+      .request('POST', '/login', {
+        email: 'wrong',
+        password: 'wrong',
+      })
+      .then(response => {
+        expect(response.status).to.eq(200);
+      });
+    cy.visit('/');
+    cy.get('nav').within(() => {
+      cy.get('.navbar-brand').should('have.length', 1);
+      cy.get('.button').should('have.length', 1);
+    });
+  });
+
+  it.only('should be able to login on /login', () => {
+    cy.exec('npm run db:reset', { timeout: 20000 });
+    cy.exec('npm run db:seed', { timeout: 20000 });
+    cy.visit('/login');
+    console.log(Cypress.env('email'));
     cy
       .request('POST', '/login', {
         email: Cypress.env('email'),
         password: Cypress.env('password'),
       })
       .then(response => {
+        console.log(response);
         expect(response.status).to.eq(200);
       });
-    cy.getCookie('connect.sid').should('exist');
+    cy.visit('/');
+    cy.get('nav').within(() => {
+      cy.get('.navbar-brand').should('have.length', 1);
+      cy.get('.button').should('contain', 'Logout');
+    });
     cy.exec('npm run db:reset', { timeout: 20000 });
   });
 
   it('should be able to register on /register', () => {
+    cy.exec('npm run db:reset', { timeout: 20000 });
     cy
       .request('POST', '/register', {
         email: Cypress.env('email'),
@@ -59,6 +84,34 @@ describe('Voting App', () => {
       .then(response => {
         expect(response.status).to.eq(200);
       });
+    cy.getCookie('connect.sid').should('exist');
+    cy.exec('npm run db:reset', { timeout: 20000 });
+  });
+
+  it('should be able to register on /register and login on /login', () => {
+    cy
+      .request('POST', '/register', {
+        email: Cypress.env('email'),
+        name: Cypress.env('name'),
+        password: Cypress.env('password'),
+        passwordRepeat: Cypress.env('password'),
+      })
+      .then(response => {
+        expect(response.status).to.eq(200);
+      });
+    cy
+      .request('POST', '/login', {
+        email: Cypress.env('email'),
+        password: Cypress.env('password'),
+      })
+      .then(response => {
+        expect(response.status).to.eq(200);
+      });
+    cy.visit('/');
+    cy.get('nav').within(() => {
+      cy.get('.navbar-brand').should('have.length', 1);
+      cy.get('.button').should('contain', 'Logout');
+    });
     cy.getCookie('connect.sid').should('exist');
     cy.exec('npm run db:reset', { timeout: 20000 });
   });
