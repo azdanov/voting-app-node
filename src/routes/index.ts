@@ -16,4 +16,11 @@ router.post('/register', validateRegister, register, login);
 
 router.get('/logout', logout);
 
+// sanity check route
+router.get('/test', (req, res) => {
+  res.json({
+    message: 'Hello World!',
+  });
+});
+
 export default router;
