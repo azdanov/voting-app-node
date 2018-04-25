@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "8"
+  - "9"
 env:
   - DATABASE=mongodb://localhost/voting-app-testing
 services:
@@ -9,4 +9,4 @@ services:
 cache: yarn
 script:
   - yarn test --maxWorkers 4
-  - $(npm bin)/cypress run --record
+  - $(npm bin)/cypress run --record --key 1153505b-f176-448c-ba80-2d46068d5c56

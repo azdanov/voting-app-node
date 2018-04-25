@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=9.0.0"
   },
   "lint-staged": {
     "src/**/*.{ts,js,json,css,scss}": ["yarn format", "git add"]
