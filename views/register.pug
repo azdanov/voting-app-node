@@ -1,36 +1,29 @@
 extends _layout
 
+mixin field(label, type, placeholder, name, icon)
+  .field
+    label.label= label
+      .control.has-icons-left
+        - const value = values && values.name
+        - const warning = warnings && warnings.name
+        input.input(type=type, placeholder=placeholder, name=name, value=value, class=h.chooseClass(warnings, values, name), required)
+        span.icon.is-small.is-left
+          i.fas(class=icon)
+      if warning
+        p.help.is-danger= warnings
+
 block content
   .container
     h1.title.has-text-centered Register
     .columns
       .column.is-half.is-offset-one-quarter.is-clearfix
         form(action="/register", method="post")
+          - const {values, warnings} = registrationForm;
           input(type="hidden", name="_csrf", value=csrfToken)
-          .field
-            label.label Name
-              .control.has-icons-left
-                input.input(type="text", placeholder="Full Name", name="name", required)
-                span.icon.is-small.is-left
-                  i.fas.fa-user
-          .field
-            label.label Email
-              .control.has-icons-left
-                input.input(type="email", placeholder="Email", name="email", required)
-                span.icon.is-small.is-left
-                  i.fas.fa-at
-          .field
-            label.label Password
-              .control.has-icons-left
-                input.input(type="password", placeholder="Password", name="password", minlength="5", required)
-                span.icon.is-small.is-left
-                  i.fas.fa-key
-          .field
-            label.label Repeat password
-              .control.has-icons-left
-                input.input(type="password", placeholder="Repeat password", name="passwordRepeat", minlength="5", required)
-                span.icon.is-small.is-left
-                  i.fas.fa-key
+          +field("Name", "text", "Full Name", "name", "fa-user")
+          +field("Email", "email", "Email", "email", "fa-envelope")
+          +field("Password", "password", "Password", "password", "fa-key")
+          +field("Repeat password", "password", "Repeat password", "password", "fa-key")
           .field.is-grouped.is-pulled-right
             .control
               button.button.is-text Cancel

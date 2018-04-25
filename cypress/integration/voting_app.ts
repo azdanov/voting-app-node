@@ -1,8 +1,4 @@
 describe('Voting App', () => {
-  beforeEach(() => {
-    cy.clearCookies();
-  });
-
   it('should assert that /test is working', () => {
     cy.request('/test').then(response => {
       expect(response.body).to.have.property('message', 'Hello World!');
@@ -35,6 +31,7 @@ describe('Voting App', () => {
   });
 
   it('should not be able to login on /login', () => {
+    cy.exec('npm run db:reset', { timeout: 20000 });
     cy
       .request('POST', '/login', {
         email: 'wrong',
@@ -50,7 +47,7 @@ describe('Voting App', () => {
     });
   });
 
-  it.only('should be able to login on /login', () => {
+  it('should be able to login on /login', () => {
     cy.exec('npm run db:reset', { timeout: 20000 });
     cy.exec('npm run db:seed', { timeout: 20000 });
     cy.visit('/login');
