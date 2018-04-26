@@ -50,15 +50,16 @@ html(lang="en")
               each category in categories
                 each message in flashes[category]
                   - const isType = category ? `is-${category === 'error' ? 'danger' : category}` : 'is-primary'
-                  article(class=isType).message
+                  article.message(class=isType)
                     .message-header
                       p= h.capitalize(category)
-                      button.delete(aria-label='delete')
+                      button.delete(aria-label="delete")
                     .message-body
                       = message
       block content
         p This is the default!
       pre= h.dump(flashes)
+      pre= h.dump(registrationForm)
     block scripts
       script(src="https://use.fontawesome.com/releases/v5.0.7/js/all.js")
       script(src="/scripts/script.js")

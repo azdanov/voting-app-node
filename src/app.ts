@@ -14,6 +14,7 @@ import csurf from 'csurf';
 import { createUser } from './models';
 import routes from './routes';
 import { logger, logStream, pugHelpers, setupPassport } from './utilities';
+import { registerForm } from './routes/user';
 
 const app = express();
 let store: expressSession.Store | undefined = undefined;
@@ -60,8 +61,22 @@ app.use((req, res, next) => {
   res.locals.h = pugHelpers;
   res.locals.flashes = req.flash();
   res.locals.siteName = process.env.SITE_NAME;
-  res.locals.user = req.user || null;
   res.locals.currentPath = req.path;
+
+  res.locals.user = req.user || null;
+
+  res.locals.registrationForm = { values: null, warnings: null };
+
+  if (req.session!.registerForm) {
+    res.locals.name = req.session!.registerForm.name;
+    res.locals.email = req.session!.registerForm.email;
+    res.locals.registrationForm = {
+      warnings: req.session!.registerForm.warnings,
+      values: req.session!.registerForm.values,
+    };
+    delete req.session!.registerForm;
+  }
+
   next();
 });
 

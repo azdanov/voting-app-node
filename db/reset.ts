@@ -13,13 +13,9 @@ const configFile = join(process.cwd(), 'cypress.json');
   config = JSON.parse(config).env;
 
   await mongoose.connect(config.database);
-
-  createUser();
-  const User = mongoose.model('User');
-
-  const remove = promisify(User.remove, { context: User });
-  await remove();
+  await mongoose.connection.db.dropDatabase();
 
   console.log('User collection removed');
+
   await mongoose.connection.close();
 })();
