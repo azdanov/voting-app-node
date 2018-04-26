@@ -12,6 +12,7 @@ import cookieParser from 'cookie-parser';
 import csurf from 'csurf';
 import helmet from 'helmet';
 import moment from 'moment';
+import compression from 'compression';
 
 import { createUser } from './models';
 import routes from './routes';
@@ -21,6 +22,7 @@ import { registerForm } from './routes/user';
 const app = express();
 
 app.use(helmet());
+app.use(compression());
 app.use(express.static(path.join(process.cwd(), 'public')));
 app.use(morgan('combined', { stream: logStream }));
 app.use(bodyParser.json());
