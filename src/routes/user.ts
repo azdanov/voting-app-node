@@ -60,16 +60,16 @@ export const register = (
   if (!validations.isEmpty()) {
     const errors: any = validations.mapped();
 
-    req.session!.registerForm = { warnings: {}, values: {} };
+    req.session!.form = { warnings: {}, values: {} };
     for (const error in errors) {
       if (errors.hasOwnProperty(error)) {
         req.flash('error', errors[error].msg);
-        req.session!.registerForm.warnings[errors[error].param] = errors[error].msg;
+        req.session!.form.warnings[errors[error].param] = errors[error].msg;
       }
     }
 
-    req.session!.registerForm.values['name'] = req.body.name;
-    req.session!.registerForm.values['email'] = req.body.email;
+    req.session!.form.values['name'] = req.body.name;
+    req.session!.form.values['email'] = req.body.email;
 
     return res.status(422).redirect('/register');
   }

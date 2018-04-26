@@ -1,16 +1,6 @@
 extends _layout
 
-mixin field(label, type, placeholder, name, icon)
-  .field
-    label.label= label
-      .control.has-icons-left
-        - const value = values && values[name]
-        - const warning = warnings && warnings[name]
-        input.input(type=type, placeholder=placeholder, name=name, value=value, class=h.chooseClass(warnings, values, name), required)
-        span.icon.is-small.is-left
-          i.fas(class=icon)
-      if warning
-        p.help.is-danger= warning
+include mixins/_field
 
 block content
   .container
@@ -18,7 +8,7 @@ block content
     .columns
       .column.is-half.is-offset-one-quarter.is-clearfix
         form(action="/register", method="post")
-          - const {values, warnings} = registrationForm;
+          - const { values, warnings } = form;
           input(type="hidden", name="_csrf", value=csrfToken)
           +field("Name", "text", "Full Name", "name", "fa-user")
           +field("Email", "email", "Email", "email", "fa-envelope")
@@ -26,6 +16,6 @@ block content
           +field("Repeat password", "password", "Repeat password", "passwordRepeat", "fa-key")
           .field.is-grouped.is-pulled-right
             .control
-              button.button.is-text Cancel
+              input.button.is-text(type="reset", value="Cancel")
             .control
-              button.button.is-primary Register
+              input.button.is-primary(type="reset", value="Register")

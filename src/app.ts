@@ -65,16 +65,16 @@ app.use((req, res, next) => {
 
   res.locals.user = req.user || null;
 
-  res.locals.registrationForm = { values: null, warnings: null };
+  res.locals.form = { values: null, warnings: null };
 
-  if (req.session!.registerForm) {
-    res.locals.name = req.session!.registerForm.name;
-    res.locals.email = req.session!.registerForm.email;
-    res.locals.registrationForm = {
-      warnings: req.session!.registerForm.warnings,
-      values: req.session!.registerForm.values,
+  if (req.session!.form) {
+    res.locals.name = req.session!.form.name;
+    res.locals.email = req.session!.form.email;
+    res.locals.form = {
+      warnings: req.session!.form.warnings,
+      values: req.session!.form.values,
     };
-    delete req.session!.registerForm;
+    delete req.session!.form;
   }
 
   next();

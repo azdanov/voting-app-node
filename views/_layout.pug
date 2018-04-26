@@ -18,12 +18,25 @@ html(lang="en")
             span
             span
         #navMenu.navbar-menu
-          .navbar-end
+          .navbar-start
             a.navbar-item(href="/")
               span Home
+          .navbar-end
             if user
-              a.navbar-item(href="/profile")
-                | Profile
+              .navbar-item.has-dropdown.is-hoverable
+                a.navbar-link(href="/profile")
+                  | #{user.name}
+                .navbar-dropdown.is-boxed
+                  a.navbar-item(href="/poll/new")
+                    | New Poll
+                  hr.navbar-divider
+                  a.navbar-item(href="/profile")
+                    | User Profile
+                  a.navbar-item(href="/poll/user")
+                    | User Polls
+                  hr.navbar-divider
+                  a.navbar-item(href="/poll/all")
+                    | All Polls
               .navbar-item
                 .field
                   p.control

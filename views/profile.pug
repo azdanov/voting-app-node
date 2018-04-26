@@ -1,0 +1,21 @@
+extends _layout
+
+include mixins/_field
+
+block content
+  h1.title.has-text-centered Profile
+  .columns
+    .column.is-half.is-offset-one-quarter.is-clearfix
+      form(action="/profile", method="post")
+        - const { warnings } = form;
+        - let values = { email: user.email, name: user.name }
+        input(type="hidden", name="_csrf", value=csrfToken)
+        +field("Name", "text", "Full Name", "name", "fa-user")
+        +field("Email", "email", "Email", "email", "fa-envelope")
+        +field("Password", "password", "Password", "password", "fa-key")
+        +field("Repeat password", "password", "Repeat password", "passwordRepeat", "fa-key")
+        .field.is-grouped.is-pulled-right
+          .control
+            input.button.is-text(type="reset", value="Cancel")
+          .control
+            input.button.is-primary(type="reset", value="Update")
