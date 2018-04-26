@@ -5,6 +5,7 @@ env:
   global:
     - DATABASE_TEST="mongodb://localhost/voting-app-testing"
     - SITE_NAME="Voting App"
+    - NODE_ENV=test
 services:
   - redis-server
   - mongodb
