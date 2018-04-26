@@ -2,7 +2,9 @@ language: node_js
 node_js:
   - "9"
 env:
-  - DATABASE_TEST="mongodb://localhost/voting-app-testing" SITE_NAME="Voting App"
+  global:
+    - DATABASE_TEST="mongodb://localhost/voting-app-testing"
+    - SITE_NAME="Voting App"
 services:
   - redis-server
   - mongodb
