@@ -6,11 +6,12 @@ block content
     .columns
       .column.is-half.is-offset-one-quarter.is-clearfix
         form(action="/login", method="post")
+          - const {values} = registrationForm;
           input(type="hidden", name="_csrf", value=csrfToken)
           .field
             label.label Email
               .control.has-icons-left
-                input.input(type="email", placeholder="Email", name="email", required)
+                input.input(type="email", placeholder="Email", name="email", value=values && values.email, required)
                 span.icon.is-small.is-left
                   i.fas.fa-at
           .field

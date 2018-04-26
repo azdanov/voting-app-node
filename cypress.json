@@ -4,9 +4,15 @@
   "viewportHeight": 720,
   "env": {
     "node_env": "test",
+    "database": "mongodb://localhost/voting-app-testing",
     "email": "testing@test.com",
     "name": "testing",
-    "password": "test123"
+    "wrongName": "testing123",
+    "password": "test123",
+    "passwordRepeat": "test123",
+    "wrongEmail": "wrong@wrong",
+    "wrongPassword": "wrong",
+    "wrongPasswordRepeat": "wrong12"
   },
   "projectId": "g8m64m"
 }

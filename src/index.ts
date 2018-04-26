@@ -10,11 +10,11 @@ const port = normalizePort(process.env.PORT || 3000);
 
 app.set('port', port);
 
-let db = process.env.DATABASE || null;
+let db = process.env.DATABASE;
 if (process.env.NODE_ENV === 'test') {
-  db = 'mongodb://localhost/voting-app-testing';
+  db = process.env.DATABASE_TEST;
 }
-connect(db);
+connect(db || null);
 
 const server = http.createServer(app);
 server.listen(port);
