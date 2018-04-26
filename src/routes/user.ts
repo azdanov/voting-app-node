@@ -12,6 +12,11 @@ export const registerForm = (req: express.Request, res: express.Response) => {
   res.render('register', { title: 'Register' });
 };
 
+let passwordLength = 5;
+if (process.env.PASSWORD_LENGTH) {
+  passwordLength = +process.env.PASSWORD_LENGTH;
+}
+
 export const validateRegister = [
   check('email', 'Email is incorrect')
     .isEmail()
@@ -21,7 +26,9 @@ export const validateRegister = [
     .custom((email, { req }) => {
       const User = mongoose.model('User');
       return User.findOne({ email: req.body.email }).then(user => {
-        throw new Error('This email is already in use');
+        if (user) {
+          throw new Error('This email is already in use');
+        }
       });
     }),
   check('name', 'Name is incorrect')
@@ -30,10 +37,13 @@ export const validateRegister = [
     .matches(/^[a-zA-Z ]+$/)
     .withMessage('A name must consist of alphabetical characters')
     .isString(),
-  check('password', 'Password must be at least 5 characters long and contain one number')
+  check(
+    'password',
+    `Password must be at least ${passwordLength} characters long and contain one number`,
+  )
     .exists()
-    .isLength({ min: 5 })
-    .matches(/^.*(?=.{5,})(?=.*[a-zA-Z]).*$/)
+    .isLength({ min: passwordLength })
+    .matches(new RegExp(`^(?=.*?[A-Za-z])(?=.*?[^a-zA-Z\s]).{${passwordLength},}$`))
     .trim(),
   check('passwordRepeat', 'Passwords do not match')
     .exists()
@@ -49,7 +59,7 @@ export const register = (
 
   if (!validations.isEmpty()) {
     const errors: any = validations.mapped();
-    console.log(errors);
+
     req.session!.registerForm = { warnings: {}, values: {} };
     for (const error in errors) {
       if (errors.hasOwnProperty(error)) {

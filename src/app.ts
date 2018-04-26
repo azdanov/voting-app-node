@@ -68,7 +68,6 @@ app.use((req, res, next) => {
   res.locals.registrationForm = { values: null, warnings: null };
 
   if (req.session!.registerForm) {
-    console.log(req.session!.registerForm.inputs);
     res.locals.name = req.session!.registerForm.name;
     res.locals.email = req.session!.registerForm.email;
     res.locals.registrationForm = {

@@ -4,13 +4,13 @@ mixin field(label, type, placeholder, name, icon)
   .field
     label.label= label
       .control.has-icons-left
-        - const value = values && values.name
-        - const warning = warnings && warnings.name
+        - const value = values && values[name]
+        - const warning = warnings && warnings[name]
         input.input(type=type, placeholder=placeholder, name=name, value=value, class=h.chooseClass(warnings, values, name), required)
         span.icon.is-small.is-left
           i.fas(class=icon)
       if warning
-        p.help.is-danger= warnings
+        p.help.is-danger= warning
 
 block content
   .container
@@ -23,7 +23,7 @@ block content
           +field("Name", "text", "Full Name", "name", "fa-user")
           +field("Email", "email", "Email", "email", "fa-envelope")
           +field("Password", "password", "Password", "password", "fa-key")
-          +field("Repeat password", "password", "Repeat password", "password", "fa-key")
+          +field("Repeat password", "password", "Repeat password", "passwordRepeat", "fa-key")
           .field.is-grouped.is-pulled-right
             .control
               button.button.is-text Cancel
