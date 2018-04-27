@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import passportLocalMongoose from 'passport-local-mongoose';
 import validator from 'validator';
-import mongooseBeautifulUniqueValidation from 'mongoose-beautiful-unique-validation';
+const mongooseBeautifulUniqueValidation = require('mongoose-beautiful-unique-validation');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({

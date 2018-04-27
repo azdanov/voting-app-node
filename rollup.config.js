@@ -27,5 +27,8 @@ export default {
     'express-validator/check',
     'helmet',
     'compression',
+    'method-override',
+    'express-validator/filter',
+    'bluebird',
   ],
 };
