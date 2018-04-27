@@ -25,5 +25,7 @@ export default {
     'passport-local-mongoose',
     'validator',
     'express-validator/check',
+    'helmet',
+    'compression',
   ],
 };
