@@ -69,10 +69,9 @@ html(lang="en")
                       button.delete(aria-label="delete")
                     .message-body
                       = message
-      block content
-        p This is the default!
-      pre= h.dump(flashes)
-      pre= h.dump(registrationForm)
+      main
+        block content
+          p This should not be visible!
     block scripts
       script(src="https://use.fontawesome.com/releases/v5.0.7/js/all.js")
       script(src="/scripts/script.js")

@@ -2,8 +2,17 @@ import express from 'express';
 
 import { login, logout, isLoggedIn } from './auth';
 import { homePage } from './home';
-import { profilePage, profileUpdate } from './profile';
 import { loginForm, register, registerForm, validateRegister } from './user';
+import { catchErrors } from '../utilities/catchErrors';
+import {
+  profilePage,
+  profileUpdate,
+  validateUpdate,
+  profileNewPasswordPage,
+  validateNewPassword,
+  profileNewPasswordUpdate,
+  profileDelete,
+} from './profile';
 
 const router = express.Router();
 
@@ -18,7 +27,16 @@ router.post('/register', validateRegister, register, login);
 router.get('/logout', logout);
 
 router.get('/profile', isLoggedIn, profilePage);
-router.post('/profile', isLoggedIn, profileUpdate);
+router.post('/profile', isLoggedIn, validateUpdate, catchErrors(profileUpdate));
+router.delete('/profile', isLoggedIn, catchErrors(profileDelete));
+
+router.get('/profile/password', isLoggedIn, profileNewPasswordPage);
+router.post(
+  '/profile/password',
+  isLoggedIn,
+  validateNewPassword,
+  catchErrors(profileNewPasswordUpdate),
+);
 
 // sanity check route
 router.get('/test', (req, res) => {

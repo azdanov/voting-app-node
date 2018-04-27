@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
 import passportLocalMongoose from 'passport-local-mongoose';
 import validator from 'validator';
-
+import mongooseBeautifulUniqueValidation from 'mongoose-beautiful-unique-validation';
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   email: {
     type: String,
-    unique: true,
+    unique: 'Two users cannot share the same email ({VALUE})',
     lowercase: true,
     trim: true,
     validate: [validator.isEmail, 'Invalid Email Address'],
@@ -20,6 +20,7 @@ const userSchema = new Schema({
   },
 });
 
+userSchema.plugin(mongooseBeautifulUniqueValidation);
 userSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
 
 export function createUser() {

@@ -1,6 +1,16 @@
 extends _layout
 
-include mixins/_field
+mixin field(label, type, placeholder, name, icon)
+  .field
+    label.label= label
+      .control.has-icons-left
+        - const value = values && values[name]
+        - const warning = warnings && warnings[name]
+        input.input(type=type, placeholder=placeholder, name=name, value=value, class=h.chooseClass(warnings, values, name), required)
+        span.icon.is-small.is-left
+          i.fas(class=icon)
+      if warning
+        p.help.is-danger= warning
 
 block content
   .container
@@ -14,6 +24,7 @@ block content
           +field("Email", "email", "Email", "email", "fa-envelope")
           +field("Password", "password", "Password", "password", "fa-key")
           +field("Repeat password", "password", "Repeat password", "passwordRepeat", "fa-key")
+          hr
           .field.is-grouped.is-pulled-right
             .control
               input.button.is-text(type="reset", value="Cancel")
