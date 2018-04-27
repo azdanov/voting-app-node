@@ -8,8 +8,11 @@ import morgan from 'morgan';
 import passport from 'passport';
 import path from 'path';
 import redis from 'redis';
-import cookieParser from 'cookie-parser';
 import csurf from 'csurf';
+import helmet from 'helmet';
+import moment from 'moment';
+import compression from 'compression';
+import methodOverride from 'method-override';
 
 import { createUser } from './models';
 import routes from './routes';
@@ -17,6 +20,20 @@ import { logger, logStream, pugHelpers, setupPassport } from './utilities';
 import { registerForm } from './routes/user';
 
 const app = express();
+
+app.use(helmet());
+app.use(methodOverride('_method'));
+app.use(compression());
+app.use(express.static(path.join(process.cwd(), 'public')));
+app.use(morgan('combined', { stream: logStream }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+app.use(connectFlash());
+
+app.set('views', path.join(process.cwd(), 'views'));
+app.set('view engine', 'pug');
+
 let store: expressSession.Store | undefined = undefined;
 if (process.env.NODE_ENV !== 'test') {
   const redisClient = redis.createClient();
@@ -29,27 +46,21 @@ if (process.env.NODE_ENV !== 'test') {
   });
 }
 
-app.set('views', path.join(process.cwd(), 'views'));
-app.set('view engine', 'pug');
-
-app.use(express.static(path.join(process.cwd(), 'public')));
-app.use(morgan('combined', { stream: logStream }));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser(process.env.SECRET || 'secret'));
-app.use(csurf({ cookie: true }));
-app.use(cors());
-app.use(connectFlash());
-
 app.use(
   expressSession({
     store,
+    name: 'votingAppSession',
     secret: process.env.SECRET || 'secret',
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      expires: moment()
+        .add(1, 'hour')
+        .toDate(),
+    },
   }),
 );
-
+app.use(csurf({ cookie: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -62,19 +73,20 @@ app.use((req, res, next) => {
   res.locals.flashes = req.flash();
   res.locals.siteName = process.env.SITE_NAME;
   res.locals.currentPath = req.path;
+  res.locals.csrfToken = req.csrfToken();
 
   res.locals.user = req.user || null;
 
-  res.locals.registrationForm = { values: null, warnings: null };
+  res.locals.form = { values: null, warnings: null };
 
-  if (req.session!.registerForm) {
-    res.locals.name = req.session!.registerForm.name;
-    res.locals.email = req.session!.registerForm.email;
-    res.locals.registrationForm = {
-      warnings: req.session!.registerForm.warnings,
-      values: req.session!.registerForm.values,
+  if (req.session!.form) {
+    res.locals.name = req.session!.form.name;
+    res.locals.email = req.session!.form.email;
+    res.locals.form = {
+      warnings: req.session!.form.warnings,
+      values: req.session!.form.values,
     };
-    delete req.session!.registerForm;
+    delete req.session!.form;
   }
 
   next();
@@ -88,6 +100,8 @@ app.use((err, req, res, next) => {
     next(err);
     return;
   }
+
+  req.flash('error', 'Submission has been tampered with');
 
   res.status(409);
   res.redirect('/');

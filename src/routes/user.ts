@@ -1,14 +1,13 @@
 import express from 'express';
 import { check, validationResult } from 'express-validator/check';
 import mongoose from 'mongoose';
+import { assignValidationsToSession } from '../utilities';
 
 export const loginForm = (req: express.Request, res: express.Response) => {
-  res.locals.csrfToken = req.csrfToken();
   res.render('login', { title: 'Login' });
 };
 
 export const registerForm = (req: express.Request, res: express.Response) => {
-  res.locals.csrfToken = req.csrfToken();
   res.render('register', { title: 'Register' });
 };
 
@@ -35,7 +34,7 @@ export const validateRegister = [
     .exists()
     .trim()
     .matches(/^[a-zA-Z ]+$/)
-    .withMessage('A name must consist of alphabetical characters')
+    .withMessage('Please enter only unaccented alphabetical letters, A–Z or a–z')
     .isString(),
   check(
     'password',
@@ -43,8 +42,7 @@ export const validateRegister = [
   )
     .exists()
     .isLength({ min: passwordLength })
-    .matches(new RegExp(`^(?=.*?[A-Za-z])(?=.*?[^a-zA-Z\s]).{${passwordLength},}$`))
-    .trim(),
+    .matches(new RegExp(`^(?=.*?[A-Za-z])(?=.*?[^a-zA-Z\s]).{${passwordLength},}$`)),
   check('passwordRepeat', 'Passwords do not match')
     .exists()
     .custom((passwordRepeat, { req }) => passwordRepeat === req.body.password),
@@ -58,19 +56,7 @@ export const register = (
   const validations = validationResult(req);
 
   if (!validations.isEmpty()) {
-    const errors: any = validations.mapped();
-
-    req.session!.registerForm = { warnings: {}, values: {} };
-    for (const error in errors) {
-      if (errors.hasOwnProperty(error)) {
-        req.flash('error', errors[error].msg);
-        req.session!.registerForm.warnings[errors[error].param] = errors[error].msg;
-      }
-    }
-
-    req.session!.registerForm.values['name'] = req.body.name;
-    req.session!.registerForm.values['email'] = req.body.email;
-
+    assignValidationsToSession(req, validations);
     return res.status(422).redirect('/register');
   }
 
