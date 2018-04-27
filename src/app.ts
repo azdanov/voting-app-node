@@ -8,7 +8,6 @@ import morgan from 'morgan';
 import passport from 'passport';
 import path from 'path';
 import redis from 'redis';
-import cookieParser from 'cookie-parser';
 import csurf from 'csurf';
 import helmet from 'helmet';
 import moment from 'moment';
@@ -27,8 +26,6 @@ app.use(express.static(path.join(process.cwd(), 'public')));
 app.use(morgan('combined', { stream: logStream }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser(process.env.SECRET || 'secret'));
-app.use(csurf({ cookie: true }));
 app.use(cors());
 app.use(connectFlash());
 
@@ -61,7 +58,7 @@ app.use(
     },
   }),
 );
-
+app.use(csurf({ cookie: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
