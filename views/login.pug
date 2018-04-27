@@ -6,7 +6,7 @@ block content
     .columns
       .column.is-half.is-offset-one-quarter.is-clearfix
         form(action="/login", method="post")
-          - const {values} = registrationForm;
+          - const { values } = form;
           input(type="hidden", name="_csrf", value=csrfToken)
           .field
             label.label Email
@@ -20,8 +20,9 @@ block content
                 input.input(type="password", placeholder="Password", name="password", required)
                 span.icon.is-small.is-left
                   i.fas.fa-key
+          hr
           .field.is-grouped.is-pulled-right
             .control
               a.button.is-text(href="/register") Register
             .control
-              button.button.is-primary Login
+              input.button.is-primary(type="submit", value="Login")

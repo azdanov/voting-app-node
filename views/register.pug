@@ -18,14 +18,15 @@ block content
     .columns
       .column.is-half.is-offset-one-quarter.is-clearfix
         form(action="/register", method="post")
-          - const {values, warnings} = registrationForm;
+          - const { values, warnings } = form;
           input(type="hidden", name="_csrf", value=csrfToken)
           +field("Name", "text", "Full Name", "name", "fa-user")
           +field("Email", "email", "Email", "email", "fa-envelope")
           +field("Password", "password", "Password", "password", "fa-key")
           +field("Repeat password", "password", "Repeat password", "passwordRepeat", "fa-key")
+          hr
           .field.is-grouped.is-pulled-right
             .control
-              button.button.is-text Cancel
+              input.button.is-text(type="reset", value="Cancel")
             .control
-              button.button.is-primary Register
+              input.button.is-primary(type="submit", value="Register")

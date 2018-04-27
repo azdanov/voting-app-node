@@ -1,3 +1,4 @@
+export { assignValidationsToSession } from './session';
 export { pugHelpers } from './pugHelpers';
 export { setupPassport } from './passport';
 export { catchErrors } from './catchErrors';
