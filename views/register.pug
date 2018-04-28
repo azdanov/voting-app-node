@@ -17,7 +17,7 @@ block content
     h1.title.has-text-centered Register
     .columns
       .column.is-half.is-offset-one-quarter.is-clearfix
-        form(action="/register", method="post")
+        form(action="/register", method="POST")
           - const { values, warnings } = form;
           input(type="hidden", name="_csrf", value=csrfToken)
           +field("Name", "text", "Full Name", "name", "fa-user")
