@@ -24,7 +24,7 @@ router.post('/login', login);
 router.get('/register', registerForm);
 router.post('/register', validateRegister, register, login);
 
-router.get('/logout', logout);
+router.post('/logout', isLoggedIn, logout);
 
 router.get('/profile', isLoggedIn, profilePage);
 router.post('/profile', isLoggedIn, validateUpdate, catchErrors(profileUpdate));

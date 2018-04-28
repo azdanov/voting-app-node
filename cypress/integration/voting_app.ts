@@ -41,7 +41,10 @@ describe('Voting App', () => {
         cy.get('.button').should('be.visible');
         cy.contains('Home').should('have.attr', 'href', '/');
         cy.contains('Profile').should('have.attr', 'href', '/profile');
-        cy.contains('Logout').should('have.attr', 'href', '/logout');
+        cy.get('form').within(() => {
+          cy.get('_csrf').should('not.be.visible');
+          cy.get('button').should('have.text', 'Logout');
+        });
       });
     });
 
@@ -325,7 +328,7 @@ describe('Voting App', () => {
 
     it('should contain correct profile form', () => {
       cy.title().should('include', 'Profile');
-      cy.get('form').within(() => {
+      cy.get('main form').within(() => {
         cy.get('input').should('have.length', 7);
         cy.get('input[name="email"]').should('have.attr', 'disabled');
         cy.get('input:first').should($input => {
@@ -394,23 +397,30 @@ describe('Voting App', () => {
           .type(`${Cypress.env('password')}new{enter}`);
         cy.get('.message').should('contain', 'Password successfully changed');
 
-        cy.request('GET', '/logout').then(() => {
-          cy.visit('/login');
+        cy
+          .contains('Logout')
+          .siblings('[name="_csrf"]')
+          .then($input => {
+            const logoutCsrfToken = $input.attr('value');
 
-          cy.get('input[name="_csrf"]').then($input => {
-            const csrfToken = $input.attr('value');
-            cy
-              .request('POST', '/login', {
-                email: Cypress.env('email'),
-                password: newPassword,
-                _csrf: csrfToken,
-              })
-              .then(() => {
-                cy.visit('/');
-                cy.contains('Logout');
+            cy.request('POST', '/logout', { _csrf: logoutCsrfToken }).then(() => {
+              cy.visit('/login');
+
+              cy.get('input[name="_csrf"]').then($input => {
+                const loginCsrfToken = $input.attr('value');
+                cy
+                  .request('POST', '/login', {
+                    email: Cypress.env('email'),
+                    password: newPassword,
+                    _csrf: loginCsrfToken,
+                  })
+                  .then(() => {
+                    cy.visit('/');
+                    cy.contains('Logout');
+                  });
               });
+            });
           });
-        });
       });
 
       it('should not change password on with incorrect old password', () => {

@@ -40,10 +40,12 @@ html(lang="en")
               .navbar-item
                 .field
                   p.control
-                    a.button.is-primary(href="/logout")
-                      span.icon
-                        i.fas.fa-sign-out-alt(aria-hidden="true")
-                      span Logout
+                    form(action="/logout", method="POST")
+                      input(type="hidden", name="_csrf", value=csrfToken)
+                      button.button.is-primary
+                        span.icon
+                          i.fas.fa-sign-out-alt(aria-hidden="true")
+                        span Logout
             else
               a.navbar-item(href="/register")
                 span Register

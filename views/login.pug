@@ -5,7 +5,7 @@ block content
     h1.title.has-text-centered Login
     .columns
       .column.is-half.is-offset-one-quarter.is-clearfix
-        form(action="/login", method="post")
+        form(action="/login", method="POST")
           - const { values } = form;
           input(type="hidden", name="_csrf", value=csrfToken)
           .field
