@@ -14,5 +14,6 @@
     "wrongPassword": "wrong",
     "wrongPasswordRepeat": "wrong12"
   },
-  "projectId": "g8m64m"
+  "projectId": "g8m64m",
+  "videoRecording": false
 }

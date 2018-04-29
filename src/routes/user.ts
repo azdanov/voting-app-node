@@ -8,6 +8,11 @@ export const loginForm = (req: express.Request, res: express.Response) => {
 };
 
 export const registerForm = (req: express.Request, res: express.Response) => {
+  if (req.user) {
+    res.redirect('/');
+    return;
+  }
+
   res.render('register', { title: 'Register' });
 };
 
