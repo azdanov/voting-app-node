@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add a click event on each of them
     $messageCloseButtons.forEach(function($el) {
       $el.addEventListener('click', function() {
-        $el.parentElement.parentElement.remove();
+        $el.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
       });
     });
   }

@@ -8,6 +8,7 @@ block content
           | Voting App
         h2.subtitle.has-text-centered.has-text-grey-darker.is-size-4.has-text-weight-light
           | Simple polls for everyone
-        p.has-text-centered
-          a.button.is-primary.is-large.is-inverted(href="/register")
-            span.has-text-primary Register
+        unless user
+          p.has-text-centered
+            a.button.is-primary.is-large.is-inverted(href="/register")
+              span.has-text-primary Register
