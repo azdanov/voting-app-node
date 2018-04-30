@@ -366,7 +366,7 @@ describe('Voting App', () => {
     it('should not change name on profile update with incorrect input', () => {
       cy.get('input[name="name"]').type(' new@{enter}');
 
-      cy.get('input[name="name"]').should('have.value', Cypress.env('name'));
+      cy.get('input[name="name"]').should('be.empty');
       cy
         .get('.message')
         .should(
@@ -496,12 +496,36 @@ describe('Voting App', () => {
       });
     });
 
+    describe('/poll/vote', () => {
+      const option = 'BC';
+
+      beforeEach(() => {
+        cy.visit('/poll/new');
+        cy.get('input[name="pollName"]').type("Anton's poll");
+        cy.get('textarea[name="pollOptions"]').type(`AB\n${option}\nCD`);
+        cy.contains('Create').click();
+      });
+
+      it('should show a poll by an id', () => {
+        cy.get('.message').should('contain', 'Poll submitted');
+        cy.contains('View poll').click();
+      });
+
+      it.only('should cast a vote on a poll', () => {
+        cy.get('.message').should('contain', 'Poll submitted');
+        cy.contains('View poll').click();
+
+        cy.get('select').select(option);
+        cy.contains('Vote').click();
+      });
+    });
+
     describe('/poll/new', () => {
       beforeEach(() => {
         cy.visit('/poll/new');
       });
 
-      it.only('should register a new poll', () => {
+      it('should register a new poll', () => {
         cy.get('input[name="pollName"]').type("Anton's poll");
         cy.get('textarea[name="pollOptions"]').type('AB\nBC\nCD');
         cy.contains('Create').click();

@@ -1,8 +1,9 @@
 import express from 'express';
 import { check, validationResult } from 'express-validator/check';
-import mongoose from 'mongoose';
-import { assignValidationsToSession } from '../utilities';
 import { sanitize } from 'express-validator/filter';
+import mongoose from 'mongoose';
+
+import { assignValidationsToSession } from '../utilities';
 
 export const loginForm = (req: express.Request, res: express.Response) => {
   res.render('login', { title: 'Login' });

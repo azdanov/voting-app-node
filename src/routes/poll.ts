@@ -1,8 +1,7 @@
 import express from 'express';
-import { validationResult, check } from 'express-validator/check';
-import { sanitize, matchedData } from 'express-validator/filter';
+import { check, validationResult } from 'express-validator/check';
+import { matchedData, sanitize } from 'express-validator/filter';
 import mongoose from 'mongoose';
-import Hashids from 'hashids';
 
 import { assignValidationsToSession, hashids } from '../utilities';
 
@@ -25,7 +24,11 @@ export const validatePoll = [
     .trim(),
 ];
 
-export const pollAdd = async (req: express.Request, res: express.Response) => {
+export const pollAdd = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction,
+) => {
   const validations = validationResult(req);
 
   if (!validations.isEmpty()) {
@@ -56,4 +59,33 @@ export const pollAdd = async (req: express.Request, res: express.Response) => {
   }
 
   res.redirect('/poll/new');
+};
+
+export const pollShow = async (req: express.Request, res: express.Response) => {
+  const pollHashid = req.params.id;
+  const id = hashids.decodeHex(pollHashid);
+
+  const Poll = mongoose.model('Poll');
+  const poll = await Poll.findById(id);
+  res.render('pollShow', { poll, title: 'Poll' });
+};
+
+export const validateVote = [
+  check('vote', 'Must have a vote')
+    .exists()
+    .isString(),
+];
+
+export const pollVote = async (req: express.Request, res: express.Response) => {
+  const { id } = req.params;
+  const { vote } = req.body;
+
+  const Poll = mongoose.model('Poll');
+  const poll = await Poll.findById(id);
+
+  await Poll.findByIdAndUpdate(id, {
+    $push: { votes: { option: vote, person: req.user!._id } },
+  });
+
+  res.redirect(`/poll/${hashids.encodeHex(id)}`);
 };

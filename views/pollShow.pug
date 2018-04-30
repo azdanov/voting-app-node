@@ -1,0 +1,25 @@
+extends _layout
+
+block content
+  .section
+    .container
+      h1.title.has-text-centered Viewing Poll
+      .columns
+        .column.is-5
+          .section
+            h1.title.has-text-centered!= poll.name
+            form(action=`/poll/${poll._id}`, method="post")
+              input(type="hidden", name="_csrf", value=csrfToken)
+              .field.has-addons
+                .control.is-expanded
+                  .select.is-fullwidth
+                    select(name="vote")
+                      option Choose your vote:
+                      each option in poll.options
+                        option(value=option, required)= option
+                .control
+                  input.button.is-primary(type="submit", value="Vote")
+            
+        .column.is-7
+          .section
+            pre= h.dump(poll.votes)
