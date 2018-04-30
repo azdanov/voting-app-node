@@ -10,6 +10,7 @@ export const login = passport.authenticate('local', {
 
 export const logout = (req: express.Request, res: express.Response) => {
   req.logout();
+  req.flash('success', 'You are now logged out!');
   res.redirect('/');
 };
 
@@ -18,6 +19,6 @@ export const isLoggedIn = (req, res, next) => {
     next();
     return;
   }
-  req.flash('error', 'You must be logged in to do that');
+  req.flash('error', 'You must be logged in to do that!');
   res.redirect('/login');
 };
