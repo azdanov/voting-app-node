@@ -496,6 +496,16 @@ describe('Voting App', () => {
       });
     });
 
+    describe('/poll/all', () => {
+      beforeEach(() => {
+        cy.visit('/poll/all');
+      });
+
+      it.only('should show all polls', () => {
+        cy.get('body');
+      });
+    });
+
     describe('/poll/vote', () => {
       const option = 'BC';
 
@@ -511,7 +521,7 @@ describe('Voting App', () => {
         cy.contains('View poll').click();
       });
 
-      it.only('should cast a vote on a poll', () => {
+      it('should cast a vote on a poll', () => {
         cy.get('.message').should('contain', 'Poll submitted');
         cy.contains('View poll').click();
 

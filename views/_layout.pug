@@ -8,6 +8,7 @@ html(lang="en")
     meta(http-equiv="X-UA-Compatible", content="ie=edge")
     link(rel="stylesheet", href="/dist/style.css")
     link(rel="shortcut icon", type="image/png", href="/images/icons/favicon.png")
+    script(defer, src="https://use.fontawesome.com/releases/v5.0.10/js/all.js", integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+", crossorigin="anonymous")
     title= `${title} | ${siteName}`
   body
     block header
@@ -67,5 +68,4 @@ html(lang="en")
       block content
         p This should not be visible!
     block scripts
-      script(src="https://use.fontawesome.com/releases/v5.0.7/js/all.js")
-      script(src="/scripts/script.js")
+      script(src="/dist/client.js")

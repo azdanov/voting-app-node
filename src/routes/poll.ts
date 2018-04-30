@@ -5,6 +5,13 @@ import mongoose from 'mongoose';
 
 import { assignValidationsToSession, hashids } from '../utilities';
 
+export const pollAll = async (req: express.Request, res: express.Response) => {
+  const Poll = mongoose.model('Poll');
+  const polls = await Poll.find({});
+
+  res.render('pollAll', { polls, title: 'All Polls' });
+};
+
 export const pollNew = (req: express.Request, res: express.Response) => {
   res.render('pollNew', { title: 'New Poll' });
 };
@@ -61,13 +68,13 @@ export const pollAdd = async (
   res.redirect('/poll/new');
 };
 
-export const pollShow = async (req: express.Request, res: express.Response) => {
+export const pollOne = async (req: express.Request, res: express.Response) => {
   const pollHashid = req.params.id;
   const id = hashids.decodeHex(pollHashid);
 
   const Poll = mongoose.model('Poll');
   const poll = await Poll.findById(id);
-  res.render('pollShow', { poll, title: 'Poll' });
+  res.render('pollOne', { poll, title: 'Poll' });
 };
 
 export const validateVote = [

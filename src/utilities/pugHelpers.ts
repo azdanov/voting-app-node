@@ -1,3 +1,4 @@
+import md5 from 'md5';
 import moment from 'moment';
 
 const dump = (obj: any) => JSON.stringify(obj, null, 2);
@@ -20,6 +21,7 @@ const chooseClass = (warnings, values, field) => {
 
 export const pugHelpers = {
   moment,
+  md5,
   dump,
   capitalize,
   chooseClass,

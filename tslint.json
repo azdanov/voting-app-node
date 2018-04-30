@@ -8,6 +8,7 @@
     "prettier": true,
     "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case"],
     "no-unused-variable": true,
-    "import-name": false
+    "import-name": false,
+    "no-increment-decrement": false
   }
 }
