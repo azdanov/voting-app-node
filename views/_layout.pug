@@ -1,3 +1,5 @@
+include mixins/_flash
+
 doctype html
 html(lang="en")
   head
@@ -55,22 +57,12 @@ html(lang="en")
                     a.button.is-primary(href="/login")
                       span.icon
                         i.fas.fa-sign-in-alt(aria-hidden="true")
-                      spak Login
+                      span Login
     - const categories = Object.keys(flashes);
-    if categories.length
+    if currentPath !== '/' && categories.length
       block messages
         .section
-          .columns
-            .column.is-half.is-offset-one-quarter
-              each category in categories
-                each message in flashes[category]
-                  - const isType = category ? `is-${category === 'error' ? 'danger' : category}` : 'is-primary'
-                  article.message(class=isType)
-                    .message-header
-                      p= h.capitalize(category)
-                      button.delete(aria-label="delete")
-                    .message-body
-                      = message
+          +flash(categories)
     main
       block content
         p This should not be visible!

@@ -46,7 +46,7 @@ export const profileDelete = async (req: express.Request, res: express.Response)
   const User = mongoose.model('User');
   await User.findByIdAndRemove(req.user!.id);
 
-  req.flash('success', 'Your account has been deleted');
+  req.flash('success', 'Your account has been deleted!');
 
   res.redirect('/');
 };
@@ -95,9 +95,9 @@ export const profileNewPasswordUpdate = async (
 
   try {
     await user.changePassword(passwordOld, passwordNew);
-    req.flash('success', 'Password successfully changed');
+    req.flash('success', 'Password successfully changed!');
   } catch (error) {
-    req.flash('error', 'Entered old password is incorrect');
+    req.flash('error', 'Entered old password is incorrect!');
     res.redirect('/profile/password');
     return;
   }

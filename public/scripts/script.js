@@ -23,9 +23,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if ($messageCloseButtons.length > 0) {
     // Add a click event on each of them
-    $messageCloseButtons.forEach(function($el) {
-      $el.addEventListener('click', function() {
-        $el.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
+    $messageCloseButtons.forEach(function($element) {
+      $element.addEventListener('click', function() {
+        let $currentElement = $element;
+        for (let i = 0; i < 10; i++) {
+          if (
+            $currentElement.className === 'columns' ||
+            $currentElement.className === 'flash'
+          ) {
+            break;
+          }
+          $currentElement = $currentElement.parentElement;
+        }
+        $currentElement.remove();
       });
     });
   }

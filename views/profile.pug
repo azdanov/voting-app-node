@@ -13,28 +13,29 @@ mixin field(label, type, placeholder, name, icon, disabled = false)
         p.help.is-danger= warning
 
 block content
-  h1.title.has-text-centered Profile
-  .columns
-    .column.is-half.is-offset-one-quarter.is-clearfix
-      form(action="/profile", method="post")
-        - const { warnings } = form;
-        - let values = { email: user.email, name: user.name }
-        input(type="hidden", name="_csrf", value=csrfToken)
-        +field("Name", "text", "Full Name", "name", "fa-user")
-        +field("Email", "email", "Email", "email", "fa-envelope", true)
-        hr
-        .field.is-grouped.is-pulled-left
-          .control
-            a.button.is-text(href="/profile/password") New Password
-        .field.is-grouped.is-pulled-right
-          .control
-            input.button.is-text(type="reset", value="Reset")
-          .control
-            input.button.is-primary(type="submit", value="Update")
-  .columns
-    .column.is-half.is-offset-one-quarter.is-clearfix
-      form(action=`/profile?_method=DELETE`, method="post")
-        input(type="hidden", name="_csrf", value=csrfToken)
-        .field
-          .control
-            input.button.is-danger.is-outlined(type="submit", value="Delete Account", name="delete")
+  .section
+    h1.title.has-text-centered Profile
+    .columns
+      .column.is-half.is-offset-one-quarter.is-clearfix
+        form(action="/profile", method="post")
+          - const { warnings } = form;
+          - let values = { email: user.email, name: user.name }
+          input(type="hidden", name="_csrf", value=csrfToken)
+          +field("Name", "text", "Full Name", "name", "fa-user")
+          +field("Email", "email", "Email", "email", "fa-envelope", true)
+          hr
+          .field.is-grouped.is-pulled-left
+            .control
+              a.button.is-text(href="/profile/password") New Password
+          .field.is-grouped.is-pulled-right
+            .control
+              input.button.is-text(type="reset", value="Reset")
+            .control
+              input.button.is-primary(type="submit", value="Update")
+    .columns
+      .column.is-half.is-offset-one-quarter.is-clearfix
+        form(action=`/profile?_method=DELETE`, method="post")
+          input(type="hidden", name="_csrf", value=csrfToken)
+          .field
+            .control
+              input.button.is-danger.is-outlined(type="submit", value="Delete Account", name="delete")

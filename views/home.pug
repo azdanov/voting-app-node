@@ -4,6 +4,10 @@ block content
   section.hero.is-primary.is-bold
     .hero-body
       .container
+        if currentPath === '/' && categories.length
+          block messages
+            .flash
+              +flash(categories)
         h1.title.has-text-centered.has-text-grey-darker.is-size-1.has-text-weight-light
           | Voting App
         h2.subtitle.has-text-centered.has-text-grey-darker.is-size-4.has-text-weight-light
