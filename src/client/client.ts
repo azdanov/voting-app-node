@@ -47,8 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const context: any = document.getElementById('results');
   if (context) {
-    const labels = ['1', '2', '3', '4', '5', '6'];
-    const data = [12, 19, 3, 5, 2, 3];
+    const { labels, data } = (window as any).chart;
 
     const myChart = new Chart(context, {
       type: 'bar',
