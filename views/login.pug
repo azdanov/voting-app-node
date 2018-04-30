@@ -1,5 +1,13 @@
 extends _layout
 
+mixin loginField(label, type, placeholder, name, icon)
+  .field
+    label.label label
+      .control.has-icons-left
+        input.input(type=type, placeholder=placeholder, name=name, value=values && values[type], required)
+        span.icon.is-small.is-left
+          i.fas(class=icon)
+
 block content
   .section
     .container
@@ -9,18 +17,8 @@ block content
           form(action="/login", method="POST")
             - const { values } = form;
             input(type="hidden", name="_csrf", value=csrfToken)
-            .field
-              label.label Email
-                .control.has-icons-left
-                  input.input(type="email", placeholder="Email", name="email", value=values && values.email, required)
-                  span.icon.is-small.is-left
-                    i.fas.fa-at
-            .field
-              label.label Password
-                .control.has-icons-left
-                  input.input(type="password", placeholder="Password", name="password", required)
-                  span.icon.is-small.is-left
-                    i.fas.fa-key
+            +loginField('Email', 'email', 'Email', 'email', 'fa-at')
+            +loginField('Password', 'password', 'Password', 'password', 'fa-key')
             hr
             .field.is-grouped.is-pulled-right
               .control

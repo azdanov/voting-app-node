@@ -479,4 +479,35 @@ describe('Voting App', () => {
       });
     });
   });
+
+  describe('/poll', () => {
+    beforeEach('should have correct update form', () => {
+      cy.visit('/login');
+      cy.exec('npm run db:reset');
+      cy.exec('npm run db:seed');
+
+      cy.get('input[name="_csrf"]').then($input => {
+        const csrfToken = $input.attr('value');
+        cy.request('POST', '/login', {
+          email: Cypress.env('email'),
+          password: Cypress.env('password'),
+          _csrf: csrfToken,
+        });
+      });
+    });
+
+    describe('/poll/new', () => {
+      beforeEach(() => {
+        cy.visit('/poll/new');
+      });
+
+      it.only('should register a new poll', () => {
+        cy.get('input[name="pollName"]').type("Anton's poll");
+        cy.get('textarea[name="pollOptions"]').type('AB\nBC\nCD');
+        cy.contains('Create').click();
+
+        cy.get('.message').should('contain', 'Poll submitted');
+      });
+    });
+  });
 });

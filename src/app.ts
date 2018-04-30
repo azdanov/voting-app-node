@@ -14,7 +14,7 @@ import moment from 'moment';
 import compression from 'compression';
 import methodOverride from 'method-override';
 
-import { createUser } from './models';
+import { createUser, createPoll } from './models';
 import routes from './routes';
 import { logger, logStream, pugHelpers, setupPassport } from './utilities';
 import { registerForm } from './routes/user';
@@ -65,6 +65,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 createUser();
+createPoll();
 setupPassport();
 
 // setup addons for pug
