@@ -1,1 +1,14 @@
 @import 'bulma';
+
+.hero-body {
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+.flash {
+  margin-bottom: 1.3em;
+}
+
+.navbar + .section {
+  padding-bottom: 0;
+}

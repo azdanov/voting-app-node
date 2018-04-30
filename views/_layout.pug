@@ -1,3 +1,5 @@
+include mixins/_flash
+
 doctype html
 html(lang="en")
   head
@@ -5,7 +7,7 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     meta(http-equiv="X-UA-Compatible", content="ie=edge")
     link(rel="stylesheet", href="/dist/style.css")
-    link(rel="shortcut icon", type="image/png", href="/images/icons/ballot.png")
+    link(rel="shortcut icon", type="image/png", href="/images/icons/favicon.png")
     title= `${title} | ${siteName}`
   body
     block header
@@ -56,24 +58,14 @@ html(lang="en")
                       span.icon
                         i.fas.fa-sign-in-alt(aria-hidden="true")
                       span Login
-    .section
+    - const categories = Object.keys(flashes);
+    if currentPath !== '/' && categories.length
       block messages
-        if flashes
-          .columns
-            .column.is-half.is-offset-one-quarter
-              - const categories = Object.keys(flashes)
-              each category in categories
-                each message in flashes[category]
-                  - const isType = category ? `is-${category === 'error' ? 'danger' : category}` : 'is-primary'
-                  article.message(class=isType)
-                    .message-header
-                      p= h.capitalize(category)
-                      button.delete(aria-label="delete")
-                    .message-body
-                      = message
-      main
-        block content
-          p This should not be visible!
+        .section
+          +flash(categories)
+    main
+      block content
+        p This should not be visible!
     block scripts
       script(src="https://use.fontawesome.com/releases/v5.0.7/js/all.js")
       script(src="/scripts/script.js")

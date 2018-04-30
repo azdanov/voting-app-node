@@ -1,4 +1,18 @@
 extends _layout
 
 block content
-  p Index page
+  section.hero.is-primary.is-bold
+    .hero-body
+      .container
+        if currentPath === '/' && categories.length
+          block messages
+            .flash
+              +flash(categories)
+        h1.title.has-text-centered.has-text-grey-darker.is-size-1.has-text-weight-light
+          | Voting App
+        h2.subtitle.has-text-centered.has-text-grey-darker.is-size-4.has-text-weight-light
+          | Simple polls for everyone
+        unless user
+          p.has-text-centered
+            a.button.is-primary.is-large.is-inverted(href="/register")
+              span.has-text-primary Register
