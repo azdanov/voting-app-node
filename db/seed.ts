@@ -43,7 +43,7 @@ const configFile = join(process.cwd(), 'cypress.json');
 
   users = await User.find({});
 
-  const result = await new Poll({
+  await new Poll({
     name: 'Test Poll 1',
     author: users[0]._id,
     options: ['A', 'B', 'C'],
@@ -51,6 +51,16 @@ const configFile = join(process.cwd(), 'cypress.json');
       { option: 'C', person: users[0]._id },
       { option: 'C', person: users[1]._id },
       { option: 'A', person: users[2]._id },
+    ],
+  }).save();
+
+  await new Poll({
+    name: 'Test Poll 2',
+    author: users[1]._id,
+    options: ['1', '2'],
+    votes: [
+      { option: '1', person: users[0]._id },
+      { option: '1', person: users[2]._id },
     ],
   }).save();
 

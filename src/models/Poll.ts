@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { uniq } from 'lodash';
+import { hashids } from '../utilities';
 const mongooseBeautifulUniqueValidation = require('mongoose-beautiful-unique-validation');
 const { Schema } = mongoose;
 
@@ -15,10 +16,23 @@ const Poll = new Schema({
   votes: [{ option: String, person: { type: Schema.Types.ObjectId, ref: 'User' } }],
 });
 
-Poll.pre('save', function(this: any, next) {
+Poll.virtual('hashid').get(function() {
+  return hashids.encodeHex(this._id);
+});
+
+function deDuplicate(next) {
   this.options = uniq(this.options);
   next();
-});
+}
+
+function autoPopulate(next) {
+  this.populate('author');
+  next();
+}
+
+Poll.pre('save', deDuplicate);
+Poll.pre('find', autoPopulate);
+Poll.pre('findOne', autoPopulate);
 
 Poll.plugin(mongooseBeautifulUniqueValidation);
 
