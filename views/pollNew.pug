@@ -1,0 +1,33 @@
+extends _layout
+
+mixin field(label, type, placeholder, name)
+  .field
+    label.label= label
+      .control
+        input.input(type=type, placeholder=placeholder, name=name, value=value, required)
+      if warning
+        p.help.is-danger= warning
+
+block content
+  .section
+    .container
+      h1.title.has-text-centered New Poll
+      .columns
+        .column.is-half.is-offset-one-quarter.is-clearfix
+          form(action="/poll/new", method="POST")
+            - const { values } = form;
+            input(type="hidden", name="_csrf", value=csrfToken)
+            - const value = values && values[name]
+            +field("Poll Name", "text", "Poll Name", "pollName")
+            label.label Options
+              textarea.textarea(placeholder="Option 1\nOption 2\nOption 3", name="pollOptions", value=value, required)
+              if warning
+                p.help.is-danger= warning
+              else
+                p.help.has-text-weight-light Each option must be on a separate line
+            hr
+            .field.is-grouped.is-pulled-right
+              .control
+                input.button.is-text(type="reset", value="Cancel")
+              .control
+                input.button.is-primary(type="submit", value="Create")

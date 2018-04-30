@@ -4,6 +4,7 @@ import { login, logout, isLoggedIn } from './auth';
 import { homePage } from './home';
 import { loginForm, register, registerForm, validateRegister } from './user';
 import { catchErrors } from '../utilities/catchErrors';
+import { pollNew, validatePoll, pollAdd } from './poll';
 import {
   profilePage,
   profileUpdate,
@@ -37,6 +38,9 @@ router.post(
   validateNewPassword,
   catchErrors(profileNewPasswordUpdate),
 );
+
+router.get('/poll/new', isLoggedIn, pollNew);
+router.post('/poll/new', isLoggedIn, validatePoll, catchErrors(pollAdd));
 
 // sanity check route
 router.get('/test', (req, res) => {

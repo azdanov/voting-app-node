@@ -15,7 +15,7 @@ const configFile = join(process.cwd(), 'cypress.json');
   await mongoose.connect(config.database);
   await mongoose.connection.db.dropDatabase();
 
-  console.log('User collection removed');
+  console.log('Testing database dropped');
 
   await mongoose.connection.close();
 })();
