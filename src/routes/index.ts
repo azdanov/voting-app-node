@@ -1,19 +1,25 @@
 import express from 'express';
-
-import { login, logout, isLoggedIn } from './auth';
+import { catchErrors } from '../utilities';
+import { isLoggedIn, login, logout } from './auth';
 import { homePage } from './home';
-import { loginForm, register, registerForm, validateRegister } from './user';
-import { catchErrors } from '../utilities/catchErrors';
-import { pollNew, validatePoll, pollAdd } from './poll';
 import {
+  pollAdd,
+  pollNew,
+  pollShow,
+  pollVote,
+  validatePoll,
+  validateVote,
+} from './poll';
+import {
+  profileDelete,
+  profileNewPasswordPage,
+  profileNewPasswordUpdate,
   profilePage,
   profileUpdate,
-  validateUpdate,
-  profileNewPasswordPage,
   validateNewPassword,
-  profileNewPasswordUpdate,
-  profileDelete,
+  validateUpdate,
 } from './profile';
+import { loginForm, register, registerForm, validateRegister } from './user';
 
 const router = express.Router();
 
@@ -41,6 +47,9 @@ router.post(
 
 router.get('/poll/new', isLoggedIn, pollNew);
 router.post('/poll/new', isLoggedIn, validatePoll, catchErrors(pollAdd));
+
+router.get('/poll/:id', catchErrors(pollShow));
+router.post('/poll/:id', isLoggedIn, validateVote, catchErrors(pollVote));
 
 // sanity check route
 router.get('/test', (req, res) => {
