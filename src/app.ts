@@ -1,23 +1,22 @@
 import bodyParser from 'body-parser';
+import compression from 'compression';
 import connectFlash from 'connect-flash';
-import connectRedis from 'connect-redis';
+import connectMongo from 'connect-mongo';
 import cors from 'cors';
+import csurf from 'csurf';
 import express from 'express';
 import expressSession from 'express-session';
+import helmet from 'helmet';
+import methodOverride from 'method-override';
+import moment from 'moment';
+import mongoose from 'mongoose';
 import morgan from 'morgan';
 import passport from 'passport';
 import path from 'path';
-import redis from 'redis';
-import csurf from 'csurf';
-import helmet from 'helmet';
-import moment from 'moment';
-import compression from 'compression';
-import methodOverride from 'method-override';
 
-import { createUser, createPoll } from './models';
+import { createPoll, createUser } from './models';
 import routes from './routes';
 import { logger, logStream, pugHelpers, setupPassport } from './utilities';
-import { registerForm } from './routes/user';
 
 const app = express();
 
@@ -34,17 +33,9 @@ app.use(connectFlash());
 app.set('views', path.join(process.cwd(), 'views'));
 app.set('view engine', 'pug');
 
-let store: expressSession.Store | undefined = undefined;
-if (process.env.NODE_ENV !== 'test') {
-  const redisClient = redis.createClient();
-
-  store = new (connectRedis(expressSession))({
-    host: 'localhost',
-    port: 6379,
-    client: redisClient,
-    ttl: 260,
-  });
-}
+const store = new (connectMongo(expressSession))({
+  mongooseConnection: mongoose.connection,
+});
 
 app.use(
   expressSession({

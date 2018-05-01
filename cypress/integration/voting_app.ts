@@ -88,9 +88,8 @@ describe('Voting App', () => {
 
   describe('/login', () => {
     beforeEach(() => {
-      cy.visit('/login');
-
       cy.exec('npm run db:reset');
+      cy.visit('/login');
     });
 
     it('should have proper /login <form>', () => {
@@ -162,8 +161,8 @@ describe('Voting App', () => {
 
   describe('/register', () => {
     beforeEach(() => {
-      cy.visit('/register');
       cy.exec('npm run db:reset');
+      cy.visit('/register');
     });
 
     it('should have proper /register <form>', () => {
@@ -326,9 +325,9 @@ describe('Voting App', () => {
 
   describe('/profile', () => {
     beforeEach('should have correct update form', () => {
-      cy.visit('/login');
       cy.exec('npm run db:reset');
       cy.exec('npm run db:seed');
+      cy.visit('/login');
 
       cy.get('input[name="_csrf"]').then($input => {
         const csrfToken = $input.attr('value');
@@ -482,9 +481,9 @@ describe('Voting App', () => {
 
   describe('/poll', () => {
     beforeEach('should have correct update form', () => {
-      cy.visit('/login');
       cy.exec('npm run db:reset');
       cy.exec('npm run db:seed');
+      cy.visit('/login');
 
       cy.get('input[name="_csrf"]').then($input => {
         const csrfToken = $input.attr('value');
