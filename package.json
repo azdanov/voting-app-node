@@ -60,6 +60,7 @@
     "lodash": "^4.17.10",
     "md5": "^2.2.1",
     "method-override": "^2.3.10",
+    "mockingoose": "^2.9.1",
     "moment": "^2.22.1",
     "mongoose": "^5.0.15",
     "mongoose-beautiful-unique-validation": "^7.1.1",

@@ -47,18 +47,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const context: any = document.getElementById('results');
   if (context) {
-    const { votes } = (window as any).chart;
+    // @ts-ignore
+    const { votes, options } = window.chart;
 
-    const { labels, data } = votes.reduce(
-      (accumulator, item) => {
-        accumulator.labels.push(item.option);
-        accumulator.data.push(item.votes);
-        return accumulator;
+    const { data, labels } = options.reduce(
+      (acc, option) => {
+        acc.labels.push(option);
+        votes.hasOwnProperty(option) ? acc.data.push(votes[option]) : acc.data.push(0);
+
+        return acc;
       },
-      { labels: [], data: [] },
+      { data: [], labels: [] },
     );
 
-    const total = data.reduce((accumulator, vote) => accumulator + vote);
+    const total = data.reduce((acc, vote) => acc + vote);
 
     const myChart = new Chart(context, {
       type: 'bar',
@@ -73,6 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
         ],
       },
       options: {
+        animation: {
+          duration: 650,
+          easing: 'easeInOutQuint',
+        },
         tooltips: {
           bodyFontSize: 16,
         },
