@@ -12,7 +12,7 @@ services:
 cache: yarn
 before_script:
   - yarn build
-  - yarn start --silent &
+  - yarn start
 script:
   - yarn test --maxWorkers 4
   - $(npm bin)/cypress run --config videoRecording=true --record --key 1153505b-f176-448c-ba80-2d46068d5c56
