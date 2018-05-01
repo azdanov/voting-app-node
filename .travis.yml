@@ -11,7 +11,7 @@ services:
   - mongodb
 cache: yarn
 before_script:
-  - yarn build
+  - yarn ci
   - yarn start --silent &
 script:
   - yarn test --maxWorkers 4

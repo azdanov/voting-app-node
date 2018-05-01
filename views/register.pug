@@ -1,6 +1,6 @@
 extends _layout
 
-mixin field(label, type, placeholder, name, icon)
+mixin registerField(label, type, placeholder, name, icon)
   .field
     label.label= label
       .control.has-icons-left
@@ -21,10 +21,10 @@ block content
           form(action="/register", method="POST")
             - const { values, warnings } = form;
             input(type="hidden", name="_csrf", value=csrfToken)
-            +field("Name", "text", "Full Name", "name", "fa-user")
-            +field("Email", "email", "Email", "email", "fa-envelope")
-            +field("Password", "password", "Password", "password", "fa-key")
-            +field("Repeat password", "password", "Repeat password", "passwordRepeat", "fa-key")
+            +registerField("Name", "text", "Full Name", "name", "fa-user")
+            +registerField("Email", "email", "Email", "email", "fa-envelope")
+            +registerField("Password", "password", "Password", "password", "fa-key")
+            +registerField("Repeat password", "password", "Repeat password", "passwordRepeat", "fa-key")
             hr
             .field.is-grouped.is-pulled-right
               .control

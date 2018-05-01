@@ -1,6 +1,8 @@
 import express from 'express';
 import { check, validationResult } from 'express-validator/check';
+import { sanitize } from 'express-validator/filter';
 import mongoose from 'mongoose';
+
 import { assignValidationsToSession } from '../utilities';
 
 export const loginForm = (req: express.Request, res: express.Response) => {
@@ -25,7 +27,6 @@ export const validateRegister = [
   check('email', 'Email is incorrect')
     .isEmail()
     .withMessage('Must be a correct email')
-    .trim()
     .normalizeEmail()
     .custom((email, { req }) => {
       const User = mongoose.model('User');
@@ -37,7 +38,6 @@ export const validateRegister = [
     }),
   check('name', 'Name is incorrect')
     .exists()
-    .trim()
     .matches(/^[a-zA-Z ]+$/)
     .withMessage('Please enter only unaccented alphabetical letters, A–Z or a–z')
     .isString(),
@@ -51,6 +51,12 @@ export const validateRegister = [
   check('passwordRepeat', 'Passwords do not match')
     .exists()
     .custom((passwordRepeat, { req }) => passwordRepeat === req.body.password),
+  sanitize('email')
+    .normalizeEmail()
+    .trim(),
+  sanitize('name')
+    .escape()
+    .trim(),
 ];
 
 export const register = (
