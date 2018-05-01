@@ -1,5 +1,5 @@
 import Chart from 'chart.js';
-import palette from '../vendor/palette.js/palette.js';
+import palette from './palette.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const $navbarBurgers = Array.prototype.slice.call(
