@@ -501,7 +501,7 @@ describe('Voting App', () => {
         cy.visit('/poll/all');
       });
 
-      it.only('should show all polls', () => {
+      it('should show all polls', () => {
         cy.get('body');
       });
     });
