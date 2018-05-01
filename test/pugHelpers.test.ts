@@ -1,4 +1,4 @@
-import { pugHelpers } from '../../src/utilities';
+import { pugHelpers } from '../src/utilities';
 
 describe('pugHelpers', () => {
   describe('chooseClass', () => {
