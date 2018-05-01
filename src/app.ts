@@ -1,7 +1,6 @@
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import connectFlash from 'connect-flash';
-import connectMongo from 'connect-mongo';
 import cors from 'cors';
 import csurf from 'csurf';
 import express from 'express';
@@ -17,6 +16,8 @@ import path from 'path';
 import { createPoll, createUser } from './models';
 import routes from './routes';
 import { logger, logStream, pugHelpers, setupPassport } from './utilities';
+
+const connectMongo = require('connect-mongo');
 
 const app = express();
 
