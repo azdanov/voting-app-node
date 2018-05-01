@@ -34,6 +34,32 @@ Poll.pre('save', deDuplicate);
 Poll.pre('find', autoPopulate);
 Poll.pre('findOne', autoPopulate);
 
+Poll.statics.getTopStores = function(id: string) {
+  return this.aggregate([
+    {
+      $match: { _id: mongoose.Types.ObjectId(id) },
+    },
+    {
+      $project: { _id: 0, votes: 1 },
+    },
+    {
+      $unwind: '$votes',
+    },
+    {
+      $group: {
+        _id: '$votes.option',
+        votes: { $sum: 1 },
+      },
+    },
+    {
+      $addFields: { option: '$_id' },
+    },
+    {
+      $project: { _id: 0 },
+    },
+  ]);
+};
+
 Poll.plugin(mongooseBeautifulUniqueValidation);
 
 export function createPoll() {

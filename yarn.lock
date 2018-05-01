@@ -220,16 +220,24 @@
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-2.2.44.tgz#1d4a798e53f35212fd5ad4d04050620171cd5b5e"
 
 "@types/mongodb@*":
-  version "3.0.15"
-  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.0.15.tgz#b9ae8d6dd4d24f6cc83aec23b224d03d58ae131c"
+  version "3.0.16"
+  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.0.16.tgz#7972a5fc0524a8c4dc96263b5791b44def760fcc"
   dependencies:
     "@types/bson" "*"
     "@types/events" "*"
     "@types/node" "*"
 
-"@types/mongoose@*", "@types/mongoose@^5.0.10":
+"@types/mongoose@*":
   version "5.0.10"
   resolved "https://registry.yarnpkg.com/@types/mongoose/-/mongoose-5.0.10.tgz#fb370719379ed1a96cae6000e71673e3dd1f4ffb"
+  dependencies:
+    "@types/events" "*"
+    "@types/mongodb" "*"
+    "@types/node" "*"
+
+"@types/mongoose@^5.0.10":
+  version "5.0.11"
+  resolved "https://registry.yarnpkg.com/@types/mongoose/-/mongoose-5.0.11.tgz#db5fc62f17a435fc7ec6c32f936c6383c336ef6d"
   dependencies:
     "@types/events" "*"
     "@types/mongodb" "*"
@@ -241,9 +249,13 @@
   dependencies:
     "@types/express" "*"
 
-"@types/node@*", "@types/node@^10.0.0":
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.0.0.tgz#c40f8e07dce607d3ef25a626b93a6a7cdcf97881"
+"@types/node@*":
+  version "8.10.11"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.11.tgz#971ea8cb91adbe0b74e3fbd867dec192d5893a5f"
+
+"@types/node@^10.0.0":
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.0.1.tgz#9095e8b9b10d1de6d49a939b2f65c2872a47afd9"
 
 "@types/passport-local-mongoose@^4.0.11":
   version "4.0.11"
@@ -4464,9 +4476,9 @@ jstransformer@1.0.0:
     is-promise "^2.0.0"
     promise "^7.0.1"
 
-kareem@2.0.6:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/kareem/-/kareem-2.0.6.tgz#011ed59fd718bb147c63141a799fc888cd5a211b"
+kareem@2.0.7:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/kareem/-/kareem-2.0.7.tgz#8d260366a4df4236ceccec318fcf10c17c5beb22"
 
 kind-of@^3.0.2, kind-of@^3.0.3, kind-of@^3.2.0:
   version "3.2.2"
@@ -5056,12 +5068,12 @@ mongoose-legacy-pluralize@1.0.2:
   resolved "https://registry.yarnpkg.com/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz#3ba9f91fa507b5186d399fb40854bff18fb563e4"
 
 mongoose@^5.0.15:
-  version "5.0.16"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.0.16.tgz#a405ff0a6583442d9c55fead8ea4fdbdc0b4f5ba"
+  version "5.0.17"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.0.17.tgz#7c70e663b8ac567460902dca636ebb59f36a540a"
   dependencies:
     async "2.1.4"
     bson "~1.0.4"
-    kareem "2.0.6"
+    kareem "2.0.7"
     lodash.get "4.4.2"
     mongodb "3.0.7"
     mongoose-legacy-pluralize "1.0.2"

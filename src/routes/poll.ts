@@ -73,8 +73,25 @@ export const pollOne = async (req: express.Request, res: express.Response) => {
   const id = hashids.decodeHex(pollHashid);
 
   const Poll = mongoose.model('Poll');
+
+  let userVote = await Poll.findOne(
+    {
+      _id: id,
+      'votes.person': { $in: [req.user!._id] },
+    },
+    ['votes'],
+  );
+
+  if (userVote) {
+    // @ts-ignore
+    userVote = userVote.votes.filter(vote => vote.person.equals(req.user!._id))[0];
+  }
+
+  // @ts-ignore
+  const votes = await Poll.getTopStores(id);
   const poll = await Poll.findById(id);
-  res.render('pollOne', { poll, title: 'Poll' });
+
+  res.render('pollOne', { userVote, votes, poll, title: 'Poll' });
 };
 
 export const validateVote = [
@@ -88,7 +105,16 @@ export const pollVote = async (req: express.Request, res: express.Response) => {
   const { vote } = req.body;
 
   const Poll = mongoose.model('Poll');
-  const poll = await Poll.findById(id);
+
+  const userVote = await Poll.findOne({
+    'votes.person': { $in: [req.user!._id] },
+  });
+
+  if (userVote) {
+    req.flash('warning', 'You have already voted');
+    res.redirect('back');
+    return;
+  }
 
   await Poll.findByIdAndUpdate(id, {
     $push: { votes: { option: vote, person: req.user!._id } },

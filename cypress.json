@@ -7,7 +7,7 @@
     "database": "mongodb://localhost/voting-app-testing",
     "email": "testing@test.com",
     "name": "testing",
-    "email1": "testin1g@test.com",
+    "email1": "testing1@test.com",
     "name1": "testing1",
     "email2": "testing2@test.com",
     "name2": "testing2",

@@ -15,8 +15,9 @@ block content
                   .select.is-fullwidth
                     select(name="vote")
                       option Please choose:
+                      - const userOption = userVote && userVote.option
                       each option in poll.options
-                        option(value=option, required)= option
+                        option(value=option, required, selected=userOption)= option
                 .control
                   input.button.is-primary(type="submit", value="Vote")
           hr
@@ -38,10 +39,8 @@ block content
           .section
             canvas#results(width="200", height="130")
 
-  pre= h.dump(poll)
+  pre= h.dump(votes)
 
   script.
-    const options = !{JSON.stringify(poll.options)};
-    const labels = ['1', '2', '3', '4', '5', '6'];
-    const data = [12, 19, 3, 5, 2, 3];
-    window.chart = { labels, data };
+    const votes = !{JSON.stringify(votes)};
+    window.chart = { votes };
