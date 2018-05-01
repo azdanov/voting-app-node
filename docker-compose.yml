@@ -1,10 +1,10 @@
-version: "3"
+version: "3.3"
 services:
-  mongo:
-    image: mongo:latest
-    ports:
-    - "27017:27017"
-    volumes:
-    - data-volume:/data/db
+    mongo:
+        image: mongo:latest
+        ports:
+            - "27017:27017"
+        volumes:
+            - data-volume:/data/db
 volumes:
-  data-volume: {}
+    data-volume: {}

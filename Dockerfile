@@ -14,8 +14,6 @@ COPY . /app/
 
 # Precompile javascript
 RUN yarn build
-RUN rm -rf node_modules
-RUN yarn install --prod
 
 # Expose port and start application
 EXPOSE 3000
