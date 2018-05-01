@@ -12,7 +12,7 @@ export default {
     }),
     typescript(),
     commonjs({
-      namedExports: { './src/vendor/palette.js/palette.js': ['palette'] },
+      namedExports: { './src/client/palette.js': ['palette'] },
     }),
   ],
 };
