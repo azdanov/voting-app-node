@@ -19,7 +19,7 @@ describe('/poll', () => {
       cy.visit('/poll/all');
     });
 
-    it.only('should show a poll', () => {
+    it('should show a poll', () => {
       cy.contains('Vote').click();
     });
   });

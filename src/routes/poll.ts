@@ -83,7 +83,7 @@ export const pollOne = async (req: express.Request, res: express.Response) => {
   );
 
   if (userVote) {
-    // @ts-ignore
+    // @ts-ignore Extract current user vote
     userVote = userVote.votes.filter(vote => vote.person.equals(req.user!._id))[0];
   }
 

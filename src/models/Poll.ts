@@ -1,6 +1,7 @@
-import mongoose from 'mongoose';
 import { uniq } from 'lodash';
+import mongoose from 'mongoose';
 import { hashids } from '../utilities';
+
 const mongooseBeautifulUniqueValidation = require('mongoose-beautiful-unique-validation');
 const { Schema } = mongoose;
 
@@ -34,8 +35,8 @@ Poll.pre('save', deDuplicate);
 Poll.pre('find', autoPopulate);
 Poll.pre('findOne', autoPopulate);
 
-Poll.statics.getTopStores = function(id: string) {
-  return this.aggregate([
+Poll.statics.getTopStores = async function(id: string) {
+  return (await this.aggregate([
     {
       $match: { _id: mongoose.Types.ObjectId(id) },
     },
@@ -57,7 +58,13 @@ Poll.statics.getTopStores = function(id: string) {
     {
       $project: { _id: 0 },
     },
-  ]);
+    {
+      $sort: { option: 1 },
+    },
+  ])).reduce((acc, item) => {
+    acc[item.option] = item.votes;
+    return acc;
+  }, {});
 };
 
 Poll.plugin(mongooseBeautifulUniqueValidation);

@@ -9,17 +9,19 @@ block content
           .section
             h2.title.has-text-centered Vote Options
             form(action=`/poll/${poll._id}`, method="post")
+              - const userOption = userVote && userVote.option
               input(type="hidden", name="_csrf", value=csrfToken)
               .field.has-addons
                 .control.is-expanded
-                  .select.is-fullwidth
+                  .select.is-fullwidth(class=userOption ? 'is-success' : '')
                     select(name="vote")
                       option Please choose:
-                      - const userOption = userVote && userVote.option
                       each option in poll.options
                         option(value=option, required, selected=userOption)= option
                 .control
-                  input.button.is-primary(type="submit", value="Vote")
+                  input.button.is-primary(type="submit", value="Vote", disabled=userOption)
+              if userOption
+                p.help.is-success You have already voted on this poll!
           hr
           h3.title.has-text-centered Author
           .columns
@@ -37,10 +39,11 @@ block content
                       a.button.is-primary.is-outlined.is-inverted.is-medium(href=`/poll/all`) All Polls
         .column.is-7
           .section
-            canvas#results(width="200", height="130")
+            canvas#results(width="200", height="170")
 
   pre= h.dump(votes)
 
   script.
     const votes = !{JSON.stringify(votes)};
-    window.chart = { votes };
+    const options = !{JSON.stringify(poll.options)};
+    window.chart = { votes, options };
