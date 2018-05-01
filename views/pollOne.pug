@@ -1,0 +1,47 @@
+extends _layout
+
+block content
+  .section
+    .container
+      h1.title.has-text-centered!= poll.name
+      .columns
+        .column.is-5
+          .section
+            h2.title.has-text-centered Vote Options
+            form(action=`/poll/${poll._id}`, method="post")
+              input(type="hidden", name="_csrf", value=csrfToken)
+              .field.has-addons
+                .control.is-expanded
+                  .select.is-fullwidth
+                    select(name="vote")
+                      option Please choose:
+                      each option in poll.options
+                        option(value=option, required)= option
+                .control
+                  input.button.is-primary(type="submit", value="Vote")
+          hr
+          h3.title.has-text-centered Author
+          .columns
+            .column
+              .card
+                .card-content
+                  .media
+                    .media-left
+                      figure.image.is-48x48
+                        img(src=poll.author.gravatar, alt=`${poll.author.name}'s avatar`)
+                    .media-content
+                      h4.title.is-4= poll.author.name
+                      h4.subtitle.is-7= poll.author.email
+                    .media-right
+                      a.button.is-primary.is-outlined.is-inverted.is-medium(href=`/poll/all`) All Polls
+        .column.is-7
+          .section
+            canvas#results(width="200", height="130")
+
+  pre= h.dump(poll)
+
+  script.
+    const options = !{JSON.stringify(poll.options)};
+    const labels = ['1', '2', '3', '4', '5', '6'];
+    const data = [12, 19, 3, 5, 2, 3];
+    window.chart = { labels, data };

@@ -48,6 +48,24 @@ describe('Voting App', () => {
       });
     });
 
+    it('should show flash after logging out', () => {
+      cy.exec('npm run db:seed');
+
+      cy.visit('/login');
+      cy.get('input[name=email]').type(Cypress.env('email'));
+      cy.get('input[name=password]').type(`${Cypress.env('password')}{enter}`);
+
+      cy.get('.hero').within(() => {
+        cy.get('.message').should('contain', 'You are now logged in!');
+      });
+
+      cy.contains('Logout').click();
+
+      cy.get('.hero').within(() => {
+        cy.get('.message').should('contain', 'You are now logged out!');
+      });
+    });
+
     it('should assert that flash messages are functional', () => {
       cy.exec('npm run db:seed');
 
@@ -348,7 +366,7 @@ describe('Voting App', () => {
     it('should not change name on profile update with incorrect input', () => {
       cy.get('input[name="name"]').type(' new@{enter}');
 
-      cy.get('input[name="name"]').should('have.value', Cypress.env('name'));
+      cy.get('input[name="name"]').should('be.empty');
       cy
         .get('.message')
         .should(
@@ -458,6 +476,71 @@ describe('Voting App', () => {
         cy.get('input[name="passwordRepeat"]').type('nope12{enter}');
 
         cy.get('.message').should('contain', 'Passwords do not match');
+      });
+    });
+  });
+
+  describe('/poll', () => {
+    beforeEach('should have correct update form', () => {
+      cy.visit('/login');
+      cy.exec('npm run db:reset');
+      cy.exec('npm run db:seed');
+
+      cy.get('input[name="_csrf"]').then($input => {
+        const csrfToken = $input.attr('value');
+        cy.request('POST', '/login', {
+          email: Cypress.env('email'),
+          password: Cypress.env('password'),
+          _csrf: csrfToken,
+        });
+      });
+    });
+
+    describe('/poll/all', () => {
+      beforeEach(() => {
+        cy.visit('/poll/all');
+      });
+
+      it('should show all polls', () => {
+        cy.get('body');
+      });
+    });
+
+    describe('/poll/vote', () => {
+      const option = 'BC';
+
+      beforeEach(() => {
+        cy.visit('/poll/new');
+        cy.get('input[name="pollName"]').type("Anton's poll");
+        cy.get('textarea[name="pollOptions"]').type(`AB\n${option}\nCD`);
+        cy.contains('Create').click();
+      });
+
+      it('should show a poll by an id', () => {
+        cy.get('.message').should('contain', 'Poll submitted');
+        cy.contains('View poll').click();
+      });
+
+      it('should cast a vote on a poll', () => {
+        cy.get('.message').should('contain', 'Poll submitted');
+        cy.contains('View poll').click();
+
+        cy.get('select').select(option);
+        cy.contains('Vote').click();
+      });
+    });
+
+    describe('/poll/new', () => {
+      beforeEach(() => {
+        cy.visit('/poll/new');
+      });
+
+      it('should register a new poll', () => {
+        cy.get('input[name="pollName"]').type("Anton's poll");
+        cy.get('textarea[name="pollOptions"]').type('AB\nBC\nCD');
+        cy.contains('Create').click();
+
+        cy.get('.message').should('contain', 'Poll submitted');
       });
     });
   });

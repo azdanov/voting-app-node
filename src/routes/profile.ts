@@ -1,9 +1,10 @@
-import express from 'express';
-import { check, oneOf, validationResult } from 'express-validator/check';
-import mongoose from 'mongoose';
-import { matchedData } from 'express-validator/filter';
-import { assignValidationsToSession } from '../utilities/session';
 import { promisify } from 'bluebird';
+import express from 'express';
+import { check, validationResult } from 'express-validator/check';
+import { matchedData } from 'express-validator/filter';
+import mongoose from 'mongoose';
+
+import { assignValidationsToSession } from '../utilities';
 
 export const profilePage = (req: express.Request, res: express.Response) => {
   req.session!.form = { warnings: {}, values: {} };
@@ -25,7 +26,11 @@ export const validateUpdate = [
     .isString(),
 ];
 
-export const profileUpdate = async (req: express.Request, res: express.Response) => {
+export const profileUpdate = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction,
+) => {
   const validations = validationResult(req);
   if (!validations.isEmpty()) {
     assignValidationsToSession(req, validations);
@@ -46,7 +51,7 @@ export const profileDelete = async (req: express.Request, res: express.Response)
   const User = mongoose.model('User');
   await User.findByIdAndRemove(req.user!.id);
 
-  req.flash('success', 'Your account has been deleted');
+  req.flash('success', 'Your account has been deleted!');
 
   res.redirect('/');
 };
@@ -76,6 +81,7 @@ export const validateNewPassword = [
 export const profileNewPasswordUpdate = async (
   req: express.Request,
   res: express.Response,
+  next: express.NextFunction,
 ) => {
   const validations = validationResult(req);
 
@@ -95,9 +101,9 @@ export const profileNewPasswordUpdate = async (
 
   try {
     await user.changePassword(passwordOld, passwordNew);
-    req.flash('success', 'Password successfully changed');
+    req.flash('success', 'Password successfully changed!');
   } catch (error) {
-    req.flash('error', 'Entered old password is incorrect');
+    req.flash('error', 'Entered old password is incorrect!');
     res.redirect('/profile/password');
     return;
   }

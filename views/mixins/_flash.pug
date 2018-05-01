@@ -1,0 +1,12 @@
+mixin flash(categories)
+  .columns
+    .column.is-half.is-offset-one-quarter
+      each category in categories
+        each message in flashes[category]
+          - const isType = category ? `is-${category === 'error' ? 'danger' : category}` : 'is-primary'
+          article.message(class=isType)
+            .message-header
+              p= h.capitalize(category)
+              button.delete(aria-label="delete")
+            .message-body
+              != message

@@ -1,8 +1,11 @@
+import md5 from 'md5';
 import mongoose from 'mongoose';
 import passportLocalMongoose from 'passport-local-mongoose';
 import validator from 'validator';
+
 const mongooseBeautifulUniqueValidation = require('mongoose-beautiful-unique-validation');
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 const userSchema = new Schema({
   email: {
@@ -18,6 +21,11 @@ const userSchema = new Schema({
     required: 'Please provide your name',
     trim: true,
   },
+});
+
+userSchema.virtual('gravatar').get(function() {
+  const hash = md5(this.email);
+  return `https://gravatar.com/avatar/${hash}?s=144`;
 });
 
 userSchema.plugin(mongooseBeautifulUniqueValidation);

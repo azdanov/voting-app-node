@@ -1,1 +1,19 @@
 @import 'bulma';
+
+.hero-body {
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+.flash {
+  margin-bottom: 1.3em;
+}
+
+.navbar + .section {
+  padding-bottom: 0;
+}
+
+.button.is-primary:focus:not(:active),
+.button.is-primary.is-focused:not(:active) {
+  box-shadow: 0 0 0 0.125em rgba(50, 115, 220, 0.25);
+}

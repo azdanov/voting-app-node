@@ -7,6 +7,10 @@
     "database": "mongodb://localhost/voting-app-testing",
     "email": "testing@test.com",
     "name": "testing",
+    "email1": "testin1g@test.com",
+    "name1": "testing1",
+    "email2": "testing2@test.com",
+    "name2": "testing2",
     "wrongName": "testing123",
     "password": "test123",
     "passwordRepeat": "test123",
@@ -14,5 +18,6 @@
     "wrongPassword": "wrong",
     "wrongPasswordRepeat": "wrong12"
   },
-  "projectId": "g8m64m"
+  "projectId": "g8m64m",
+  "videoRecording": false
 }
