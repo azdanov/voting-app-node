@@ -1,23 +1,12 @@
 extends _layout
 
+include mixins/_voteCard
+
 block content
   .section
     .container
       h1.title.has-text-centered All Polls
       .section
-        each poll in polls
-          .columns
-            .column.is-half.is-offset-one-quarter
-              .card
-                .card-content
-                  .media
-                    .media-left
-                      figure.image.is-48x48
-                        img(src=poll.author.gravatar, alt=`${poll.author.name}'s avatar`)
-                    .media-content
-                      p.title.is-4= poll.name
-                      p.subtitle.is-7
-                        = `By: ${poll.author.name} `
-                        small= ` | ${poll.author.email}`
-                    .media-right
-                      a.button.is-primary.is-large(href=`/poll/${poll.hashid}`) Vote
+        .columns
+          .column.is-10.is-offset-1
+            +voteCard(polls)

@@ -24,7 +24,7 @@ import { loginForm, register, registerForm, validateRegister } from './user';
 
 const router = express.Router();
 
-router.get('/', homePage);
+router.get('/', catchErrors(homePage));
 
 router.get('/login', loginForm);
 router.post('/login', login);

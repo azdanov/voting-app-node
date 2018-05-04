@@ -36,7 +36,10 @@ block content
                       h4.title.is-4= poll.author.name
                       h4.subtitle.is-7= poll.author.email
                     .media-right
-                      a.button.is-primary.is-outlined.is-inverted.is-medium(href=`/poll/all`) All Polls
+                      a.button.is-primary.is-medium(href=`https://twitter.com/intent/tweet?text=${encodeURI(`View ${poll.author.name}'s poll on Voting App!\n${fullUrl}`)}`)
+                        span.icon
+                          i.fab.fa-twitter
+                        span Share
         .column.is-7
           .section
             canvas#results(width="200", height="170")

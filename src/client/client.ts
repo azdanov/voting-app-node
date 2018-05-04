@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
           {
             data,
             label: 'Number of Votes',
-            backgroundColor: palette('cb-Set1', 6).map(hex => '#' + hex),
+            backgroundColor: palette('cb-Set1', data.length).map(hex => '#' + hex),
           },
         ],
       },

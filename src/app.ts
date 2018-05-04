@@ -66,6 +66,7 @@ app.use((req, res, next) => {
   res.locals.flashes = req.flash();
   res.locals.siteName = process.env.SITE_NAME;
   res.locals.currentPath = req.path;
+  res.locals.fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
   res.locals.csrfToken = req.csrfToken();
 
   res.locals.user = req.user || null;

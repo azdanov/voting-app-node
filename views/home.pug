@@ -1,5 +1,7 @@
 extends _layout
 
+include mixins/_voteCard
+
 block content
   section.hero.is-primary.is-bold
     .hero-body
@@ -16,3 +18,11 @@ block content
           p.has-text-centered
             a.button.is-primary.is-large.is-inverted(href="/register")
               span.has-text-primary Register
+  .section
+    .columns.is-desktop
+      .column
+        h3.title.has-text-centered Latest Polls
+        +voteCard(latestPolls)
+      .column
+        h3.title.has-text-centered Popular Polls
+        +voteCard(popularPolls)
