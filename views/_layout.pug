@@ -6,7 +6,7 @@ html(lang="en")
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     meta(http-equiv="X-UA-Compatible", content="ie=edge")
-    link(rel="stylesheet", href="/dist/style.css")
+    link(rel="stylesheet", href="/dist/styles.css")
     link(rel="shortcut icon", type="image/png", href="/images/icons/favicon.png")
     script(defer, src="https://use.fontawesome.com/releases/v5.0.10/js/all.js", integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+", crossorigin="anonymous")
     title= `${title} | ${siteName}`
@@ -24,22 +24,21 @@ html(lang="en")
           .navbar-start
             a.navbar-item(href="/")
               span Home
+            a.navbar-item(href="/poll/all")
+              span Polls
           .navbar-end
             if user
               .navbar-item.has-dropdown.is-hoverable
                 a.navbar-link(href="/profile")
                   | #{user.name}
                 .navbar-dropdown.is-boxed
-                  a.navbar-item(href="/poll/new")
-                    | New Poll
-                  hr.navbar-divider
                   a.navbar-item(href="/profile")
-                    | User Profile
+                    | Profile
                   a.navbar-item(href="/poll/user")
                     | User Polls
                   hr.navbar-divider
-                  a.navbar-item(href="/poll/all")
-                    | All Polls
+                  a.navbar-item(href="/poll/new")
+                    | New Poll
               .navbar-item
                 .field
                   p.control
@@ -64,8 +63,16 @@ html(lang="en")
       block messages
         .section
           +flash(categories)
-    main
+    main.main
       block content
         p This should not be visible!
+    footer.footer
+      .container
+        .content.has-text-centered
+          p
+          | © Voting App -
+          |
+          = h.moment().year()
+
     block scripts
       script(src="/dist/client.js")

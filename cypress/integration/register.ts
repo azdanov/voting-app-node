@@ -1,6 +1,13 @@
 describe('/register', () => {
-  beforeEach(() => {
+  before(() => {
     cy.exec('npm run db:reset');
+  });
+
+  after(() => {
+    cy.exec('npm run db:reset');
+  });
+
+  beforeEach(() => {
     cy.visit('/register');
   });
 
@@ -33,6 +40,7 @@ describe('/register', () => {
       cy.get('[href="/profile"]').should('be.visible');
       cy.get('.button').should('contain', 'Logout');
     });
+    cy.exec('npm run db:reset');
   });
 
   it('should not be able to register on /register with wrong name', () => {

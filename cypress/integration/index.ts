@@ -1,5 +1,9 @@
 describe('/', () => {
-  beforeEach(() => {
+  before(() => {
+    cy.exec('npm run db:seed');
+  });
+
+  after(() => {
     cy.exec('npm run db:reset');
   });
 
@@ -21,8 +25,6 @@ describe('/', () => {
   });
 
   it('should assert that <nav> is correct when logged in', () => {
-    cy.exec('npm run db:seed');
-
     cy.visit('/login');
     cy.get('input[name=email]').type(Cypress.env('email'));
     cy.get('input[name=password]').type(`${Cypress.env('password')}{enter}`);
@@ -40,8 +42,6 @@ describe('/', () => {
   });
 
   it('should show flash after logging out', () => {
-    cy.exec('npm run db:seed');
-
     cy.visit('/login');
     cy.get('input[name=email]').type(Cypress.env('email'));
     cy.get('input[name=password]').type(`${Cypress.env('password')}{enter}`);
@@ -58,8 +58,6 @@ describe('/', () => {
   });
 
   it('should assert that flash messages are functional', () => {
-    cy.exec('npm run db:seed');
-
     cy.visit('/login');
     cy.get('input[name=email]').type(Cypress.env('email'));
     cy.get('input[name=password]').type(`${Cypress.env('password')}{enter}`);

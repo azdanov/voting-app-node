@@ -1,0 +1,17 @@
+mixin voteCard(polls)
+  each poll in polls
+    .columns
+      .column
+        .card
+          .card-content
+            .media
+              .media-left
+                figure.image.is-48x48
+                  img(src=poll.author.gravatar, alt=`${poll.author.name}'s avatar`)
+              .media-content
+                p.title.is-4= poll.name
+                p.subtitle.is-7
+                  = `By: ${poll.author.name} `
+                  small= ` | ${poll.author.email}`
+              .media-right
+                a.button.is-primary.is-large(href=`/poll/${poll.hashid}`) View
