@@ -67,12 +67,23 @@ html(lang="en")
       block content
         p This should not be visible!
     footer.footer
-      .container
-        .content.has-text-centered
-          p
-          | © Voting App -
+      nav.level
+        .level-item.has-text-centered.active
+          | © Voting App
           |
           = h.moment().year()
-
+        .level-item.level
+          .tabs.is-fullwidth
+            ul
+              li
+                a.link.is-info.level-item.has-text-right(href="/terms")
+                  span.icon.is-small
+                    span.far.fa-file-alt(aria-hidden='true')
+                  span Terms of Service
+              li
+                a.link.is-info.level-item.has-text-right(href="/privacy")
+                  span.icon.is-small
+                    span.fas.fa-user-secret(aria-hidden='true')
+                  span Privacy Policy
     block scripts
       script(src="/dist/client.js")

@@ -1,10 +1,30 @@
 import mongoose from 'mongoose';
 import passport from 'passport';
+import { Strategy as TwitterTokenStrategy } from 'passport-twitter';
 
 export function setupPassport() {
-  const user = mongoose.model('User');
-  passport.use(user.createStrategy());
+  const User = mongoose.model('User');
 
-  passport.serializeUser(user.serializeUser());
-  passport.deserializeUser(user.deserializeUser());
+  passport.serializeUser(User.serializeUser());
+  passport.deserializeUser(User.deserializeUser());
+
+  passport.use(User.createStrategy());
+
+  passport.use(
+    new TwitterTokenStrategy(
+      {
+        consumerKey: process.env.TWITTER_KEY || '',
+        consumerSecret: process.env.TWITTER_SECRET || '',
+        passReqToCallback: true,
+        includeEmail: true,
+        callbackURL: 'http://localhost:3000/auth/twitter/return',
+      },
+      (req, accessToken, refreshToken, profile, done) => {
+        // @ts-ignore
+        User.authTwitterUser(accessToken, refreshToken, profile, (err, user) =>
+          done(err, user),
+        );
+      },
+    ),
+  );
 }

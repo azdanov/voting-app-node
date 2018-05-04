@@ -25,3 +25,8 @@ block content
                 a.button.is-text(href="/register") Register
               .control
                 input.button.is-primary(type="submit", value="Login")
+          form(action="/auth/twitter", method="GET")
+            input(type="hidden", name="_csrf", value=csrfToken)
+            .field
+              .control
+                input.button.is-primary(type="submit", value="Login with Twitter")

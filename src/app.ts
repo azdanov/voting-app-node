@@ -14,97 +14,100 @@ import passport from 'passport';
 import path from 'path';
 
 import { createPoll, createUser } from './models';
-import routes from './routes';
+import { router, callback } from './routes';
 import { logger, logStream, pugHelpers, setupPassport } from './utilities';
 
-const connectMongo = require('connect-mongo');
+export default () => {
+  const connectMongo = require('connect-mongo');
 
-const app = express();
+  const app = express();
 
-app.use(helmet());
-app.use(methodOverride('_method'));
-app.use(compression());
-app.use(express.static(path.join(process.cwd(), 'public')));
-app.use(morgan('combined', { stream: logStream }));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
-app.use(connectFlash());
+  // app.use(helmet());
+  app.use(methodOverride('_method'));
+  app.use(compression());
+  app.use(express.static(path.join(process.cwd(), 'public')));
+  app.use(morgan('combined', { stream: logStream }));
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(cors());
+  app.use(connectFlash());
 
-app.set('views', path.join(process.cwd(), 'views'));
-app.set('view engine', 'pug');
+  app.set('views', path.join(process.cwd(), 'views'));
+  app.set('view engine', 'pug');
 
-const store = new (connectMongo(expressSession))({
-  mongooseConnection: mongoose.connection,
-});
+  const store = new (connectMongo(expressSession))({
+    mongooseConnection: mongoose.connection,
+  });
 
-app.use(
-  expressSession({
-    store,
-    name: 'votingAppSession',
-    secret: process.env.SECRET || 'secret',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      expires: moment()
-        .add(1, 'hour')
-        .toDate(),
-    },
-  }),
-);
-app.use(csurf({ cookie: false }));
-app.use(passport.initialize());
-app.use(passport.session());
+  app.use(
+    expressSession({
+      store,
+      name: 'votingAppSession',
+      secret: process.env.SECRET || 'secret',
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        expires: moment()
+          .add(1, 'hour')
+          .toDate(),
+      },
+    }),
+  );
+  app.use(passport.initialize());
+  app.use(passport.session());
+  app.use('/', callback);
+  app.use(csurf({ cookie: false }));
 
-createUser();
-createPoll();
-setupPassport();
+  createUser();
+  createPoll();
+  setupPassport();
 
-// setup addons for pug
-app.use((req, res, next) => {
-  res.locals.h = pugHelpers;
-  res.locals.flashes = req.flash();
-  res.locals.siteName = process.env.SITE_NAME;
-  res.locals.currentPath = req.path;
-  res.locals.fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-  res.locals.csrfToken = req.csrfToken();
+  // setup addons for pug
+  app.use((req, res, next) => {
+    res.locals.h = pugHelpers;
+    res.locals.flashes = req.flash();
+    res.locals.siteName = process.env.SITE_NAME;
+    res.locals.currentPath = req.path;
+    res.locals.rootUrl = req.protocol + '://' + req.get('host');
+    res.locals.fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+    res.locals.csrfToken = req.csrfToken();
 
-  res.locals.user = req.user || null;
+    res.locals.user = req.user || null;
 
-  res.locals.form = { values: null, warnings: null };
+    res.locals.form = { values: null, warnings: null };
 
-  if (req.session!.form) {
-    res.locals.name = req.session!.form.name;
-    res.locals.email = req.session!.form.email;
-    res.locals.form = {
-      warnings: req.session!.form.warnings,
-      values: req.session!.form.values,
-    };
-    delete req.session!.form;
-  }
+    if (req.session!.form) {
+      res.locals.name = req.session!.form.name;
+      res.locals.email = req.session!.form.email;
+      res.locals.form = {
+        warnings: req.session!.form.warnings,
+        values: req.session!.form.values,
+      };
+      delete req.session!.form;
+    }
 
-  next();
-});
+    next();
+  });
 
-app.use('/', routes);
+  app.use('/', router);
 
-// handle missing csrf token
-app.use((err, req, res, next) => {
-  if (err.code !== 'EBADCSRFTOKEN') {
-    next(err);
-    return;
-  }
+  // handle missing csrf token
+  app.use((err, req, res, next) => {
+    if (err.code !== 'EBADCSRFTOKEN') {
+      next(err);
+      return;
+    }
 
-  req.flash('error', 'Submission has been tampered with');
+    req.flash('error', 'Submission has been tampered with');
 
-  res.status(409);
-  res.redirect('/');
-});
+    res.status(409);
+    res.redirect('/');
+  });
 
-// catch-all error handler
-app.use((err, req, res, next) => {
-  logger.error('Unhandled error: ', err);
-  res.status(500).send(err);
-});
-
-export default app;
+  // catch-all error handler
+  app.use((err, req, res, next) => {
+    logger.error('Unhandled error: ', err);
+    res.status(500).send(err);
+  });
+  return app;
+};
