@@ -3,10 +3,6 @@ describe('/profile', () => {
     cy.exec('npm run db:seed');
   });
 
-  after(() => {
-    cy.exec('npm run db:reset');
-  });
-
   beforeEach('should have correct update form', () => {
     cy.visit('/login');
 

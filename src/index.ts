@@ -1,22 +1,24 @@
+import dotenv from 'dotenv';
 import http from 'http';
-
-import app from './app';
+import { join } from 'path';
+import createApp from './app';
 import { connect } from './db';
 import { normalizePort, onError, onListening } from './utilities';
 
-require('dotenv').config();
+dotenv.config({ path: join(__dirname, '../.env') });
 
-const port = normalizePort(process.env.PORT || 3000);
+const app = createApp();
 
-app.set('port', port);
+app.set('port', normalizePort(process.env.PORT || 3000));
 
 let db = process.env.DATABASE;
 if (process.env.NODE_ENV === 'test') {
   db = process.env.DATABASE_TEST;
 }
-connect(db || null);
+
+(async () => await connect(db || null))();
 
 const server = http.createServer(app);
-server.listen(port);
+server.listen(app.get('port'));
 server.on('error', onError);
 server.on('listening', onListening);

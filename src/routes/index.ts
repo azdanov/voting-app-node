@@ -1,7 +1,8 @@
 import express from 'express';
+import passport from 'passport';
 import { catchErrors } from '../utilities';
 import { isLoggedIn, login, logout } from './auth';
-import { homePage } from './home';
+import { homePage, privacy, terms } from './home';
 import {
   pollAdd,
   pollAll,
@@ -22,9 +23,13 @@ import {
 } from './profile';
 import { loginForm, register, registerForm, validateRegister } from './user';
 
-const router = express.Router();
+export const router = express.Router();
+export const callback = express.Router();
 
 router.get('/', catchErrors(homePage));
+
+router.get('/terms', terms);
+router.get('/privacy', privacy);
 
 router.get('/login', loginForm);
 router.post('/login', login);
@@ -54,11 +59,20 @@ router.post('/poll/new', isLoggedIn, validatePoll, catchErrors(pollAdd));
 router.get('/poll/:id', catchErrors(pollOne));
 router.post('/poll/:id', isLoggedIn, validateVote, catchErrors(pollVote));
 
+router.get('/auth/twitter/', passport.authenticate('twitter'));
+
+callback.get(
+  '/auth/twitter/return/',
+  passport.authenticate('twitter', { failureRedirect: '/login' }),
+  (req, res) => {
+    req.flash('success', 'You are now logged in via Twitter!');
+    res.redirect('/');
+  },
+);
+
 // sanity check route
 router.get('/test', (req, res) => {
   res.json({
     message: 'Hello World!',
   });
 });
-
-export default router;

@@ -18,3 +18,15 @@ export const homePage = async (req: express.Request, res: express.Response) => {
     title: 'Home',
   });
 };
+
+export const terms = (req: express.Request, res: express.Response) => {
+  res.render('terms', {
+    title: 'Terms of Service',
+  });
+};
+
+export const privacy = (req: express.Request, res: express.Response) => {
+  res.render('privacy', {
+    title: 'Privacy Policy',
+  });
+};

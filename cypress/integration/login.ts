@@ -3,10 +3,6 @@ describe('/login', () => {
     cy.exec('npm run db:seed');
   });
 
-  after(() => {
-    cy.exec('npm run db:reset');
-  });
-
   beforeEach(() => {
     cy.visit('/login');
   });
@@ -14,7 +10,7 @@ describe('/login', () => {
   it('should have proper /login <form>', () => {
     cy.title().should('include', 'Login');
     cy.get('form').within(() => {
-      cy.get('input').should('have.length', 4);
+      cy.get('input').should('have.length', 5);
       cy
         .get('input:first')
         .should('not.be.visible')
