@@ -6,7 +6,7 @@ describe('/poll', () => {
   });
 
   after(() => {
-    // cy.exec('npm run db:reset');
+    cy.exec('npm run db:reset');
   });
 
   beforeEach('should have correct update form', () => {
@@ -27,8 +27,35 @@ describe('/poll', () => {
       cy.visit('/poll/all');
     });
 
-    it('should show the first poll', () => {
-      cy.contains('Vote').click();
+    it('should show the first poll when logged out', () => {
+      cy.contains('Logout').click();
+      cy.visit('/poll/all');
+      cy.contains('View').click();
+      cy
+        .get('main form')
+        .children()
+        .should('have.length', 3);
+      cy.get('.help').should('contain', 'Please log in to participate in this poll!');
+    });
+
+    it('should show the first poll when logged in', () => {
+      cy.visit('/login');
+
+      cy.get('input[name="_csrf"]').then($input => {
+        const csrfToken = $input.attr('value');
+        cy.request('POST', '/login', {
+          email: Cypress.env('email'),
+          password: Cypress.env('password'),
+          _csrf: csrfToken,
+        });
+      });
+
+      cy.visit('/poll/all');
+      cy.contains('View').click();
+      cy
+        .get('main form')
+        .children()
+        .should('have.length', 2);
     });
   });
 

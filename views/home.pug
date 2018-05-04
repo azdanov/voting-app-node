@@ -22,7 +22,13 @@ block content
     .columns.is-desktop
       .column
         h3.title.has-text-centered Latest Polls
-        +voteCard(latestPolls)
+        if latestPolls.length
+          +voteCard(latestPolls)
+        else
+          p.has-text-centered No polls are currently available
       .column
         h3.title.has-text-centered Popular Polls
-        +voteCard(popularPolls)
+        if latestPolls.length
+          +voteCard(popularPolls)
+        else
+          p.has-text-centered No polls are currently available

@@ -74,13 +74,16 @@ export const pollOne = async (req: express.Request, res: express.Response) => {
 
   const Poll = mongoose.model('Poll');
 
-  let userVote = await Poll.findOne(
-    {
-      _id: id,
-      'votes.person': { $in: [req.user!._id] },
-    },
-    ['votes'],
-  );
+  let userVote;
+  if (req.user) {
+    userVote = await Poll.findOne(
+      {
+        _id: id,
+        'votes.person': { $in: [req.user!._id] },
+      },
+      ['votes'],
+    );
+  }
 
   if (userVote) {
     // @ts-ignore Extract current user vote

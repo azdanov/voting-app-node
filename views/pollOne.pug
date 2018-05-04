@@ -19,9 +19,11 @@ block content
                       each option in poll.options
                         option(value=option, required, selected= (option === userOption))= option
                 .control
-                  input.button.is-primary(type="submit", value="Vote", disabled=userOption)
+                  input.button.is-primary(type="submit", value="Vote", disabled= (!user || userOption))
               if userOption
                 p.help.is-success You have already voted on this poll!
+              unless user
+                p.help.is-info Please log in to participate in this poll!
           hr
           h3.title.has-text-centered Author
           .columns

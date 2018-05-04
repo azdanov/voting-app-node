@@ -9,4 +9,7 @@ block content
       .section
         .columns
           .column.is-10.is-offset-1
-            +voteCard(polls)
+            if polls.length
+              +voteCard(polls)
+            else
+              p.has-text-centered No polls are currently available

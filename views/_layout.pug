@@ -24,6 +24,8 @@ html(lang="en")
           .navbar-start
             a.navbar-item(href="/")
               span Home
+            a.navbar-item(href="/poll/all")
+              span Polls
           .navbar-end
             if user
               .navbar-item.has-dropdown.is-hoverable
@@ -37,9 +39,6 @@ html(lang="en")
                   hr.navbar-divider
                   a.navbar-item(href="/poll/new")
                     | New Poll
-                  hr.navbar-divider
-                  a.navbar-item(href="/poll/all")
-                    | All Polls
               .navbar-item
                 .field
                   p.control

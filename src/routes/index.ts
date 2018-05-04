@@ -46,7 +46,7 @@ router.post(
   catchErrors(profileNewPasswordUpdate),
 );
 
-router.get('/poll/all', isLoggedIn, catchErrors(pollAll));
+router.get('/poll/all', catchErrors(pollAll));
 
 router.get('/poll/new', isLoggedIn, pollNew);
 router.post('/poll/new', isLoggedIn, validatePoll, catchErrors(pollAdd));
