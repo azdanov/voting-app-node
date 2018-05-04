@@ -1,6 +1,13 @@
 describe('/login', () => {
-  beforeEach(() => {
+  before(() => {
+    cy.exec('npm run db:seed');
+  });
+
+  after(() => {
     cy.exec('npm run db:reset');
+  });
+
+  beforeEach(() => {
     cy.visit('/login');
   });
 
@@ -20,8 +27,6 @@ describe('/login', () => {
   });
 
   it('should be able to login on /login', () => {
-    cy.exec('npm run db:seed');
-
     cy.get('input[name=email]').type(Cypress.env('email'));
     cy.get('input[name=password]').type(`${Cypress.env('password')}{enter}`);
     cy
@@ -54,8 +59,6 @@ describe('/login', () => {
   });
 
   it('should not be able to login on /login with registered user and wrong password', () => {
-    cy.exec('npm run db:seed');
-
     cy.get('input[name=email]').type(Cypress.env('email'));
     cy.get('input[name=password]').type(`${Cypress.env('wrongPassword')}{enter}`);
     cy

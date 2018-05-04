@@ -1,7 +1,15 @@
 describe('/poll', () => {
-  beforeEach('should have correct update form', () => {
-    cy.exec('npm run db:reset');
+  let pollNumber = 0;
+
+  before(() => {
     cy.exec('npm run db:seed');
+  });
+
+  after(() => {
+    // cy.exec('npm run db:reset');
+  });
+
+  beforeEach('should have correct update form', () => {
     cy.visit('/login');
 
     cy.get('input[name="_csrf"]').then($input => {
@@ -19,7 +27,7 @@ describe('/poll', () => {
       cy.visit('/poll/all');
     });
 
-    it('should show a poll', () => {
+    it('should show the first poll', () => {
       cy.contains('Vote').click();
     });
   });
@@ -34,12 +42,26 @@ describe('/poll', () => {
     });
   });
 
+  describe('/poll/new', () => {
+    beforeEach(() => {
+      cy.visit('/poll/new');
+    });
+
+    it('should register a new poll', () => {
+      cy.get('input[name="pollName"]').type("Anton's poll " + pollNumber++);
+      cy.get('textarea[name="pollOptions"]').type('AB\nBC\nCD');
+      cy.contains('Create').click();
+
+      cy.get('.message').should('contain', 'Poll submitted');
+    });
+  });
+
   describe('/poll/vote', () => {
     const option = 'BC';
 
     beforeEach(() => {
       cy.visit('/poll/new');
-      cy.get('input[name="pollName"]').type("Anton's poll");
+      cy.get('input[name="pollName"]').type("Anton's poll " + pollNumber++);
       cy.get('textarea[name="pollOptions"]').type(`AB\n${option}\nCD`);
       cy.contains('Create').click();
     });
@@ -54,21 +76,10 @@ describe('/poll', () => {
       cy.contains('View poll').click();
 
       cy.get('select').select(option);
-      cy.contains('Vote').click();
-    });
-  });
+      cy.get('main form').submit();
 
-  describe('/poll/new', () => {
-    beforeEach(() => {
-      cy.visit('/poll/new');
-    });
-
-    it('should register a new poll', () => {
-      cy.get('input[name="pollName"]').type("Anton's poll");
-      cy.get('textarea[name="pollOptions"]').type('AB\nBC\nCD');
-      cy.contains('Create').click();
-
-      cy.get('.message').should('contain', 'Poll submitted');
+      cy.get('select').should('have.value', option);
+      cy.get('.help').should('contain', 'You have already voted on this poll!');
     });
   });
 });
