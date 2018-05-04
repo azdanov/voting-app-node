@@ -38,7 +38,6 @@ userSchema.virtual('gravatar').get(function() {
 });
 
 userSchema.statics.authTwitterUser = function(accessToken, refreshToken, profile, done) {
-  console.log(profile);
   return this.findOne(
     {
       'twitterProvider.id': profile.id,
@@ -60,7 +59,7 @@ userSchema.statics.authTwitterUser = function(accessToken, refreshToken, profile
 
       this.register(
         newUser,
-        crypto.randomBytes(64).toString('hex'),
+        crypto.randomBytes(16).toString('hex'),
         (error, savedUser) => {
           if (error) {
             logger.error(error);

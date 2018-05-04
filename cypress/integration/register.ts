@@ -3,10 +3,6 @@ describe('/register', () => {
     cy.exec('npm run db:reset');
   });
 
-  after(() => {
-    cy.exec('npm run db:reset');
-  });
-
   beforeEach(() => {
     cy.visit('/register');
   });
@@ -14,7 +10,7 @@ describe('/register', () => {
   it('should have proper /register <form>', () => {
     cy.title().should('include', 'Register');
     cy.get('form').within(() => {
-      cy.get('input').should('have.length', 7);
+      cy.get('input').should('have.length', 8);
       cy.get('input:first').should($input => {
         expect($input.attr('name')).to.equal('_csrf');
         expect($input.val()).to.be.a('string');

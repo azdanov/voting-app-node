@@ -3,10 +3,6 @@ describe('/', () => {
     cy.exec('npm run db:seed');
   });
 
-  after(() => {
-    cy.exec('npm run db:reset');
-  });
-
   it('should assert that <title> is correct', () => {
     cy.visit('/');
     cy.title().should('include', 'Voting App');

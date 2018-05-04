@@ -65,7 +65,7 @@ callback.get(
   '/auth/twitter/return/',
   passport.authenticate('twitter', { failureRedirect: '/login' }),
   (req, res) => {
-    console.log('Returned!');
+    req.flash('success', 'You are now logged in via Twitter!');
     res.redirect('/');
   },
 );

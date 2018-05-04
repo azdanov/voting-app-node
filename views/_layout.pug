@@ -46,7 +46,7 @@ html(lang="en")
                       input(type="hidden", name="_csrf", value=csrfToken)
                       button.button.is-primary
                         span.icon
-                          i.fas.fa-sign-out-alt(aria-hidden="true")
+                          span.fas.fa-sign-out-alt(aria-hidden="true")
                         span Logout
             else
               a.navbar-item(href="/register")
@@ -67,23 +67,22 @@ html(lang="en")
       block content
         p This should not be visible!
     footer.footer
-      nav.level
-        .level-item.has-text-centered.active
-          | © Voting App
-          |
-          = h.moment().year()
-        .level-item.level
-          .tabs.is-fullwidth
-            ul
-              li
-                a.link.is-info.level-item.has-text-right(href="/terms")
-                  span.icon.is-small
-                    span.far.fa-file-alt(aria-hidden='true')
-                  span Terms of Service
-              li
-                a.link.is-info.level-item.has-text-right(href="/privacy")
-                  span.icon.is-small
-                    span.fas.fa-user-secret(aria-hidden='true')
-                  span Privacy Policy
+      .tabs.is-centered
+        ul
+          li
+            a.link.level-item.has-text-right(href="/terms")
+              span.icon.is-small
+                span.fas.fa-file-alt(aria-hidden='true')
+              span Terms of Service
+          li
+            a.link
+              span.icon.is-small
+                span.fas.fa-copyright(aria-hidden='true')
+              span= `Voting App ${h.moment().year()}`
+          li
+            a.link.level-item.has-text-right(href="/privacy")
+              span.icon.is-small
+                span.fas.fa-user-secret(aria-hidden='true')
+              span Privacy Policy
     block scripts
       script(src="/dist/client.js")

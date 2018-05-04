@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const context: any = document.getElementById('results');
   if (context) {
     // @ts-ignore
-    const { votes, options } = window.votingAppChart;
+    const { votes, options } = window.chart;
 
     const { data, labels } = options.reduce(
       (acc, option) => {

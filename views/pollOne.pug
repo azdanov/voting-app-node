@@ -46,6 +46,6 @@ block content
           .section
             canvas#results(width="200", height="170")
   script.
-    const votes = !{JSON.stringify(votes)};
-    const options = !{JSON.stringify(poll.options)};
-    window.votingAppChart = { votes, options };
+    var votes = !{JSON.stringify(votes)};
+    var options = !{JSON.stringify(poll.options)};
+    window.chart = { votes, options };
