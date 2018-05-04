@@ -1,13 +1,16 @@
 describe('/register', () => {
-  beforeEach(() => {
+  before(() => {
     cy.exec('npm run db:reset');
+  });
+
+  beforeEach(() => {
     cy.visit('/register');
   });
 
   it('should have proper /register <form>', () => {
     cy.title().should('include', 'Register');
     cy.get('form').within(() => {
-      cy.get('input').should('have.length', 7);
+      cy.get('input').should('have.length', 8);
       cy.get('input:first').should($input => {
         expect($input.attr('name')).to.equal('_csrf');
         expect($input.val()).to.be.a('string');
@@ -33,6 +36,7 @@ describe('/register', () => {
       cy.get('[href="/profile"]').should('be.visible');
       cy.get('.button').should('contain', 'Logout');
     });
+    cy.exec('npm run db:reset');
   });
 
   it('should not be able to register on /register with wrong name', () => {

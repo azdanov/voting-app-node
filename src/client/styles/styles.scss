@@ -2,7 +2,7 @@
 
 .hero-body {
   padding-top: 2em;
-  padding-bottom: 2em;
+  padding-bottom: 2.3em;
 }
 
 .flash {
@@ -16,4 +16,19 @@
 .button.is-primary:focus:not(:active),
 .button.is-primary.is-focused:not(:active) {
   box-shadow: 0 0 0 0.125em rgba(50, 115, 220, 0.25);
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+}
+
+.footer {
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
 }

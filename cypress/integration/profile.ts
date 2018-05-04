@@ -1,16 +1,18 @@
 describe('/profile', () => {
-  beforeEach('should have correct update form', () => {
-    cy.exec('npm run db:reset');
+  before(() => {
     cy.exec('npm run db:seed');
+  });
+
+  beforeEach('should have correct update form', () => {
     cy.visit('/login');
 
     cy.get('input[name="_csrf"]').then($input => {
-      const csrfToken = $input.attr('value');
+      const loginCsrfToken = $input.attr('value');
       cy
         .request('POST', '/login', {
           email: Cypress.env('email'),
           password: Cypress.env('password'),
-          _csrf: csrfToken,
+          _csrf: loginCsrfToken,
         })
         .then(() => {
           cy.visit('/profile');
@@ -49,44 +51,15 @@ describe('/profile', () => {
       );
   });
 
-  describe('/profile/delete', () => {
-    it('should delete the user', () => {
-      cy.get('input[name="delete"]').click();
-      cy.get('.message').should('contain', 'Your account has been deleted');
-      cy.url().should('contain', '/');
-
-      cy.visit('/login');
-
-      cy.get('input[name="_csrf"]').then($input => {
-        const csrfToken = $input.attr('value');
-        cy
-          .request('POST', '/login', {
-            email: Cypress.env('email'),
-            password: Cypress.env('password'),
-            _csrf: csrfToken,
-          })
-          .then(() => {
-            cy.visit('/profile');
-            cy.get('.message').should('contain', 'You must be logged in to do that');
-          });
-      });
-    });
-  });
-
   describe('/profile/password', () => {
-    beforeEach('should have correct update form', () => {
-      cy.visit('/profile/password');
-    });
+    const newPassword = `${Cypress.env('password')}new`;
 
     it('should change password on new password profile update', () => {
       cy.visit('/profile/password');
 
-      const newPassword = `${Cypress.env('password')}new`;
       cy.get('input[name="passwordOld"]').type(Cypress.env('password'));
       cy.get('input[name="passwordNew"]').type(newPassword);
-      cy
-        .get('input[name="passwordRepeat"]')
-        .type(`${Cypress.env('password')}new{enter}`);
+      cy.get('input[name="passwordRepeat"]').type(`${newPassword}{enter}`);
       cy.get('.message').should('contain', 'Password successfully changed');
 
       cy
@@ -109,6 +82,9 @@ describe('/profile', () => {
                 .then(() => {
                   cy.visit('/');
                   cy.contains('Logout');
+
+                  cy.exec('npm run db:reset');
+                  cy.exec('npm run db:seed');
                 });
             });
           });
@@ -119,10 +95,8 @@ describe('/profile', () => {
       cy.visit('/profile/password');
 
       cy.get('input[name="passwordOld"]').type('Nope123');
-      cy.get('input[name="passwordNew"]').type(`${Cypress.env('password')}new`);
-      cy
-        .get('input[name="passwordRepeat"]')
-        .type(`${Cypress.env('password')}new{enter}`);
+      cy.get('input[name="passwordNew"]').type(Cypress.env('password'));
+      cy.get('input[name="passwordRepeat"]').type(`${Cypress.env('password')}{enter}`);
 
       cy.get('.message').should('contain', 'Entered old password is incorrect');
     });
@@ -150,6 +124,30 @@ describe('/profile', () => {
       cy.get('input[name="passwordRepeat"]').type('nope12{enter}');
 
       cy.get('.message').should('contain', 'Passwords do not match');
+    });
+  });
+
+  describe('/profile/delete', () => {
+    it('should delete the user', () => {
+      cy.get('input[name="delete"]').click();
+      cy.get('.message').should('contain', 'Your account has been deleted');
+      cy.url().should('contain', '/');
+
+      cy.visit('/login');
+
+      cy.get('input[name="_csrf"]').then($input => {
+        const csrfToken = $input.attr('value');
+        cy
+          .request('POST', '/login', {
+            email: Cypress.env('email'),
+            password: Cypress.env('password'),
+            _csrf: csrfToken,
+          })
+          .then(() => {
+            cy.visit('/profile');
+            cy.get('.message').should('contain', 'You must be logged in to do that');
+          });
+      });
     });
   });
 });

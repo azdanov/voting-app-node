@@ -1,13 +1,16 @@
 describe('/login', () => {
+  before(() => {
+    cy.exec('npm run db:seed');
+  });
+
   beforeEach(() => {
-    cy.exec('npm run db:reset');
     cy.visit('/login');
   });
 
   it('should have proper /login <form>', () => {
     cy.title().should('include', 'Login');
     cy.get('form').within(() => {
-      cy.get('input').should('have.length', 4);
+      cy.get('input').should('have.length', 5);
       cy
         .get('input:first')
         .should('not.be.visible')
@@ -20,8 +23,6 @@ describe('/login', () => {
   });
 
   it('should be able to login on /login', () => {
-    cy.exec('npm run db:seed');
-
     cy.get('input[name=email]').type(Cypress.env('email'));
     cy.get('input[name=password]').type(`${Cypress.env('password')}{enter}`);
     cy
@@ -54,8 +55,6 @@ describe('/login', () => {
   });
 
   it('should not be able to login on /login with registered user and wrong password', () => {
-    cy.exec('npm run db:seed');
-
     cy.get('input[name=email]').type(Cypress.env('email'));
     cy.get('input[name=password]').type(`${Cypress.env('wrongPassword')}{enter}`);
     cy

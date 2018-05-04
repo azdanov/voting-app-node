@@ -1,4 +1,5 @@
 import Chart from 'chart.js';
+
 import palette from './palette.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -70,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
           {
             data,
             label: 'Number of Votes',
-            backgroundColor: palette('cb-Set1', 6).map(hex => '#' + hex),
+            backgroundColor: palette('cb-Set1', data.length).map(hex => '#' + hex),
           },
         ],
       },
@@ -89,6 +90,13 @@ document.addEventListener('DOMContentLoaded', () => {
           fontSize: 15,
         },
         scales: {
+          xAxes: [
+            {
+              ticks: {
+                autoSkip: false,
+              },
+            },
+          ],
           yAxes: [
             {
               ticks: {
