@@ -7,11 +7,14 @@ mixin voteCard(polls)
             .media
               .media-left
                 figure.image.is-48x48
-                  img(src=poll.author.gravatar, alt=`${poll.author.name}'s avatar`)
+                  img(src=poll.author.avatar, alt=`${poll.author.name}'s avatar`)
               .media-content
-                p.title.is-4= poll.name
+                - const charsInLine = 30;
+                - const pollName = poll.name.length > charsInLine ? poll.name.substring(0, charsInLine) + '...' : poll.name
+                p.title.is-4
+                  a.is-text.has-text-dark(href=`/poll/${poll.hashid}`)= pollName
                 p.subtitle.is-7
                   = `By: ${poll.author.name} `
                   small= ` | ${poll.author.email}`
               .media-right
-                a.button.is-primary.is-large(href=`/poll/${poll.hashid}`) View
+                a.button.is-primary(href=`/poll/${poll.hashid}`) View
