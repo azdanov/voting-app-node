@@ -50,6 +50,8 @@ export const profileUpdate = async (
 export const profileDelete = async (req: express.Request, res: express.Response) => {
   const User = mongoose.model('User');
   await User.findByIdAndRemove(req.user!.id);
+  const Poll = mongoose.model('Poll');
+  await Poll.remove({ author: req.user!.id });
 
   req.flash('success', 'Your account has been deleted!');
 
