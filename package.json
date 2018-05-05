@@ -39,7 +39,7 @@
     "ci": "run-p ci:**",
     "ci:server": "rollup --config rollup.config.server.js",
     "ci:client": "rollup --config rollup.config.client.js",
-    "ci:scss": "node-sass --source-map public/dist/ src/styles/style.scss public/dist/style.css"
+    "ci:scss": "node-sass --source-map true --output public/dist/ src/client/styles/styles.scss"
   },
   "dependencies": {
     "bluebird": "^3.5.1",

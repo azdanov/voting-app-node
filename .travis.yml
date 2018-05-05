@@ -7,7 +7,6 @@ env:
     - SITE_NAME="Voting App"
     - NODE_ENV=test
 services:
-  - redis-server
   - mongodb
 cache: yarn
 before_script:
