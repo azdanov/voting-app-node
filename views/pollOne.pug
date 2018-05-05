@@ -33,7 +33,7 @@ block content
                   .media
                     .media-left
                       figure.image.is-48x48
-                        img(src=poll.author.gravatar, alt=`${poll.author.name}'s avatar`)
+                        img(src=poll.author.avatar, alt=`${poll.author.name}'s avatar`)
                     .media-content
                       h4.title.is-4= poll.author.name
                       h4.subtitle.is-7= poll.author.email
@@ -48,4 +48,4 @@ block content
   script.
     var votes = !{JSON.stringify(votes)};
     var options = !{JSON.stringify(poll.options)};
-    window.chart = { votes, options };
+    window.votingAppChart = { votes, options };

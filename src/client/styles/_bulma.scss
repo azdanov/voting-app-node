@@ -5,6 +5,7 @@ $primary: #fddbb4;
 $primary-invert: #925142;
 $white-ter: #fafafa;
 $footer-background-color: #fafafa;
-$tabs-border-bottom-color: $footer-background-color;
+$tabs-border-bottom-color: #f1f1f1;
+$desktop: 900px + (2 * $gap);
 
 @import '../../../node_modules/bulma/bulma';
