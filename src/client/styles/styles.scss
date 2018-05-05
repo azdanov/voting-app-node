@@ -1,8 +1,8 @@
 @import 'bulma';
 
 .hero-body {
-  padding-top: 2em;
   padding-bottom: 2.3em;
+  padding-top: 2em;
 }
 
 .flash {
@@ -20,8 +20,8 @@
 
 body {
   display: flex;
-  min-height: 100vh;
   flex-direction: column;
+  min-height: 100vh;
 }
 
 .main {
@@ -29,6 +29,6 @@ body {
 }
 
 .footer {
-  padding-top: 1.5em;
   padding-bottom: 1.5em;
+  padding-top: 1.5em;
 }
