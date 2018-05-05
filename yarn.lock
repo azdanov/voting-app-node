@@ -234,8 +234,8 @@
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-2.2.44.tgz#1d4a798e53f35212fd5ad4d04050620171cd5b5e"
 
 "@types/mongodb@*":
-  version "3.0.16"
-  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.0.16.tgz#7972a5fc0524a8c4dc96263b5791b44def760fcc"
+  version "3.0.18"
+  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.0.18.tgz#e5775ba9c15bf1601e57ada52d9fcbc6d6095d18"
   dependencies:
     "@types/bson" "*"
     "@types/events" "*"
@@ -250,8 +250,8 @@
     "@types/node" "*"
 
 "@types/mongoose@^5.0.11":
-  version "5.0.11"
-  resolved "https://registry.yarnpkg.com/@types/mongoose/-/mongoose-5.0.11.tgz#db5fc62f17a435fc7ec6c32f936c6383c336ef6d"
+  version "5.0.12"
+  resolved "https://registry.yarnpkg.com/@types/mongoose/-/mongoose-5.0.12.tgz#d7764e0e6850e047253769d4c4e8b70d0c3a70e7"
   dependencies:
     "@types/events" "*"
     "@types/mongodb" "*"
@@ -263,13 +263,9 @@
   dependencies:
     "@types/express" "*"
 
-"@types/node@*":
-  version "8.10.11"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.11.tgz#971ea8cb91adbe0b74e3fbd867dec192d5893a5f"
-
-"@types/node@^10.0.3":
-  version "10.0.3"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.0.3.tgz#1f89840c7aac2406cc43a2ecad98fc02a8e130e4"
+"@types/node@*", "@types/node@^10.0.3":
+  version "10.0.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.0.4.tgz#130598ee56e9a1210a53f557d64935571f05390d"
 
 "@types/passport-local-mongoose@^4.0.11":
   version "4.0.11"
@@ -7913,8 +7909,8 @@ validate-npm-package-license@^3.0.1:
     spdx-expression-parse "^3.0.0"
 
 validator@^10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/validator/-/validator-10.0.0.tgz#f57664d1d4bee46291f76be95ed27733cc8156aa"
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-10.1.0.tgz#0ef24583c23556922f0228a8fe4ac5f1b4a08cd5"
 
 validator@^9.4.0:
   version "9.4.1"
