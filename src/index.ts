@@ -3,9 +3,13 @@ import http from 'http';
 import { join } from 'path';
 import createApp from './app';
 import { connect } from './db';
+import { createPoll, createUser } from './models';
 import { normalizePort, onError, onListening } from './utilities';
 
 dotenv.config({ path: join(__dirname, '../.env') });
+
+createUser();
+createPoll();
 
 const app = createApp();
 

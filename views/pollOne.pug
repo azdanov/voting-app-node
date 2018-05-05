@@ -23,7 +23,8 @@ block content
               if userOption
                 p.help.is-success You have already voted on this poll!
               unless user
-                p.help.is-info Please log in to participate in this poll!
+                p.help.is-info
+                  a(href="/login") Please log in to participate in this poll!
           hr
           h3.title.has-text-centered Author
           .columns

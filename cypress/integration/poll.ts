@@ -20,12 +20,12 @@ describe('/poll', () => {
 
   describe('/poll/:id', () => {
     beforeEach(() => {
-      cy.visit('/poll/all');
+      cy.visit('/poll');
     });
 
     it('should show the first poll when logged out', () => {
       cy.contains('Logout').click();
-      cy.visit('/poll/all');
+      cy.visit('/poll');
       cy.contains('View').click();
       cy
         .get('main form')
@@ -46,7 +46,7 @@ describe('/poll', () => {
         });
       });
 
-      cy.visit('/poll/all');
+      cy.visit('/poll');
       cy.contains('View').click();
       cy
         .get('main form')
@@ -55,9 +55,9 @@ describe('/poll', () => {
     });
   });
 
-  describe('/poll/all', () => {
+  describe('/poll', () => {
     beforeEach(() => {
-      cy.visit('/poll/all');
+      cy.visit('/poll');
     });
 
     it('should show all polls', () => {

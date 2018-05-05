@@ -75,11 +75,12 @@ export const pollOne = async (req: express.Request, res: express.Response) => {
   const Poll = mongoose.model('Poll');
 
   let userVote;
+
   if (req.user) {
     userVote = await Poll.findOne(
       {
         _id: id,
-        'votes.person': { $in: [req.user!._id] },
+        'votes.person': req.user!._id,
       },
       ['votes'],
     );
@@ -109,9 +110,13 @@ export const pollVote = async (req: express.Request, res: express.Response) => {
 
   const Poll = mongoose.model('Poll');
 
-  const userVote = await Poll.findOne({
-    'votes.person': { $in: [req.user!._id] },
-  });
+  const userVote = await Poll.findOne(
+    {
+      _id: id,
+      'votes.person': req.user!._id,
+    },
+    ['votes'],
+  );
 
   if (userVote) {
     req.flash('warning', 'You have already voted');

@@ -51,7 +51,7 @@ router.post(
   catchErrors(profileNewPasswordUpdate),
 );
 
-router.get('/poll/all', catchErrors(pollAll));
+router.get('/poll', catchErrors(pollAll));
 
 router.get('/poll/new', isLoggedIn, pollNew);
 router.post('/poll/new', isLoggedIn, validatePoll, catchErrors(pollAdd));
@@ -75,4 +75,11 @@ router.get('/test', (req, res) => {
   res.json({
     message: 'Hello World!',
   });
+});
+
+// 404 on fallthrough
+router.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const err = new Error('Not Found');
+  (<any>err).status = 404;
+  next(err);
 });
