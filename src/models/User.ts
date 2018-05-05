@@ -32,9 +32,9 @@ const userSchema = new Schema({
   },
 });
 
-userSchema.virtual('gravatar').get(function() {
+userSchema.virtual('avatar').get(function() {
   const hash = md5(this.email);
-  return `https://gravatar.com/avatar/${hash}?s=144`;
+  return `https://robohash.org/${hash}?set=set4&size=144x144&gravatar=hashed&bgset=bg1`;
 });
 
 userSchema.statics.authTwitterUser = function(accessToken, refreshToken, profile, done) {
