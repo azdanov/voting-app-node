@@ -11,13 +11,13 @@ export const initErrorHandlers = (app: Express) => {
 
     req.flash('error', 'Submission has been tampered with');
 
-    res.status(409);
-    res.redirect('/');
+    res.status(409).redirect('/');
   });
 
   // catch-all error handler
   app.use((err, req, res, next) => {
     logger.error('Unhandled error: ', err);
-    res.status(500).send(err);
+    const code = err.status || 500;
+    res.status(code).render('error', { code, title: `${code} Error` });
   });
 };
