@@ -46,16 +46,17 @@ const configFile = join(process.cwd(), 'cypress.json');
   });
 
   const users = await Promise.all(newUserPromises);
-  const usersTotal = _.random(users.length - 1);
 
   const newPoll = () => {
     const options = _.times(_.random(2, 10), () => _.capitalize(faker.random.words()));
+    const randomUserIndex = _.random(users.length - 1);
+
     return new Poll({
       options,
       name: _.capitalize(faker.random.words() + _.sample(['?', '.', '!'])),
-      author: users[usersTotal]._id,
+      author: users[randomUserIndex]._id,
       votes: users.reduce((acc, user) => {
-        if (Math.random() * 100 < 60) {
+        if (Math.random() * 100 < 65) {
           acc.push({ option: _.sample(options), person: user._id });
         }
         return acc;
