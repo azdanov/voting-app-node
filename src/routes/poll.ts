@@ -7,7 +7,7 @@ import { assignValidationsToSession, hashids } from '../utilities';
 
 export const pollAll = async (req: express.Request, res: express.Response) => {
   const Poll = mongoose.model('Poll');
-  const polls = await Poll.find({});
+  const polls = await Poll.find().sort('-created');
 
   res.render('pollAll', { polls, title: 'All Polls' });
 };
