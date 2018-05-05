@@ -1,10 +1,17 @@
 import typescript from 'rollup-plugin-typescript2';
+import commonjs from 'rollup-plugin-commonjs';
 
 export default {
   input: `src/index.ts`,
   output: [{ file: 'public/dist/index.js', format: 'cjs', sourcemap: true }],
-  plugins: [typescript()],
+  plugins: [
+    typescript(),
+    commonjs({ namedExports: { 'node_modules/dotenv/config.js': ['dotenv'] } }),
+  ],
   external: [
+    'fs',
+    'crypto',
+    'passport-twitter',
     'http',
     'body-parser',
     'connect-flash',
