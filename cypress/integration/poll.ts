@@ -49,9 +49,9 @@ describe('/poll', () => {
       cy.visit('/poll');
       cy.contains('View').click();
       cy
-        .get('main form')
+        .get('main .section form')
         .children()
-        .should('have.length', 3);
+        .should('have.length', 2);
     });
   });
 
