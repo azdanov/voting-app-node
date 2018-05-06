@@ -5,11 +5,11 @@ import mongoose from 'mongoose';
 
 import { assignValidationsToSession } from '../utilities';
 
-export const loginForm = (req: express.Request, res: express.Response) => {
+export const loginFormPage = (req: express.Request, res: express.Response) => {
   res.render('login', { title: 'Login' });
 };
 
-export const registerForm = (req: express.Request, res: express.Response) => {
+export const registerFormPage = (req: express.Request, res: express.Response) => {
   if (req.user) {
     res.redirect('/');
     return;
@@ -68,7 +68,7 @@ export const register = (
 
   if (!validations.isEmpty()) {
     assignValidationsToSession(req, validations);
-    return res.status(422).redirect('/register');
+    return res.redirect('/register');
   }
 
   const User = mongoose.model('User');

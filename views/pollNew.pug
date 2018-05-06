@@ -14,7 +14,7 @@ block content
       h1.title.has-text-centered New Poll
       .columns
         .column.is-half.is-offset-one-quarter.is-clearfix
-          form(action="/poll/new", method="POST")
+          form(action="/poll", method="POST")
             - const { values } = form;
             input(type="hidden", name="_csrf", value=csrfToken)
             - const value = values && values[name]
