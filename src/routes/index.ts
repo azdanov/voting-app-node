@@ -1,13 +1,17 @@
 import express from 'express';
 import passport from 'passport';
-import { catchErrors } from '../utilities';
+import { catchAsyncErrors } from '../utilities';
 import { isLoggedIn, login, logout } from './auth';
-import { homePage, privacy, terms } from './home';
+import { homePage, privacyPage, termsPage } from './home';
 import {
+  isPollOwner,
   pollAdd,
-  pollAll,
-  pollNew,
-  pollOne,
+  pollAllPage,
+  pollDelete,
+  pollEditPage,
+  pollNewPage,
+  pollOnePage,
+  pollUpdate,
   pollVote,
   validatePoll,
   validateVote,
@@ -21,43 +25,52 @@ import {
   validateNewPassword,
   validateUpdate,
 } from './profile';
-import { loginForm, register, registerForm, validateRegister } from './user';
+import { loginFormPage, register, registerFormPage, validateRegister } from './user';
 
 export const router = express.Router();
 export const callback = express.Router();
 
-router.get('/', catchErrors(homePage));
+router.get('/', catchAsyncErrors(homePage));
 
-router.get('/terms', terms);
-router.get('/privacy', privacy);
+router.get('/terms', termsPage);
+router.get('/privacy', privacyPage);
 
-router.get('/login', loginForm);
+router.get('/login', loginFormPage);
 router.post('/login', login);
 
-router.get('/register', registerForm);
+router.get('/register', registerFormPage);
 router.post('/register', validateRegister, register, login);
 
 router.post('/logout', isLoggedIn, logout);
 
 router.get('/profile', isLoggedIn, profilePage);
-router.post('/profile', isLoggedIn, validateUpdate, catchErrors(profileUpdate));
-router.delete('/profile', isLoggedIn, catchErrors(profileDelete));
+router.patch('/profile', isLoggedIn, validateUpdate, catchAsyncErrors(profileUpdate));
+router.delete('/profile', isLoggedIn, catchAsyncErrors(profileDelete));
 
 router.get('/profile/password', isLoggedIn, profileNewPasswordPage);
-router.post(
+router.patch(
   '/profile/password',
   isLoggedIn,
   validateNewPassword,
-  catchErrors(profileNewPasswordUpdate),
+  catchAsyncErrors(profileNewPasswordUpdate),
 );
 
-router.get('/poll', catchErrors(pollAll));
+router.get('/poll', catchAsyncErrors(pollAllPage));
+router.post('/poll', isLoggedIn, validatePoll, catchAsyncErrors(pollAdd));
 
-router.get('/poll/new', isLoggedIn, pollNew);
-router.post('/poll/new', isLoggedIn, validatePoll, catchErrors(pollAdd));
+router.get('/poll/new', isLoggedIn, pollNewPage);
+router.get('/poll/edit/:id', isLoggedIn, isPollOwner, catchAsyncErrors(pollEditPage));
 
-router.get('/poll/:id', catchErrors(pollOne));
-router.post('/poll/:id', isLoggedIn, validateVote, catchErrors(pollVote));
+router.get('/poll/:id', catchAsyncErrors(pollOnePage));
+router.patch('/poll/:id', isLoggedIn, validateVote, catchAsyncErrors(pollVote));
+router.put(
+  '/poll/:id',
+  isLoggedIn,
+  validatePoll,
+  isPollOwner,
+  catchAsyncErrors(pollUpdate),
+);
+router.delete('/poll/:id', isLoggedIn, isPollOwner, catchAsyncErrors(pollDelete));
 
 router.get('/auth/twitter/', passport.authenticate('twitter'));
 

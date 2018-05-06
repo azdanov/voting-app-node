@@ -4,7 +4,7 @@ import { check, validationResult } from 'express-validator/check';
 import { matchedData } from 'express-validator/filter';
 import mongoose from 'mongoose';
 
-import { assignValidationsToSession } from '../utilities';
+import { assignValidationsToSession, logger } from '../utilities';
 
 export const profilePage = (req: express.Request, res: express.Response) => {
   req.session!.form = { warnings: {}, values: {} };
@@ -35,7 +35,7 @@ export const profileUpdate = async (
   if (!validations.isEmpty()) {
     assignValidationsToSession(req, validations);
 
-    return res.status(422).redirect('/profile');
+    return res.redirect('/profile');
   }
 
   const User = mongoose.model('User');
@@ -90,7 +90,7 @@ export const profileNewPasswordUpdate = async (
   if (!validations.isEmpty()) {
     assignValidationsToSession(req, validations);
 
-    res.status(422).redirect('/profile/password');
+    res.redirect('/profile/password');
     return;
   }
 
@@ -105,7 +105,8 @@ export const profileNewPasswordUpdate = async (
     await user.changePassword(passwordOld, passwordNew);
     req.flash('success', 'Password successfully changed!');
   } catch (error) {
-    req.flash('error', 'Entered old password is incorrect!');
+    logger.error(error);
+    req.flash('error', 'Password change was invalid!');
     res.redirect('/profile/password');
     return;
   }

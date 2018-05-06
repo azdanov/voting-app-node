@@ -9,7 +9,6 @@ import { createPoll, createUser } from '../src/models';
 
 const readAsync = promisify(readFile);
 const configFile = join(process.cwd(), 'cypress.json');
-const voteChance = Math.random() * 100 < 65;
 
 (async () => {
   let config: any = await readAsync(configFile);
@@ -54,6 +53,8 @@ const voteChance = Math.random() * 100 < 65;
       name: _.capitalize(faker.random.words() + _.sample(['?', '.', '!'])),
       author: users[randomUserIndex]._id,
       votes: users.reduce((acc, user) => {
+        const voteChance = Math.random() * 100 < 65;
+
         if (voteChance) {
           acc.push({ option: _.sample(options), person: user._id });
         }

@@ -83,7 +83,6 @@ describe('/profile', () => {
                   cy.visit('/');
                   cy.contains('Logout');
 
-                  cy.exec('npm run db:reset');
                   cy.exec('npm run db:seed');
                 });
             });
@@ -98,7 +97,7 @@ describe('/profile', () => {
       cy.get('input[name="passwordNew"]').type(Cypress.env('password'));
       cy.get('input[name="passwordRepeat"]').type(`${Cypress.env('password')}{enter}`);
 
-      cy.get('.message').should('contain', 'Entered old password is incorrect');
+      cy.get('.message').should('contain', 'Password change was invalid!');
     });
 
     it('should not change password on with incorrect new password', () => {

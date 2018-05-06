@@ -12,7 +12,7 @@ mixin voteCard(polls)
                 - const charsInLine = 30;
                 - const pollName = poll.name.length > charsInLine ? poll.name.substring(0, charsInLine) + '...' : poll.name
                 p.title.is-4
-                  a.is-text.has-text-dark(href=`/poll/${poll.hashid}`)= pollName
+                  a.is-text.has-text-dark(href=`/poll/${poll.hashid}`)!= pollName
                 p.subtitle.is-7
                   = `By: ${poll.author.name} `
                   small= ` | ${poll.author.email}`

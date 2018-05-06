@@ -1,0 +1,34 @@
+extends _layout
+
+mixin field(label, type, placeholder, name, value = null)
+  .field
+    label.label= label
+      .control
+        input.input(type=type, placeholder=placeholder, name=name, value!=value, required)
+      if warning
+        p.help.is-danger= warning
+
+block content
+  .section
+    .container
+      h1.title.has-text-centered Editing Poll
+      .columns
+        .column.is-half.is-offset-one-quarter.is-clearfix
+          form(action= `/poll/${poll.hashid}?_method=PUT`, method="POST")
+            - const { values } = form;
+            input(type="hidden", name="_csrf", value=csrfToken)
+            - const value = values && values[name]
+            +field("Poll Name", "text", "Poll Name", "pollName", poll.name)
+            label.label Options
+              - const options = poll.options.reduce((string, option) => `${string}&#13;&#10;${option}`)
+              textarea.textarea(placeholder="Option 1\nOption 2\nOption 3", name="pollOptions", required)!= options
+              if warning
+                p.help.is-danger= warning
+              else
+                p.help.has-text-weight-light Each option must be on a separate line
+            hr
+            .field.is-grouped.is-pulled-right
+              .control
+                input.button.is-text(type="reset", value="Reset")
+              .control
+                input.button.is-primary(type="submit", value="Update")

@@ -5,15 +5,42 @@ import mongoose from 'mongoose';
 
 import { assignValidationsToSession, hashids } from '../utilities';
 
-export const pollAll = async (req: express.Request, res: express.Response) => {
+export const isPollOwner = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction,
+) => {
+  const id = hashids.decodeHex(req.params.id);
+  const Poll = mongoose.model('Poll');
+  const poll = await Poll.findById(id).select('author');
+
+  if ((<any>poll)!.author._id.equals(req.user!._id)) {
+    (<any>req).pollId = id;
+    next();
+    return;
+  }
+
+  req.flash('error', 'Must be an owner to edit this poll!');
+  res.redirect('back');
+};
+
+export const pollAllPage = async (req: express.Request, res: express.Response) => {
   const Poll = mongoose.model('Poll');
   const polls = await Poll.find().sort('-created');
 
   res.render('pollAll', { polls, title: 'All Polls' });
 };
 
-export const pollNew = (req: express.Request, res: express.Response) => {
+export const pollNewPage = (req: express.Request, res: express.Response) => {
   res.render('pollNew', { title: 'New Poll' });
+};
+
+export const pollEditPage = async (req: express.Request, res: express.Response) => {
+  const id = (<any>req).pollId;
+  const Poll = mongoose.model('Poll');
+  const poll = await Poll.findById(id).select('_id name options');
+
+  res.render('pollEdit', { poll, title: 'Editing Poll' });
 };
 
 export const validatePoll = [
@@ -40,7 +67,7 @@ export const pollAdd = async (
 
   if (!validations.isEmpty()) {
     assignValidationsToSession(req, validations);
-    return res.status(422).redirect('/poll/new');
+    return res.redirect('back');
   }
 
   const { pollName, pollOptions } = matchedData(req, { locations: ['body'] });
@@ -68,7 +95,76 @@ export const pollAdd = async (
   res.redirect('/poll/new');
 };
 
-export const pollOne = async (req: express.Request, res: express.Response) => {
+export const pollUpdate = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction,
+) => {
+  const validations = validationResult(req);
+
+  if (!validations.isEmpty()) {
+    assignValidationsToSession(req, validations);
+    return res.redirect('back');
+  }
+
+  const { pollName, pollOptions } = matchedData(req, { locations: ['body'] });
+
+  const id = (<any>req).pollId;
+  const regexp = new RegExp(/[^\r\n]+/g);
+  const options: string[] = pollOptions.match(regexp);
+
+  const Poll = mongoose.model('Poll');
+
+  try {
+    const poll = await Poll.findByIdAndUpdate(id, {
+      options,
+      name: pollName,
+      author: req.user!._id,
+      votes: [],
+    });
+
+    req.flash(
+      'success',
+      `Poll updated | <a href="/poll/${req.params.id}">View poll</a>`,
+    );
+  } catch (error) {
+    req.flash('error', `${error.errors.name.message || 'Poll update failed'}`);
+  }
+
+  res.redirect('back');
+};
+
+export const pollDelete = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction,
+) => {
+  const validations = validationResult(req);
+
+  if (!validations.isEmpty()) {
+    assignValidationsToSession(req, validations);
+    return res.redirect('back');
+  }
+
+  const { pollName, pollOptions } = matchedData(req, { locations: ['body'] });
+
+  const id = (<any>req).pollId;
+
+  const Poll = mongoose.model('Poll');
+
+  try {
+    const poll = await Poll.findByIdAndRemove(id);
+
+    req.flash('success', 'Poll deleted successfully');
+  } catch (error) {
+    req.flash('error', `${error.errors.name.message || 'Poll deletion failed'}`);
+    res.redirect('back');
+  }
+
+  res.redirect('/');
+};
+
+export const pollOnePage = async (req: express.Request, res: express.Response) => {
   const pollHashid = req.params.id;
   const id = hashids.decodeHex(pollHashid);
 
@@ -94,6 +190,9 @@ export const pollOne = async (req: express.Request, res: express.Response) => {
   // @ts-ignore
   const votes = await Poll.getTopStores(id);
   const poll = await Poll.findById(id);
+
+  res.locals.owner =
+    poll && req.user ? (<any>poll)!.author._id.equals(req.user!._id) : false;
 
   res.render('pollOne', { userVote, votes, poll, title: 'Poll' });
 };

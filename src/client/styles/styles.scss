@@ -36,3 +36,15 @@ body {
 form[action*='auth'] {
   display: inline-block;
 }
+
+.title > .button {
+  margin-left: 10px;
+}
+
+a:hover {
+  color: darken(#3273dc, 15);
+}
+
+.deletePoll {
+  display: inline-block;
+}

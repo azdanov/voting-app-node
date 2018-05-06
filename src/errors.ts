@@ -11,7 +11,7 @@ export const initErrorHandlers = (app: Express) => {
 
     req.flash('error', 'Submission has been tampered with');
 
-    res.status(409).redirect('/');
+    res.redirect('/');
   });
 
   // catch-all error handler
