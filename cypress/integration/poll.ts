@@ -34,7 +34,7 @@ describe('/poll', () => {
       cy.get('.help').should('contain', 'Please log in to participate in this poll!');
     });
 
-    it.only('should show the first poll when logged in', () => {
+    it('should show the first poll when logged in', () => {
       cy.visit('/login');
 
       cy.get('input[name="_csrf"]').then($input => {

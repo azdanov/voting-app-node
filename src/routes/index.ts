@@ -12,6 +12,7 @@ import {
   pollNewPage,
   pollOnePage,
   pollUpdate,
+  pollUserPage,
   pollVote,
   validatePoll,
   validateVote,
@@ -59,6 +60,7 @@ router.get('/poll', catchAsyncErrors(pollAllPage));
 router.post('/poll', isLoggedIn, validatePoll, catchAsyncErrors(pollAdd));
 
 router.get('/poll/new', isLoggedIn, pollNewPage);
+router.get('/poll/user/:id', catchAsyncErrors(pollUserPage));
 router.get('/poll/edit/:id', isLoggedIn, isPollOwner, catchAsyncErrors(pollEditPage));
 
 router.get('/poll/:id', catchAsyncErrors(pollOnePage));

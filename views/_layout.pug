@@ -34,7 +34,9 @@ html(lang="en")
                 .navbar-dropdown.is-boxed
                   a.navbar-item(href="/profile")
                     | Profile
-                  a.navbar-item(href="/poll/user")
+                  a.navbar-item(href= `/poll`)
+                    | All Polls
+                  a.navbar-item(href= `/poll/user/${user.hashid}`)
                     | User Polls
                   hr.navbar-divider
                   a.navbar-item(href="/poll/new")
@@ -67,8 +69,8 @@ html(lang="en")
       block content
         p This should not be visible!
     footer.footer
-      .columns
-        .column.is-8-desktop.is-offset-2-desktop
+      .columns.is-centered
+        .column.is-narrow
           .tabs.is-centered
             ul
               li
@@ -81,6 +83,9 @@ html(lang="en")
                   span.icon.is-small
                     span.fas.fa-user-secret(aria-hidden='true')
                   span Privacy Policy
+        .column.is-narrow
+          .tabs.is-centered
+            ul
               li
                 a.link.level-item.has-text-right(href="https://twitter.com/Implaier")
                   span.icon.is-small
@@ -91,6 +96,8 @@ html(lang="en")
                   span.icon.is-small
                     span.fab.fa-github(aria-hidden='true')
                   span Github
-      p.has-text-centered &copy; Voting App 2018
+      .columns.is-centered
+        .column
+          p.has-text-centered Voting App 2018
     block scripts
       script(src="/dist/client.js")

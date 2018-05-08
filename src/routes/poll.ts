@@ -27,8 +27,18 @@ export const isPollOwner = async (
 export const pollAllPage = async (req: express.Request, res: express.Response) => {
   const Poll = mongoose.model('Poll');
   const polls = await Poll.find().sort('-created');
+  const count = await Poll.count({});
 
-  res.render('pollAll', { polls, title: 'All Polls' });
+  res.render('pollAll', { count, polls, title: 'All Polls' });
+};
+
+export const pollUserPage = async (req: express.Request, res: express.Response) => {
+  const userId = hashids.decodeHex(req.params.id);
+  const Poll = mongoose.model('Poll');
+  const polls = await Poll.find({ author: userId }).sort('-created');
+  const count = await Poll.count({ author: userId });
+
+  res.render('pollUser', { count, polls, title: 'User Polls' });
 };
 
 export const pollNewPage = (req: express.Request, res: express.Response) => {
@@ -190,6 +200,8 @@ export const pollOnePage = async (req: express.Request, res: express.Response) =
   // @ts-ignore
   const votes = await Poll.getTopStores(id);
   const poll = await Poll.findById(id);
+
+  console.log(poll);
 
   res.locals.owner =
     poll && req.user ? (<any>poll)!.author._id.equals(req.user!._id) : false;

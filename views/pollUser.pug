@@ -1,0 +1,8 @@
+extends _layout
+
+include mixins/_voteCard
+include mixins/_feed
+
+block content
+  - const author = polls[0].author.name;
+  +feed(author, count)

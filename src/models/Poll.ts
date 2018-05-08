@@ -21,6 +21,10 @@ Poll.virtual('hashid').get(function() {
   return hashids.encodeHex(this._id);
 });
 
+Poll.virtual('authorHashid').get(function() {
+  return hashids.encodeHex(this.author._id);
+});
+
 function deDuplicate(next) {
   this.options = uniq(this.options);
   next();
