@@ -6,7 +6,7 @@ import { connect } from './db';
 import { createPoll, createUser } from './models';
 import { normalizePort, onError, onListening } from './utilities';
 
-dotenv.config({ path: join(__dirname, '../.env') });
+dotenv.config({ path: join(process.cwd(), '.env') });
 
 createUser();
 createPoll();

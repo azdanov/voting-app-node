@@ -9,6 +9,7 @@ export default {
     commonjs({ namedExports: { 'node_modules/dotenv/config.js': ['dotenv'] } }),
   ],
   external: [
+    'util',
     'fs',
     'crypto',
     'passport-twitter',
