@@ -1,0 +1,20 @@
+if paginate.hasPreviousPages || paginate.hasNextPages(pageCount)
+  nav.pagination(role='navigation' aria-label='pagination')
+    if pages
+      ul.pagination-list
+        each page in pages
+          li
+            - const currentPage = paginate.page === page.number ? 'is-current' : ''
+            a.pagination-link(aria-label= `Page ${page.number}`, href=page.url, aria-current='page', class= currentPage)= page.number
+    - const previousHref = paginate.hasPreviousPages && paginate.href(true)
+    - const nextHref = paginate.hasNextPages(pageCount) && paginate.href()
+    a.pagination-previous(title='Previous Page', href= previousHref, disabled= !paginate.hasPreviousPages)
+      if paginate.hasPreviousPages
+        span.icon
+          span.fas.fa-caret-left.fa-fw
+      span Previous
+    a.button.pagination-next(title='Next Page', href= nextHref, disabled= !paginate.hasNextPages(pageCount))
+      span Next
+      if paginate.hasNextPages(pageCount)
+        span.icon
+          span.fas.fa-caret-right.fa-fw

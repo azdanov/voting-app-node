@@ -1,3 +1,5 @@
+import { all } from 'bluebird';
+import { getArrayPages } from 'express-paginate';
 import express from 'express';
 import { check, validationResult } from 'express-validator/check';
 import { matchedData, sanitize } from 'express-validator/filter';
@@ -26,9 +28,50 @@ export const isPollOwner = async (
 
 export const pollAllPage = async (req: express.Request, res: express.Response) => {
   const Poll = mongoose.model('Poll');
-  const polls = await Poll.find().sort('-created');
+  // @ts-ignore
+  const [polls, pollsCount] = await all([
+    Poll.find()
+      .sort('-created')
+      .limit(req.query.limit)
+      // @ts-ignore
+      .skip(req.skip)
+      .exec(),
+    Poll.count({}),
+  ]);
 
-  res.render('pollAll', { polls, title: 'All Polls' });
+  const pageCount = Math.ceil(pollsCount / req.query.limit);
+
+  res.render('pollAll', {
+    pageCount,
+    pollsCount,
+    polls,
+    pages: getArrayPages(req)(5, pageCount, req.query.page),
+    title: 'All Polls',
+  });
+};
+
+export const pollUserPage = async (req: express.Request, res: express.Response) => {
+  const userId = hashids.decodeHex(req.params.id);
+  const Poll = mongoose.model('Poll');
+  // @ts-ignore
+  const [polls, pollsCount] = await all([
+    Poll.find({ author: userId })
+      .sort('-created')
+      .limit(req.query.limit)
+      // @ts-ignore
+      .skip(req.skip),
+    Poll.count({ author: userId }),
+  ]);
+
+  const pageCount = Math.ceil(pollsCount / req.query.limit);
+
+  res.render('pollUser', {
+    pageCount,
+    pollsCount,
+    polls,
+    pages: getArrayPages(req)(5, pageCount, req.query.page),
+    title: 'User Polls',
+  });
 };
 
 export const pollNewPage = (req: express.Request, res: express.Response) => {
@@ -188,8 +231,7 @@ export const pollOnePage = async (req: express.Request, res: express.Response) =
   }
 
   // @ts-ignore
-  const votes = await Poll.getTopStores(id);
-  const poll = await Poll.findById(id);
+  const [votes, poll] = await all([Poll.getTopStores(id), Poll.findById(id)]);
 
   res.locals.owner =
     poll && req.user ? (<any>poll)!.author._id.equals(req.user!._id) : false;
