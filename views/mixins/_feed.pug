@@ -1,0 +1,14 @@
+include _voteCard
+
+mixin feed(name, count)
+  .section
+    .container
+      h1.title.has-text-centered= name ? `${name}'s Polls` : 'All Polls'
+      p.subtitle.has-text-centered= `Total: ${count}`
+      .section
+        .columns
+          .column.is-10.is-offset-1
+            if polls.length
+              +voteCard(polls)
+            else
+              p.has-text-centered No polls are currently available

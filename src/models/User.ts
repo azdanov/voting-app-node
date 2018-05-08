@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import passportLocalMongoose from 'passport-local-mongoose';
 import validator from 'validator';
 import crypto from 'crypto';
-import { logger } from '../utilities';
+import { hashids, logger } from '../utilities';
 
 const mongooseBeautifulUniqueValidation = require('mongoose-beautiful-unique-validation');
 
@@ -35,6 +35,10 @@ const userSchema = new Schema({
 userSchema.virtual('avatar').get(function() {
   const hash = md5(this.email);
   return `https://robohash.org/${hash}?set=set4&size=144x144&gravatar=hashed&bgset=bg1`;
+});
+
+userSchema.virtual('hashid').get(function() {
+  return hashids.encodeHex(this._id);
 });
 
 userSchema.statics.authTwitterUser = function(accessToken, refreshToken, profile, done) {
