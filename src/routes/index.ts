@@ -93,8 +93,11 @@ router.get('/test', (req, res) => {
 });
 
 // 404 on fallthrough
-router.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const err = new Error('Not Found');
-  (<any>err).status = 404;
-  next(err);
-});
+router.get(
+  '*',
+  (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    const err = new Error('Not Found');
+    (<any>err).status = 404;
+    next(err);
+  },
+);

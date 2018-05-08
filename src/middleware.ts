@@ -12,6 +12,7 @@ import mongoose from 'mongoose';
 import morgan from 'morgan';
 import passport from 'passport';
 import path from 'path';
+import * as paginate from 'express-paginate';
 
 import { callback } from './routes';
 import { logStream, pugHelpers } from './utilities';
@@ -27,6 +28,7 @@ export const initMiddleware = (app: Express) => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(cors());
+  app.use(paginate.middleware());
   app.use(connectFlash());
 
   app.set('views', path.join(process.cwd(), 'views'));
