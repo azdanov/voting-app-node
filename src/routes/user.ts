@@ -1,9 +1,18 @@
+import { promisify } from 'bluebird';
+import crypto from 'crypto';
 import express from 'express';
 import { check, validationResult } from 'express-validator/check';
-import { sanitize } from 'express-validator/filter';
+import { matchedData, sanitize } from 'express-validator/filter';
 import mongoose from 'mongoose';
 
 import { assignValidationsToSession } from '../utilities';
+import { send } from '../utilities/mail';
+import moment = require('moment');
+
+let passwordLength = 5;
+if (process.env.PASSWORD_LENGTH) {
+  passwordLength = +process.env.PASSWORD_LENGTH;
+}
 
 export const loginFormPage = (req: express.Request, res: express.Response) => {
   res.render('login', { title: 'Login' });
@@ -17,11 +26,6 @@ export const registerFormPage = (req: express.Request, res: express.Response) =>
 
   res.render('register', { title: 'Register' });
 };
-
-let passwordLength = 5;
-if (process.env.PASSWORD_LENGTH) {
-  passwordLength = +process.env.PASSWORD_LENGTH;
-}
 
 export const validateRegister = [
   check('email', 'Email is incorrect')
@@ -77,4 +81,114 @@ export const register = (
   User.register(user, req.body.password, () => {
     next();
   });
+};
+
+export const passwordRequestPage = (req: express.Request, res: express.Response) => {
+  res.render('passwordRequest', { title: 'Request Password' });
+};
+
+export const validateRequest = [
+  check('email', 'Email is incorrect')
+    .isEmail()
+    .withMessage('Must be a correct email')
+    .normalizeEmail()
+    .custom((email, { req }) => {
+      const User = mongoose.model('User');
+      return User.findOne({ email: req.body.email }).then(user => {
+        if (!user) {
+          throw new Error('No account with that email exists.');
+        }
+      });
+    }),
+  sanitize('email')
+    .normalizeEmail()
+    .trim(),
+];
+
+export const passwordRequest = async (req: express.Request, res: express.Response) => {
+  const validations = validationResult(req);
+
+  if (!validations.isEmpty()) {
+    assignValidationsToSession(req, validations);
+    return res.redirect('/password/request');
+  }
+
+  const User = mongoose.model('User');
+  const { email } = matchedData(req, { locations: ['body'] });
+
+  const user = await User.findOne({ email });
+
+  (<any>user).resetPasswordToken = crypto.randomBytes(48).toString('hex');
+  (<any>user).resetPasswordExpiration = moment()
+    .add('15', 'minutes')
+    .valueOf();
+
+  await user!.save();
+  const resetURL = `http://${req.headers.host}/password/reset/${
+    (<any>user).resetPasswordToken
+  }`;
+
+  await send({
+    user,
+    resetURL,
+    filename: 'passwordResetEmail',
+    subject: 'Password Reset',
+  });
+
+  req.flash('success', `You have been emailed a password reset link.`);
+  res.redirect('/login');
+};
+
+export const passwordResetPage = (req: express.Request, res: express.Response) => {
+  res.render('passwordReset', { token: req.params.token, title: 'Reset Password' });
+};
+
+export const validateReset = [
+  check(
+    'password',
+    `Password must be at least ${passwordLength} characters long and contain one number`,
+  )
+    .exists()
+    .isLength({ min: passwordLength })
+    .matches(new RegExp(`^(?=.*?[A-Za-z])(?=.*?[^a-zA-Z\s]).{${passwordLength},}$`)),
+  check('passwordRepeat', 'Passwords do not match')
+    .exists()
+    .custom((passwordRepeat, { req }) => passwordRepeat === req.body.password),
+];
+
+export const passwordReset = async (req, res) => {
+  const validations = validationResult(req);
+
+  if (!validations.isEmpty()) {
+    assignValidationsToSession(req, validations);
+    return res.redirect(`/password/reset/${req.body.token}`);
+  }
+
+  const User = mongoose.model('User');
+
+  const user = await User.findOne({
+    resetPasswordToken: req.body.token,
+    resetPasswordExpiration: { $gt: moment.now() },
+  });
+
+  if (!user) {
+    req.flash('error', 'Password reset is invalid or has expired.');
+    return res.redirect('/login');
+  }
+
+  const setPassword: (password: string) => void = promisify((<any>user).setPassword, {
+    context: user,
+  });
+
+  await setPassword(req.body.password);
+
+  (<any>user).resetPasswordToken = null;
+  (<any>user).resetPasswordExpiration = null;
+
+  const updatedUser = await user.save();
+
+  await req.login(updatedUser, () => {});
+
+  req.flash('success', 'Success! Your password has been reset!');
+  res.redirect('/');
 };

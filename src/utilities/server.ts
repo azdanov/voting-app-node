@@ -1,4 +1,5 @@
 import http from 'http';
+import { AddressInfo } from 'net';
 import { logger } from './logger';
 
 export function normalizePort(val: number | string): number | string | boolean {
@@ -18,7 +19,7 @@ export function onError(this: http.Server, error: NodeJS.ErrnoException): void {
     throw error;
   }
 
-  const address = this.address();
+  const address = this.address() as AddressInfo;
 
   const bind = address && address.port ? address.port : 'Port';
 
@@ -37,6 +38,6 @@ export function onError(this: http.Server, error: NodeJS.ErrnoException): void {
 }
 
 export function onListening(this: http.Server): void {
-  const { address, port } = this.address();
+  const { address, port } = this.address() as AddressInfo;
   logger.info(`Server is listening at http://${address}:${port}`);
 }
