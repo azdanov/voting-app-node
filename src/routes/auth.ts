@@ -8,6 +8,13 @@ export const login = passport.authenticate('local', {
   successFlash: 'You are now logged in!',
 });
 
+export const twitter = passport.authenticate('twitter', {
+  failureRedirect: '/login',
+  failureFlash: 'Failed Login!',
+  successRedirect: '/',
+  successFlash: 'You are now logged in via Twitter!',
+});
+
 export const logout = (req: express.Request, res: express.Response) => {
   req.logout();
   req.flash('success', 'You are now logged out!');

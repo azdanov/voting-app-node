@@ -1,5 +1,5 @@
 import md5 from 'md5';
-import mongoose from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import passportLocalMongoose from 'passport-local-mongoose';
 import validator from 'validator';
 import crypto from 'crypto';
@@ -23,6 +23,8 @@ const userSchema = new Schema({
     required: 'Please provide your name',
     trim: true,
   },
+  resetPasswordToken: String,
+  resetPasswordExpiration: Date,
   twitterProvider: {
     type: {
       id: String,

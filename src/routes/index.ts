@@ -1,7 +1,7 @@
 import express from 'express';
 import passport from 'passport';
 import { catchAsyncErrors } from '../utilities';
-import { isLoggedIn, login, logout } from './auth';
+import { isLoggedIn, login, logout, twitter } from './auth';
 import { homePage, privacyPage, termsPage } from './home';
 import {
   isPollOwner,
@@ -26,7 +26,18 @@ import {
   validateNewPassword,
   validateUpdate,
 } from './profile';
-import { loginFormPage, register, registerFormPage, validateRegister } from './user';
+import {
+  loginFormPage,
+  passwordRequest,
+  passwordRequestPage,
+  passwordReset,
+  passwordResetPage,
+  register,
+  registerFormPage,
+  validateRegister,
+  validateRequest,
+  validateReset,
+} from './user';
 
 export const router = express.Router();
 export const callback = express.Router();
@@ -56,6 +67,12 @@ router.patch(
   catchAsyncErrors(profileNewPasswordUpdate),
 );
 
+router.get('/password/request', passwordRequestPage);
+router.post('/password/request', validateRequest, catchAsyncErrors(passwordRequest));
+
+router.get('/password/reset/:token', passwordResetPage);
+router.post('/password/reset', validateReset, catchAsyncErrors(passwordReset));
+
 router.get('/poll', catchAsyncErrors(pollAllPage));
 router.post('/poll', isLoggedIn, validatePoll, catchAsyncErrors(pollAdd));
 
@@ -76,14 +93,7 @@ router.delete('/poll/:id', isLoggedIn, isPollOwner, catchAsyncErrors(pollDelete)
 
 router.get('/auth/twitter/', passport.authenticate('twitter'));
 
-callback.get(
-  '/auth/twitter/return/',
-  passport.authenticate('twitter', { failureRedirect: '/login' }),
-  (req, res) => {
-    req.flash('success', 'You are now logged in via Twitter!');
-    res.redirect('/');
-  },
-);
+callback.get('/auth/twitter/return/', twitter);
 
 // sanity check route
 router.get('/test', (req, res) => {
@@ -96,7 +106,7 @@ router.get('/test', (req, res) => {
 router.get(
   '*',
   (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    const err = new Error('Not Found');
+    const err = new Error(req.headers.host + req.url + ' Not Found');
     (<any>err).status = 404;
     next(err);
   },

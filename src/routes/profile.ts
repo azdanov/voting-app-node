@@ -59,7 +59,7 @@ export const profileDelete = async (req: express.Request, res: express.Response)
 };
 
 export const profileNewPasswordPage = (req: express.Request, res: express.Response) => {
-  res.render('newPassword', { title: 'New Password' });
+  res.render('passwordNew', { title: 'New Password' });
 };
 
 export const validateNewPassword = [

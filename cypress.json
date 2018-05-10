@@ -7,16 +7,14 @@
     "database": "mongodb://localhost/voting-app-testing",
     "email": "testing@test.com",
     "name": "testing",
-    "email1": "testing1@test.com",
-    "name1": "testing1",
-    "email2": "testing2@test.com",
-    "name2": "testing2",
     "wrongName": "testing123",
     "password": "test123",
     "passwordRepeat": "test123",
     "wrongEmail": "wrong@wrong",
     "wrongPassword": "wrong",
-    "wrongPasswordRepeat": "wrong12"
+    "wrongPasswordRepeat": "wrong12",
+    "etherealEmail": "t5hrwxtmlbkw2d2v@ethereal.email",
+    "etherealPassword": "3ETa9eQCMKRNpT7FMF"
   },
   "projectId": "g8m64m",
   "videoRecording": false
