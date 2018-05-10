@@ -124,18 +124,27 @@ export const passwordRequest = async (req: express.Request, res: express.Respons
     .valueOf();
 
   await user!.save();
-  const resetURL = `http://${req.headers.host}/password/reset/${
+  let resetUrl: null | string = `http://${req.headers.host}/password/reset/${
     (<any>user).resetPasswordToken
   }`;
 
   await send({
     user,
-    resetURL,
+    resetUrl,
     filename: 'passwordResetEmail',
     subject: 'Password Reset',
   });
 
-  req.flash('success', `You have been emailed a password reset link.`);
+  if (process.env.NODE_ENV !== 'test') {
+    resetUrl = null;
+  }
+
+  req.flash(
+    'success',
+    resetUrl
+      ? `<a href="${resetUrl}">Visit</a>`
+      : 'You have been emailed a password reset link.',
+  );
   res.redirect('/login');
 };
 
