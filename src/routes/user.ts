@@ -3,11 +3,11 @@ import crypto from 'crypto';
 import express from 'express';
 import { check, validationResult } from 'express-validator/check';
 import { matchedData, sanitize } from 'express-validator/filter';
+import moment from 'moment';
 import mongoose from 'mongoose';
 
 import { assignValidationsToSession } from '../utilities';
 import { send } from '../utilities/mail';
-import moment = require('moment');
 
 let passwordLength = 5;
 if (process.env.PASSWORD_LENGTH) {
