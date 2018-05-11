@@ -6,7 +6,7 @@ import { matchedData, sanitize } from 'express-validator/filter';
 import moment from 'moment';
 import mongoose from 'mongoose';
 
-import { assignValidationsToSession } from '../utilities';
+import { assignValidationsToSession, logger } from '../utilities';
 import { send } from '../utilities/mail';
 
 let passwordLength = 5;
@@ -135,7 +135,7 @@ export const passwordRequest = async (req: express.Request, res: express.Respons
     subject: 'Password Reset',
   });
 
-  console.log('node_env: ', process.env.NODE_ENV);
+  logger.log('node_env: ', process.env.NODE_ENV || 'empty');
 
   if (process.env.NODE_ENV !== 'test') {
     resetUrl = null;
