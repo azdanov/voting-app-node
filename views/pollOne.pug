@@ -24,7 +24,7 @@ block content
                     select(name="vote")
                       option Please choose:
                       each option in poll.options
-                        option(value=option, required, selected= (option === userOption))= option
+                        option(value=option, required, selected= (option === userOption))!= option
                 .control
                   input.button.is-primary(type="submit", value="Vote", disabled= (!user || userOption))
               if userOption

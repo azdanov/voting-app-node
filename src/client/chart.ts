@@ -1,6 +1,12 @@
 import Chart from 'chart.js';
 import palette from './palette.js';
 
+function decodeEntity(option) {
+  const elem = document.createElement('textarea');
+  elem.innerHTML = option;
+  return elem.value;
+}
+
 export const initChart = () => {
   const context: any = document.getElementById('results');
   if (context) {
@@ -9,7 +15,9 @@ export const initChart = () => {
 
     const { data, labels } = options.reduce(
       (acc, option) => {
-        acc.labels.push(option);
+        const decoded = decodeEntity(option);
+
+        acc.labels.push(decoded);
         votes.hasOwnProperty(option) ? acc.data.push(votes[option]) : acc.data.push(0);
 
         return acc;

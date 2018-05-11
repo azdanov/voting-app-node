@@ -124,7 +124,8 @@ export const passwordRequest = async (req: express.Request, res: express.Respons
     .valueOf();
 
   await user!.save();
-  let resetUrl: null | string = `http://${req.headers.host}/password/reset/${
+
+  const resetUrl: null | string = `http://${req.headers.host}/password/reset/${
     (<any>user).resetPasswordToken
   }`;
 

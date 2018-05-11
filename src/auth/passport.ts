@@ -17,7 +17,10 @@ export function setupPassport() {
         consumerSecret: process.env.TWITTER_SECRET || '',
         passReqToCallback: true,
         includeEmail: true,
-        callbackURL: process.env.TWITTER_CALLBACK || '',
+        callbackURL:
+          process.env.NODE_ENV === 'test'
+            ? process.env.TWITTER_CALLBACK_TEST || ''
+            : process.env.TWITTER_CALLBACK || '',
       },
       (req, accessToken, refreshToken, profile, done) => {
         // @ts-ignore
