@@ -135,6 +135,8 @@ export const passwordRequest = async (req: express.Request, res: express.Respons
     subject: 'Password Reset',
   });
 
+  console.log('node_env: ', process.env.NODE_ENV);
+
   if (process.env.NODE_ENV !== 'test') {
     resetUrl = null;
   }
