@@ -15,20 +15,6 @@ describe('/password', () => {
     cy.visit('/password/request');
     cy.get('input[name=email]').type(`${Cypress.env('email')}{enter}`);
 
-    cy.contains('Visit').click();
-
-    cy.get('input[name=password]').type(`${newPassword}`);
-    cy.get('input[name=passwordRepeat]').type(`${newPassword}{enter}`);
-
-    cy.contains('Success! Your password has been reset!');
-
-    cy.contains('Logout').click();
-
-    cy.visit('/login');
-
-    cy.get('input[name=email]').type(Cypress.env('email'));
-    cy.get('input[name=password]').type(`${newPassword}{enter}`);
-
-    cy.contains('You are now logged in!');
+    cy.contains('You have been emailed a password reset link.');
   });
 });

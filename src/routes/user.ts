@@ -135,18 +135,7 @@ export const passwordRequest = async (req: express.Request, res: express.Respons
     subject: 'Password Reset',
   });
 
-  logger.log('node_env: ', process.env.NODE_ENV || 'empty');
-
-  if (process.env.NODE_ENV !== 'test') {
-    resetUrl = null;
-  }
-
-  req.flash(
-    'success',
-    resetUrl
-      ? `<a href="${resetUrl}">Visit</a>`
-      : 'You have been emailed a password reset link.',
-  );
+  req.flash('success', 'You have been emailed a password reset link.');
   res.redirect('/login');
 };
 
