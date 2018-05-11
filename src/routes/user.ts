@@ -136,7 +136,10 @@ export const passwordRequest = async (req: express.Request, res: express.Respons
     subject: 'Password Reset',
   });
 
-  req.flash('success', 'You have been emailed a password reset link.');
+  req.flash(
+    'success',
+    'You have been emailed a password reset link. \r\nPlease visit this website <a href="https://ethereal.email/login">https://ethereal.email/login</a>.\r\nAnd login using these credentials: <strong>t5hrwxtmlbkw2d2v@ethereal.email</strong> : <strong>3ETa9eQCMKRNpT7FMF</strong>',
+  );
   res.redirect('/login');
 };
 
