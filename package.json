@@ -18,6 +18,7 @@
   },
   "scripts": {
     "clean": "rimraf ./public/dist ./build",
+    "postinstall": "yarn build",
     "build": "npm-run-all --parallel build:**",
     "start": "node ./public/dist/index.js",
     "develop": "cross-env NODE_ENV=test npm-run-all --parallel watch:**",
