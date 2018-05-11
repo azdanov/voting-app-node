@@ -5,6 +5,8 @@
 
 # Voting App Node
 
+![Website Screenshot](https://user-images.githubusercontent.com/6123841/39922452-e3eff4e4-5527-11e8-842a-f50927bfa4e4.png)
+
 A voting app full stack project for freeCodeCamp
 
 Made with the help of typescript, express.js, mongodb, mongoose and chart.js. For full list of
