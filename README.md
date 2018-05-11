@@ -5,7 +5,7 @@
 
 # Voting App Node
 
-![Website Screenshot](https://user-images.githubusercontent.com/6123841/39922452-e3eff4e4-5527-11e8-842a-f50927bfa4e4.png)
+[![Website Screenshot](https://user-images.githubusercontent.com/6123841/39922452-e3eff4e4-5527-11e8-842a-f50927bfa4e4.png)](https://node-voting-app.herokuapp.com/)
 
 A voting app full stack project for freeCodeCamp
 
