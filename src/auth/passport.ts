@@ -17,7 +17,7 @@ export function setupPassport() {
         consumerSecret: process.env.TWITTER_SECRET || '',
         passReqToCallback: true,
         includeEmail: true,
-        callbackURL: 'http://localhost:3000/auth/twitter/return',
+        callbackURL: 'https://node-voting-app.herokuapp.com/auth/twitter/return',
       },
       (req, accessToken, refreshToken, profile, done) => {
         // @ts-ignore
