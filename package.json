@@ -73,6 +73,7 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^5.0.0",
     "passport-twitter": "^1.0.4",
+    "pm2": "^2.10.3",
     "pug": "^2.0.3",
     "request": "^2.85.0",
     "validator": "^10.1.0",

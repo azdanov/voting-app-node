@@ -1,1 +1,1 @@
-web: node ./public/dist/index.js
+web: node pm2
