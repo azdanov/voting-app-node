@@ -29,7 +29,7 @@ html(lang="en")
           .navbar-end
             if user
               .navbar-item.has-dropdown.is-hoverable
-                a.navbar-link(href="/profile")
+                a.navbar-link(href="#", aria-haspopup="true")
                   | #{user.name}
                 .navbar-dropdown.is-boxed
                   a.navbar-item(href="/profile")
@@ -76,12 +76,12 @@ html(lang="en")
               li
                 a.link.level-item.has-text-right(href="/terms")
                   span.icon.is-small
-                    span.fas.fa-file-alt(aria-hidden='true')
+                    span.fas.fa-file-alt(aria-hidden="true")
                   span Terms of Service
               li
                 a.link.level-item.has-text-right(href="/privacy")
                   span.icon.is-small
-                    span.fas.fa-user-secret(aria-hidden='true')
+                    span.fas.fa-user-secret(aria-hidden="true")
                   span Privacy Policy
         .column.is-narrow
           .tabs.is-centered
@@ -89,12 +89,12 @@ html(lang="en")
               li
                 a.link.level-item.has-text-right(href="https://twitter.com/Implaier")
                   span.icon.is-small
-                    span.fab.fa-twitter(aria-hidden='true')
+                    span.fab.fa-twitter(aria-hidden="true")
                   span Twitter
               li
                 a.link.level-item.has-text-right(href="https://github.com/azdanov/voting-app-node")
                   span.icon.is-small
-                    span.fab.fa-github(aria-hidden='true')
+                    span.fab.fa-github(aria-hidden="true")
                   span Github
       .columns.is-centered
         .column
