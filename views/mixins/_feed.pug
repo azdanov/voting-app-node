@@ -1,9 +1,9 @@
 include _voteCard
 
-mixin feed(polls, count)
+mixin feed(polls, count, title)
   .section
     .container
-      h1.title.has-text-centered= user ? `${user.name}'s Polls` : 'All Polls'
+      h1.title.has-text-centered= title
       p.subtitle.has-text-centered= `Total: ${count}`
       .section
         .columns
