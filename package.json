@@ -18,7 +18,7 @@
   },
   "scripts": {
     "clean": "rimraf ./public/dist ./build",
-    "postinstall": "yarn build",
+    "postinstall": "if test \"$NODE_ENV\" = \"production\" ; then yarn build ; fi",
     "build": "npm-run-all --parallel build:**",
     "start": "node ./public/dist/index.js",
     "develop": "cross-env NODE_ENV=test npm-run-all --parallel watch:**",
