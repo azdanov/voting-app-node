@@ -1,11 +1,11 @@
+# Voting App Node
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/azdanov/voting-app-node.svg)](https://greenkeeper.io/)
 [![Build Status](https://travis-ci.org/azdanov/voting-app-node.svg?branch=master)](https://travis-ci.org/azdanov/voting-app-node)
 [![Cypress.io tests](https://img.shields.io/badge/cypress.io-tests-green.svg)](https://cypress.io)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![made with: bulma](https://img.shields.io/badge/made%20with-bulma-01d1b2.svg)](https://github.com/jgthms/bulma)
 
-# Voting App Node
-
-[![Greenkeeper badge](https://badges.greenkeeper.io/azdanov/voting-app-node.svg)](https://greenkeeper.io/)
 
 [![Website Screenshot](https://user-images.githubusercontent.com/6123841/40017539-581a1f92-57c2-11e8-8700-7a95494e9209.png)](https://node-voting-app.herokuapp.com/)
 
