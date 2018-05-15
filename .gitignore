@@ -173,6 +173,9 @@ $RECYCLE.BIN/
 # Various
 .rpt2_cache/
 build/
-public/dist/
+public/client.js
+public/client.map
+public/index.js
+public/index.map
 .idea/
 .cache/

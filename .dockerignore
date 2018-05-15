@@ -1,6 +1,9 @@
 node_modules/
-build/
-public/dist/
+build/client.js
+build/client.map
+build/index.js
+build/index.map
+public/
 .rpt2_cache/
 .vscode/
 .idea/

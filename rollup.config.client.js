@@ -4,7 +4,7 @@ import commonjs from 'rollup-plugin-commonjs';
 
 export default {
   input: `src/client/client.ts`,
-  output: [{ file: 'public/dist/client.js', format: 'iife', sourcemap: true }],
+  output: [{ file: 'public/client.js', format: 'iife', sourcemap: true }],
   plugins: [
     resolve({
       browser: true,

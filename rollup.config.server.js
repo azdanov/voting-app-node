@@ -3,7 +3,7 @@ import commonjs from 'rollup-plugin-commonjs';
 
 export default {
   input: `src/index.ts`,
-  output: [{ file: 'public/dist/index.js', format: 'cjs', sourcemap: true }],
+  output: [{ file: 'build/index.js', format: 'cjs', sourcemap: true }],
   plugins: [
     typescript(),
     commonjs({ namedExports: { 'node_modules/dotenv/config.js': ['dotenv'] } }),

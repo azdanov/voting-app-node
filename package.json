@@ -17,16 +17,16 @@
     ]
   },
   "scripts": {
-    "clean": "rimraf ./public/dist ./build",
+    "clean": "rimraf ./public/client.* ./public/styles.* ./build",
     "postinstall": "if test \"$NODE_ENV\" = \"production\" ; then yarn build ; fi",
     "build": "npm-run-all --parallel build:**",
-    "start": "node ./public/dist/index.js",
+    "start": "node ./build/index.js",
     "develop": "cross-env NODE_ENV=test npm-run-all --parallel watch:**",
-    "build:server": "parcel build src/index.ts --out-dir public/dist --target node",
-    "build:client": "parcel build src/client/client.ts --out-dir public/dist --target browser",
-    "build:styles": "parcel build src/client/styles/styles.scss --out-dir public/dist --target browser",
-    "watch:styles": "parcel watch src/client/styles/styles.scss --out-dir public/dist --target browser",
-    "watch:client": "parcel watch src/client/client.ts --out-dir public/dist --target browser",
+    "build:server": "parcel build src/index.ts --out-dir build --target node",
+    "build:client": "parcel build src/client/client.ts --out-dir public --target browser",
+    "build:styles": "parcel build src/client/styles/styles.scss --out-dir public --target browser",
+    "watch:styles": "parcel watch src/client/styles/styles.scss --out-dir public --target browser",
+    "watch:client": "parcel watch src/client/client.ts --out-dir public --target browser",
     "watch:nodemon": "nodemon",
     "format": "prettier --write src/**/*.{js,ts,json,css,scss}",
     "test:e2e": "cypress run",
@@ -40,7 +40,7 @@
     "ci": "run-p ci:**",
     "ci:server": "rollup --config rollup.config.server.js",
     "ci:client": "rollup --config rollup.config.client.js",
-    "ci:scss": "node-sass --source-map true --output public/dist/ src/client/styles/styles.scss"
+    "ci:scss": "node-sass --source-map true --output public/ src/client/styles/styles.scss"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.8",

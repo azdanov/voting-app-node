@@ -4,6 +4,7 @@ import connectFlash from 'connect-flash';
 import cors from 'cors';
 import csurf from 'csurf';
 import express, { Express } from 'express';
+import * as paginate from 'express-paginate';
 import expressSession from 'express-session';
 import helmet from 'helmet';
 import methodOverride from 'method-override';
@@ -12,7 +13,6 @@ import mongoose from 'mongoose';
 import morgan from 'morgan';
 import passport from 'passport';
 import path from 'path';
-import * as paginate from 'express-paginate';
 
 import { callback } from './routes';
 import { logStream, pugHelpers } from './utilities';

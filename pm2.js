@@ -8,7 +8,7 @@ console.log(`You should see ${instances} random numbers logged.`);
 
 var options = {
   name: 'Voting App',
-  script: './public/dist/index.js',
+  script: './public/index.js',
   exec_mode: 'cluster',
   instances: instances,
   max_memory_restart: `${maxMemory}M`,
