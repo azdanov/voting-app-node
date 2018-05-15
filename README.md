@@ -5,6 +5,8 @@
 
 # Voting App Node
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/azdanov/voting-app-node.svg)](https://greenkeeper.io/)
+
 [![Website Screenshot](https://user-images.githubusercontent.com/6123841/40017539-581a1f92-57c2-11e8-8700-7a95494e9209.png)](https://node-voting-app.herokuapp.com/)
 
 A voting app full stack project for freeCodeCamp
