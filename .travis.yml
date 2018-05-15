@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "9"
+  - "10"
 env:
   global:
     - DATABASE_TEST="mongodb://localhost/voting-app-testing"
@@ -13,5 +13,6 @@ before_script:
   - yarn ci
   - yarn start --silent &
 script:
+  - git diff --name-only $TRAVIS_COMMIT_RANGE | grep -qE '^(src/|cypress/|views/|test/|\.travis.yml)' || exit 0
   - yarn test --maxWorkers 4
   - $(npm bin)/cypress run --config videoRecording=true --record --key 1153505b-f176-448c-ba80-2d46068d5c56
