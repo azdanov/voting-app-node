@@ -6,7 +6,6 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![made with: bulma](https://img.shields.io/badge/made%20with-bulma-01d1b2.svg)](https://github.com/jgthms/bulma)
 
-
 [![Website Screenshot](https://user-images.githubusercontent.com/6123841/40017539-581a1f92-57c2-11e8-8700-7a95494e9209.png)](https://node-voting-app.herokuapp.com/)
 
 A voting app full stack project for freeCodeCamp
@@ -18,8 +17,17 @@ For demo purposes [https://ethereal.email/](https://ethereal.email/) is used for
 
 ## Install
 
-1. Run `cp .env.example .env` inside project directory.
-2. Adjust settings for your own environment inside `.env`
+1.  Run `cp .env.example .env` inside project directory.
+2.  Adjust settings for your own environment inside `.env`
+
+## Docker
+
+Docker is used for managing MongoDB on local machine for development.
+
+* `docker-compose up -d` to start in detached mode.
+* `docker ps` to show running containers.
+* `docker-compose stop` to stop all the services.
+* `docker-compose down --rmi local --volumes` to remove all created docker assets for this project.
 
 ## Scripts
 
