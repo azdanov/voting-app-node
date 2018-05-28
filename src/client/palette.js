@@ -762,7 +762,7 @@ var palette = (function() {
     h *= 6;
     var s = opt_s === void 0 ? 1 : clamp(opt_s);
     var v = opt_v === void 0 ? 1 : clamp(opt_v);
-    var x = v * (1 - s * Math.abs(h % 2 - 1));
+    var x = v * (1 - s * Math.abs((h % 2) - 1));
     var m = v * (1 - s);
     switch (Math.floor(h) % 6) {
       case 0:
