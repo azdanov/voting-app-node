@@ -179,3 +179,8 @@ public/index.js
 public/index.map
 .idea/
 .cache/
+
+# User
+public/styles.css
+public/styles.js
+public/styles.map

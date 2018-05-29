@@ -7,7 +7,7 @@ export const connect = async (database: string | null) => {
     process.exit(1);
   } else {
     await mongoose.connect(database);
-    mongoose.Promise = global.Promise;
+    mongoose.Promise = Promise;
     mongoose.connection.on('error', error => {
       logger.error('Problems connecting with the database', error);
     });

@@ -10,6 +10,8 @@ import { createPoll, createUser } from '../src/models';
 const readAsync = promisify(readFile);
 const configFile = join(process.cwd(), 'cypress.json');
 
+mongoose.Promise = Promise;
+
 (async () => {
   let config: any = await readAsync(configFile);
   config = JSON.parse(config).env;
