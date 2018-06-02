@@ -101,7 +101,7 @@
     "@types/hashids": "^1.0.30",
     "@types/helmet": "^0.0.37",
     "@types/html-to-text": "^1.4.31",
-    "@types/jest": "^22.2.3",
+    "@types/jest": "^23.0.0",
     "@types/lodash": "^4.14.109",
     "@types/md5": "^2.1.32",
     "@types/method-override": "^0.0.31",
