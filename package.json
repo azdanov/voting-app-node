@@ -99,7 +99,7 @@
     "@types/express-session": "^1.15.9",
     "@types/faker": "^4.1.2",
     "@types/hashids": "^1.0.30",
-    "@types/helmet": "^0.0.37",
+    "@types/helmet": "^0.0.38",
     "@types/html-to-text": "^1.4.31",
     "@types/jest": "^23.0.0",
     "@types/lodash": "^4.14.109",
