@@ -131,9 +131,9 @@
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.0.8.tgz#d27600e9ba2f371e08695d90a0fe0408d89c7be7"
 
-"@types/chart.js@^2.7.20":
-  version "2.7.20"
-  resolved "https://registry.yarnpkg.com/@types/chart.js/-/chart.js-2.7.20.tgz#c872de9b50dd93e46e3edb7a49bc392fa7f9c82c"
+"@types/chart.js@^2.7.21":
+  version "2.7.21"
+  resolved "https://registry.yarnpkg.com/@types/chart.js/-/chart.js-2.7.21.tgz#b66257f8c3caf37d663c7804db5e0d51ad459690"
 
 "@types/compression@^0.0.36":
   version "0.0.36"
@@ -182,7 +182,7 @@
     "@types/node" "*"
     "@types/range-parser" "*"
 
-"@types/express-session@^1.15.9":
+"@types/express-session@^1.15.10":
   version "1.15.10"
   resolved "https://registry.yarnpkg.com/@types/express-session/-/express-session-1.15.10.tgz#d0ae7d3d2fee26512574306333ac272a37430c86"
   dependencies:
@@ -190,7 +190,7 @@
     "@types/express" "*"
     "@types/node" "*"
 
-"@types/express@*", "@types/express@^4.11.1":
+"@types/express@*", "@types/express@^4.16.0":
   version "4.16.0"
   resolved "https://registry.yarnpkg.com/@types/express/-/express-4.16.0.tgz#6d8bc42ccaa6f35cf29a2b7c3333cb47b5a32a19"
   dependencies:
@@ -290,9 +290,13 @@
   dependencies:
     "@types/express" "*"
 
-"@types/node@*", "@types/node@^10.3.0":
+"@types/node@*":
   version "10.3.1"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.3.1.tgz#51092fbacaed768a122a293814474fbf6e5e8b6d"
+
+"@types/node@^10.3.2":
+  version "10.3.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.3.2.tgz#3840ec6c12556fdda6e0e6d036df853101d732a4"
 
 "@types/nodemailer@^4.6.0":
   version "4.6.0"
@@ -7309,9 +7313,9 @@ rollup-pluginutils@^2.0.1:
     estree-walker "^0.5.2"
     micromatch "^2.3.11"
 
-rollup@^0.60.0:
-  version "0.60.0"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.60.0.tgz#2c4acaaf3d8a858a81ff740d6253e21eeb58ff21"
+rollup@^0.60.1:
+  version "0.60.1"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.60.1.tgz#07cb66153f1541d5f7e82b8393b405c31647dae9"
   dependencies:
     "@types/estree" "0.0.39"
     "@types/node" "*"
