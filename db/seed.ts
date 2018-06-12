@@ -34,7 +34,7 @@ mongoose.Promise = Promise;
 
   const userInfos: { email: string; name: string }[] = [];
 
-  _.times(6, () => {
+  _.times(1, () => {
     userInfos.push({ email: faker.internet.email(), name: faker.name.findName() });
   });
 
@@ -67,7 +67,7 @@ mongoose.Promise = Promise;
 
   const polls: Promise<Document>[] = [];
 
-  _.times(15, () => polls.push(newPoll()));
+  _.times(2, () => polls.push(newPoll()));
 
   await all(polls);
 
