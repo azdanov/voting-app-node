@@ -1,18 +1,14 @@
-import { Logger, transports } from 'winston';
+import { createLogger, transports } from 'winston';
 
 const { NODE_ENV } = process.env;
 
 const level =
   NODE_ENV === 'test' ? 'error' : NODE_ENV === 'production' ? 'info' : 'debug';
 
-export const logger = new Logger({
+export const logger = createLogger({
   transports: [
     new transports.Console({
       level,
-      colorize: true,
-      timestamp: true,
-      prettyPrint: true,
-      label: 'voting-app',
     }),
   ],
 });
