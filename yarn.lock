@@ -131,7 +131,7 @@
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.0.8.tgz#d27600e9ba2f371e08695d90a0fe0408d89c7be7"
 
-"@types/chart.js@^2.7.22":
+"@types/chart.js@^2.7.23":
   version "2.7.23"
   resolved "https://registry.yarnpkg.com/@types/chart.js/-/chart.js-2.7.23.tgz#d21831d294ed0918a5bc313d9ff42806563deb0c"
 
@@ -284,7 +284,7 @@
     "@types/mongodb" "*"
     "@types/node" "*"
 
-"@types/mongoose@^5.0.17":
+"@types/mongoose@^5.0.18":
   version "5.0.18"
   resolved "https://registry.yarnpkg.com/@types/mongoose/-/mongoose-5.0.18.tgz#4cb671e870f8312df86d734f9563a5c1b9d1ec6e"
   dependencies:
@@ -298,7 +298,7 @@
   dependencies:
     "@types/express" "*"
 
-"@types/node@*", "@types/node@^10.3.4":
+"@types/node@*", "@types/node@^10.3.5":
   version "10.3.5"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.3.5.tgz#8423cdf6e6fb83433e489900d7600d3b61c8260c"
 
@@ -7394,7 +7394,7 @@ rollup-pluginutils@^2.0.1:
     estree-walker "^0.5.2"
     micromatch "^2.3.11"
 
-rollup@^0.61.0:
+rollup@^0.61.2:
   version "0.61.2"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.61.2.tgz#30a953736964683a5b8ea952b137a393d84e6302"
   dependencies:
@@ -8234,9 +8234,9 @@ ts-jest@^22.4.6:
     source-map-support "^0.5.5"
     yargs "^11.0.0"
 
-ts-node@^6.1.1:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-6.2.0.tgz#65a0ae2acce319ea4fd7ac8d7c9f1f90c5da6baf"
+ts-node@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-7.0.0.tgz#a94a13c75e5e1aa6b82814b84c68deb339ba7bff"
   dependencies:
     arrify "^1.0.0"
     buffer-from "^1.1.0"
