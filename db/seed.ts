@@ -34,7 +34,7 @@ mongoose.Promise = Promise;
 
   const userInfos: { email: string; name: string }[] = [];
 
-  _.times(1, () => {
+  _.times(2, () => {
     userInfos.push({ email: faker.internet.email(), name: faker.name.findName() });
   });
 
