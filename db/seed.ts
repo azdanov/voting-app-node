@@ -1,4 +1,4 @@
-import { all, promisify } from 'bluebird';
+import { promisify } from 'bluebird';
 import faker from 'faker';
 import { readFile } from 'fs';
 import _ from 'lodash';
@@ -44,7 +44,7 @@ mongoose.Promise = Promise;
 
   newUserPromises.push(testUser);
 
-  const users = await all(newUserPromises);
+  const users = await Promise.all(newUserPromises);
 
   const newPoll = () => {
     const options = _.times(_.random(2, 10), () => _.capitalize(faker.random.words()));
@@ -69,7 +69,7 @@ mongoose.Promise = Promise;
 
   _.times(2, () => polls.push(newPoll()));
 
-  await all(polls);
+  await Promise.all(polls);
 
   console.log('Random data seeded successfully!');
   await mongoose.connection.close();
