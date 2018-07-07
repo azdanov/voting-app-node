@@ -1,18 +1,21 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "es2015",
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "lib": ["esnext", "dom"],
+    "module": "esnext",
+    "moduleResolution": "node",
     "noImplicitAny": false,
     "noImplicitThis": false,
-    "moduleResolution": "node",
-    "sourceMap": true,
     "outDir": "build",
     "removeComments": true,
+    "sourceMap": true,
     "strict": true,
-    "allowSyntheticDefaultImports": true,
-    "lib": ["es2015", "dom"]
+    "target": "es2018"
   },
+  "exclude": ["node_modules"],
   "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "parcelTsPluginOptions": {
+    "transpileOnly": false
+  }
 }

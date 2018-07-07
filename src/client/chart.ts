@@ -1,5 +1,5 @@
 import Chart from 'chart.js';
-import palette from './palette.js';
+import palette from './palette';
 
 function decodeEntity(option) {
   const elem = document.createElement('textarea');
@@ -35,7 +35,7 @@ export const initChart = () => {
           {
             data,
             label: 'Number of Votes',
-            backgroundColor: palette('mpn65', data.length).map(hex => '#' + hex),
+            backgroundColor: palette.slice(0, data.length),
           },
         ],
       },
