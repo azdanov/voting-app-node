@@ -6,7 +6,10 @@ export const connect = async (database: string | null) => {
     logger.error('Please specify a database to connect to.');
     process.exit(1);
   } else {
-    await mongoose.connect(database);
+    await mongoose.connect(
+      database,
+      { useNewUrlParser: true },
+    );
     mongoose.Promise = Promise;
     mongoose.connection.on('error', error => {
       logger.error('Problems connecting with the database', error);

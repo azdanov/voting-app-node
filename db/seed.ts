@@ -16,7 +16,10 @@ mongoose.Promise = Promise;
   let config: any = await readAsync(configFile);
   config = JSON.parse(config).env;
 
-  await mongoose.connect(config.database);
+  await mongoose.connect(
+    config.database,
+    { useNewUrlParser: true },
+  );
   await mongoose.connection.db.dropDatabase();
 
   createUser();

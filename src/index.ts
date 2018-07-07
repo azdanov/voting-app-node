@@ -13,14 +13,22 @@ createPoll();
 
 const app = createApp();
 
-app.set('port', normalizePort(process.env.PORT || 3000));
+const port = normalizePort(process.env.PORT || 3000);
 
-let db = process.env.DATABASE;
+app.set('port', port);
+
+let db = process.env.DATABASE || '';
 if (process.env.NODE_ENV === 'test') {
-  db = process.env.DATABASE_TEST;
+  db = process.env.DATABASE_TEST || '';
 }
 
-(async () => await connect(db || null))();
+(async () => {
+  try {
+    await connect(db);
+  } catch (err) {
+    console.log(err);
+  }
+})();
 
 const server = http.createServer(app);
 server.listen(app.get('port'));
