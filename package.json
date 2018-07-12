@@ -71,7 +71,7 @@
     "juice": "^4.3.1",
     "lodash": "^4.17.10",
     "md5": "^2.2.1",
-    "method-override": "^2.3.10",
+    "method-override": "^3.0.0",
     "mockingoose": "^2.10.1",
     "moment": "^2.22.2",
     "mongoose": "5.2.3",
