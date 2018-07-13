@@ -7,6 +7,7 @@ import faEnvelope from '@fortawesome/fontawesome-free-solid/faEnvelope';
 import faFileAlt from '@fortawesome/fontawesome-free-solid/faFileAlt';
 import faKey from '@fortawesome/fontawesome-free-solid/faKey';
 import faSignInAlt from '@fortawesome/fontawesome-free-solid/faSignInAlt';
+import faSignOutAlt from '@fortawesome/fontawesome-free-solid/faSignOutAlt';
 import faUser from '@fortawesome/fontawesome-free-solid/faUser';
 import faUserSecret from '@fortawesome/fontawesome-free-solid/faUserSecret';
 import { initBurger } from './burger';
@@ -19,6 +20,7 @@ library.add(
   faUser,
   faUserSecret,
   faSignInAlt,
+  faSignOutAlt,
   faAt,
   faKey,
   faEnvelope,

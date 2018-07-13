@@ -1,4 +1,4 @@
-import { promisify } from 'bluebird';
+import bluebird, { promisify } from 'bluebird';
 import { readFile } from 'fs';
 import mongoose from 'mongoose';
 import { join } from 'path';
@@ -6,7 +6,7 @@ import { join } from 'path';
 const readAsync = promisify(readFile);
 const configFile = join(process.cwd(), 'cypress.json');
 
-mongoose.Promise = Promise;
+mongoose.Promise = bluebird;
 
 (async () => {
   let config: any = await readAsync(configFile);

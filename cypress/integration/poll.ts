@@ -27,8 +27,7 @@ describe('/poll', () => {
       cy.contains('Logout').click();
       cy.visit('/poll');
       cy.contains('View').click();
-      cy
-        .get('main form')
+      cy.get('main form')
         .children()
         .should('have.length', 3);
       cy.get('.help').should('contain', 'Please log in to participate in this poll!');
@@ -108,8 +107,7 @@ describe('/poll', () => {
 
       cy.contains('View poll').click();
 
-      cy
-        .get('select')
+      cy.get('select')
         .select(option)
         .parent()
         .parent()
@@ -124,12 +122,10 @@ describe('/poll', () => {
       cy.get('.input').should('have.have.attr', 'value', pollName);
       cy.get('.textarea').should('have.have.text', pollOptions);
 
-      cy
-        .get('input[name="pollName"]')
+      cy.get('input[name="pollName"]')
         .clear()
         .type(newPollName);
-      cy
-        .get('textarea[name="pollOptions"]')
+      cy.get('textarea[name="pollOptions"]')
         .clear()
         .type(newPollOptions);
 
@@ -138,12 +134,10 @@ describe('/poll', () => {
       cy.contains('View poll').click();
 
       cy.get('h1.title').should('have.text', newPollName);
-      cy
-        .get('select')
+      cy.get('select')
         .children()
         .should('have.have.length', 5);
-      cy
-        .get('select')
+      cy.get('select')
         .select(newOption)
         .parent()
         .parent()
@@ -193,8 +187,7 @@ describe('/poll', () => {
       cy.get('.message').should('contain', 'Poll submitted');
       cy.contains('View poll').click();
 
-      cy
-        .get('select')
+      cy.get('select')
         .select(option)
         .parent()
         .parent()

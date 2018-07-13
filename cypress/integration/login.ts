@@ -11,8 +11,7 @@ describe('/login', () => {
     cy.title().should('include', 'Login');
     cy.get('form').within(() => {
       cy.get('input').should('have.length', 5);
-      cy
-        .get('input:first')
+      cy.get('input:first')
         .should('not.be.visible')
         .and($input => {
           expect($input.attr('name')).to.equal('_csrf');
@@ -25,8 +24,7 @@ describe('/login', () => {
   it('should be able to login on /login', () => {
     cy.get('input[name=email]').type(Cypress.env('email'));
     cy.get('input[name=password]').type(`${Cypress.env('password')}{enter}`);
-    cy
-      .get('.message')
+    cy.get('.message')
       .should('be.visible')
       .within($message => {
         expect($message).to.contain('Success');
@@ -42,8 +40,7 @@ describe('/login', () => {
   it('should not be able to login on /login with unregistered user', () => {
     cy.get('input[name=email]').type(Cypress.env('wrongEmail'));
     cy.get('input[name=password]').type(`${Cypress.env('wrongPassword')}{enter}`);
-    cy
-      .get('.message')
+    cy.get('.message')
       .should('be.visible')
       .within($message => {
         expect($message).to.contain('Error');
@@ -57,8 +54,7 @@ describe('/login', () => {
   it('should not be able to login on /login with registered user and wrong password', () => {
     cy.get('input[name=email]').type(Cypress.env('email'));
     cy.get('input[name=password]').type(`${Cypress.env('wrongPassword')}{enter}`);
-    cy
-      .get('.message')
+    cy.get('.message')
       .should('be.visible')
       .within($message => {
         expect($message).to.contain('Error');

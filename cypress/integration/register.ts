@@ -24,8 +24,7 @@ describe('/register', () => {
     cy.get('input[name=password]').type(`${Cypress.env('password')}`);
     cy.get('input[name=passwordRepeat]').type(`${Cypress.env('passwordRepeat')}{enter}`);
 
-    cy
-      .get('.message')
+    cy.get('.message')
       .should('be.visible')
       .within($message => {
         expect($message).to.contain('Success');
@@ -45,8 +44,7 @@ describe('/register', () => {
     cy.get('input[name=password]').type(`${Cypress.env('password')}`);
     cy.get('input[name=passwordRepeat]').type(`${Cypress.env('passwordRepeat')}{enter}`);
 
-    cy
-      .get('.message')
+    cy.get('.message')
       .should('be.visible')
       .within($message => {
         expect($message).to.contain('Error');
@@ -75,8 +73,7 @@ describe('/register', () => {
     cy.get('input[name=password]').type(`${Cypress.env('password')}`);
     cy.get('input[name=passwordRepeat]').type(`${Cypress.env('passwordRepeat')}{enter}`);
 
-    cy
-      .get('.message')
+    cy.get('.message')
       .should('be.visible')
       .within($message => {
         expect($message).to.contain('Error');
@@ -101,8 +98,7 @@ describe('/register', () => {
     cy.get('input[name=password]').type(`${Cypress.env('wrongPassword')}`);
     cy.get('input[name=passwordRepeat]').type(`${Cypress.env('passwordRepeat')}{enter}`);
 
-    cy
-      .get('.message')
+    cy.get('.message')
       .should('be.visible')
       .within($message => {
         expect($message).to.contain('Error');
@@ -129,8 +125,7 @@ describe('/register', () => {
     cy.get('input[name=password]').type(`${Cypress.env('wrongPassword')}`);
     cy.get('input[name=passwordRepeat]').type(`${Cypress.env('wrongPassword')}{enter}`);
 
-    cy
-      .get('.message')
+    cy.get('.message')
       .should('be.visible')
       .within($message => {
         expect($message).to.contain('Error');

@@ -1,4 +1,4 @@
-import { promisify } from 'bluebird';
+import bluebird, { promisify, all } from 'bluebird';
 import faker from 'faker';
 import { readFile } from 'fs';
 import _ from 'lodash';
@@ -10,7 +10,9 @@ import { createPoll, createUser } from '../src/models';
 const readAsync = promisify(readFile);
 const configFile = join(process.cwd(), 'cypress.json');
 
-mongoose.Promise = Promise;
+mongoose.Promise = bluebird;
+
+faker.seed(123);
 
 (async () => {
   let config: any = await readAsync(configFile);
@@ -20,6 +22,7 @@ mongoose.Promise = Promise;
     config.database,
     { useNewUrlParser: true },
   );
+
   await mongoose.connection.db.dropDatabase();
 
   createUser();
@@ -30,24 +33,29 @@ mongoose.Promise = Promise;
 
   const register = promisify(User.register, { context: User });
 
-  const testUser = register(
+  const userInfos: { email: string; name: string }[] = [];
+
+  _.times(4, () => {
+    userInfos.push({ email: faker.internet.email(), name: faker.name.findName() });
+  });
+
+  const newUserPromises = userInfos.map(async user => {
+    return register(new User(user), faker.internet.password());
+  });
+
+  const testUser: any = register(
     new User({ email: config.email, name: config.name }),
     config.password,
   );
 
-  const userInfos: { email: string; name: string }[] = [];
-
-  _.times(2, () => {
-    userInfos.push({ email: faker.internet.email(), name: faker.name.findName() });
-  });
-
-  const newUserPromises = userInfos.map(user => {
-    return register(new User(user), faker.internet.password());
-  });
-
   newUserPromises.push(testUser);
 
-  const users = await Promise.all(newUserPromises);
+  let users;
+  try {
+    users = await all(newUserPromises);
+  } catch (err) {
+    throw err;
+  }
 
   const newPoll = () => {
     const options = _.times(_.random(2, 10), () => _.capitalize(faker.random.words()));
@@ -70,9 +78,13 @@ mongoose.Promise = Promise;
 
   const polls: Promise<Document>[] = [];
 
-  _.times(2, () => polls.push(newPoll()));
+  _.times(4, () => polls.push(newPoll()));
 
-  await Promise.all(polls);
+  try {
+    await all(polls);
+  } catch (err) {
+    throw err;
+  }
 
   console.log('Random data seeded successfully!');
   await mongoose.connection.close();

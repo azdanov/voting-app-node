@@ -8,15 +8,13 @@ describe('/profile', () => {
 
     cy.get('input[name="_csrf"]').then($input => {
       const loginCsrfToken = $input.attr('value');
-      cy
-        .request('POST', '/login', {
-          email: Cypress.env('email'),
-          password: Cypress.env('password'),
-          _csrf: loginCsrfToken,
-        })
-        .then(() => {
-          cy.visit('/profile');
-        });
+      cy.request('POST', '/login', {
+        email: Cypress.env('email'),
+        password: Cypress.env('password'),
+        _csrf: loginCsrfToken,
+      }).then(() => {
+        cy.visit('/profile');
+      });
     });
   });
 
@@ -43,12 +41,10 @@ describe('/profile', () => {
     cy.get('input[name="name"]').type(' new@{enter}');
 
     cy.get('input[name="name"]').should('be.empty');
-    cy
-      .get('.message')
-      .should(
-        'contain',
-        'Please enter only unaccented alphabetical letters, A–Z or a–z',
-      );
+    cy.get('.message').should(
+      'contain',
+      'Please enter only unaccented alphabetical letters, A–Z or a–z',
+    );
   });
 
   describe('/profile/password', () => {
@@ -62,8 +58,7 @@ describe('/profile', () => {
       cy.get('input[name="passwordRepeat"]').type(`${newPassword}{enter}`);
       cy.get('.message').should('contain', 'Password successfully changed');
 
-      cy
-        .contains('Logout')
+      cy.contains('Logout')
         .siblings('[name="_csrf"]')
         .then($input => {
           const logoutCsrfToken = $input.attr('value');
@@ -73,18 +68,15 @@ describe('/profile', () => {
 
             cy.get('input[name="_csrf"]').then($input => {
               const loginCsrfToken = $input.attr('value');
-              cy
-                .request('POST', '/login', {
-                  email: Cypress.env('email'),
-                  password: newPassword,
-                  _csrf: loginCsrfToken,
-                })
-                .then(() => {
-                  cy.visit('/');
-                  cy.contains('Logout');
-
-                  cy.exec('npm run db:seed');
-                });
+              cy.request('POST', '/login', {
+                email: Cypress.env('email'),
+                password: newPassword,
+                _csrf: loginCsrfToken,
+              }).then(() => {
+                cy.visit('/');
+                cy.contains('Logout');
+                cy.exec('npm run db:seed');
+              });
             });
           });
         });
@@ -107,12 +99,10 @@ describe('/profile', () => {
       cy.get('input[name="passwordNew"]').type('nope');
       cy.get('input[name="passwordRepeat"]').type('nope{enter}');
 
-      cy
-        .get('.message')
-        .should(
-          'contain',
-          'Password must be at least 5 characters long and contain one number',
-        );
+      cy.get('.message').should(
+        'contain',
+        'Password must be at least 5 characters long and contain one number',
+      );
     });
 
     it('should not change password on with incorrect repeat password', () => {
@@ -136,16 +126,14 @@ describe('/profile', () => {
 
       cy.get('input[name="_csrf"]').then($input => {
         const csrfToken = $input.attr('value');
-        cy
-          .request('POST', '/login', {
-            email: Cypress.env('email'),
-            password: Cypress.env('password'),
-            _csrf: csrfToken,
-          })
-          .then(() => {
-            cy.visit('/profile');
-            cy.get('.message').should('contain', 'You must be logged in to do that');
-          });
+        cy.request('POST', '/login', {
+          email: Cypress.env('email'),
+          password: Cypress.env('password'),
+          _csrf: csrfToken,
+        }).then(() => {
+          cy.visit('/profile');
+          cy.get('.message').should('contain', 'You must be logged in to do that');
+        });
       });
     });
   });
