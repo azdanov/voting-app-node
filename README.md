@@ -31,18 +31,20 @@ Docker is used for managing MongoDB on local machine for development.
 
 ## Scripts
 
+I used [pnpm](https://github.com/pnpm/pnpm) for this project. Any other package manager will work.
+
 ### Building
 
-* `yarn run build` for production (using parcel-bundler)
-* `yarn run ci` for ci environments or as a backup build system (using rollup / node-sass)
-* `yarn run develop` for development (using ts-node)
+* `pnpm run build` for production (using parcel-bundler)
+* `pnpm run ci` for ci environments or as a backup build system (using rollup / node-sass)
+* `pnpm run develop` for development (using ts-node)
 
 ### Testing
 
-* `yarn run test:e2e:open` for end-to-end testing with cypress (make sure the app is accessible on localhost)
-* `yarn run test` for jest unit tests
+* `pnpm run test:e2e:open` for end-to-end testing with cypress (make sure the app is accessible on localhost)
+* `pnpm run test` for jest unit tests
 
 ### Database
 
-* `yarn run db:seed` for seeding database with mock data
-* `yarn run db:reset` for deleting test database
+* `pnpm run db:seed` for seeding database with mock data
+* `pnpm run db:reset` for deleting test database
