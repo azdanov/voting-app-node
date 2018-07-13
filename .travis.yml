@@ -17,10 +17,10 @@ before_install:
 install:
   - pnpm install --shamefully-flatten
 before_script:
-  - pnpm build
+  - pnpm run build
   - pnpm start --silent &
 script:
-  - pnpm test --maxWorkers 4
+  - pnpm run test --maxWorkers 4
   - $(pnpm bin)/cypress run --record --key 1153505b-f176-448c-ba80-2d46068d5c56
 before_cache:
   - pnpm store prune
