@@ -20,7 +20,7 @@ before_script:
   - pnpm run build
   - pnpm start --silent &
 script:
-  - pnpm run test --maxWorkers 4
-  - $(pnpm bin)/cypress run --record --key 1153505b-f176-448c-ba80-2d46068d5c56
+  - npm test
+  - $(pnpm bin)/cypress run --key 1153505b-f176-448c-ba80-2d46068d5c56
 before_cache:
   - pnpm store prune

@@ -34,7 +34,7 @@
     "start": "node ./build/index.js",
     "test:e2e:open": "cypress open",
     "test:e2e": "cypress run",
-    "test": "jest",
+    "test": "jest --maxWorkers 4",
     "watch:client": "parcel watch src/client/client.ts --out-dir public",
     "watch:nodemon": "nodemon",
     "watch:styles": "parcel watch src/client/styles/styles.scss --out-dir public"
