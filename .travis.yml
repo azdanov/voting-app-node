@@ -17,7 +17,7 @@ before_install:
 install:
   - pnpm install --shamefully-flatten
 before_script:
-  - pnpm run ci
+  - pnpm build
   - pnpm start --silent &
 script:
   - pnpm test --maxWorkers 4

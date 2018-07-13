@@ -181,6 +181,6 @@ public/index.map
 .cache/
 
 # User
-public/styles.css
-public/styles.js
-public/styles.map
+public/**/*.css
+public/**/*.js
+public/**/*.map
