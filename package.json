@@ -10,11 +10,6 @@
   "engines": {
     "node": ">=9.0.0"
   },
-  "greenkeeper": {
-    "ignore": [
-      "parcel-bundler"
-    ]
-  },
   "lint-staged": {
     "src/**/*.{ts,js,json,css,scss}": [
       "npm run format",
@@ -22,10 +17,11 @@
     ]
   },
   "scripts": {
-    "build:client": "parcel build src/client/client.ts --out-dir public --target browser",
+    "build:client": "parcel build src/client/client.ts --out-dir public",
     "build:server": "parcel build src/index.ts --out-dir build --target node",
-    "build:styles": "parcel build src/client/styles/styles.scss --out-dir public --target browser",
+    "build:styles": "parcel build src/client/styles/styles.scss --no-source-maps --out-dir public",
     "build": "npm-run-all --parallel build:**",
+    "postbuild": "npm run purgecss",
     "clean": "rimraf ./public/styles.* ./public/*.js ./public/*.map ./build",
     "db:reset": "ts-node --project tsconfig.dev.json ./db/reset.ts",
     "db:seed": "ts-node --project tsconfig.dev.json ./db/seed.ts",
@@ -34,13 +30,14 @@
     "postinstall": "if test \"$NODE_ENV\" = \"production\" ; then npm build ; fi",
     "prebuild": "npm run clean",
     "precommit": "lint-staged",
+    "purgecss": "purgecss -c purgecss.config.js -o public",
     "start": "node ./build/index.js",
     "test:e2e:open": "cypress open",
     "test:e2e": "cypress run",
     "test": "jest",
-    "watch:client": "parcel watch src/client/client.ts --out-dir public --target browser",
+    "watch:client": "parcel watch src/client/client.ts --out-dir public",
     "watch:nodemon": "nodemon",
-    "watch:styles": "parcel watch src/client/styles/styles.scss --out-dir public --target browser"
+    "watch:styles": "parcel watch src/client/styles/styles.scss --out-dir public"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.8",
@@ -127,6 +124,7 @@
     "parcel-bundler": "1.9.6",
     "parcel-plugin-typescript": "^1.0.0",
     "prettier": "1.13.7",
+    "purgecss": "^1.0.1",
     "rimraf": "^2.6.2",
     "ts-jest": "^23.0.0",
     "ts-node": "^7.0.0",
