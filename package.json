@@ -26,7 +26,7 @@
     "db:reset": "ts-node --project tsconfig.dev.json ./db/reset.ts",
     "db:seed": "ts-node --project tsconfig.dev.json ./db/seed.ts",
     "develop": "cross-env NODE_ENV=test npm-run-all clean --parallel watch:**",
-    "format": "prettier --write src/**/*.{js,ts,json,css,scss}",
+    "format": "prettier --write '**/*.{js,ts,html,css,scss,md,json}'",
     "prebuild": "npm run clean",
     "heroku-prebuild": "npm run build",
     "precommit": "lint-staged",
