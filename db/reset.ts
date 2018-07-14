@@ -1,10 +1,10 @@
-import bluebird, { promisify } from 'bluebird';
-import { readFile } from 'fs';
-import mongoose from 'mongoose';
-import { join } from 'path';
+import bluebird, { promisify } from "bluebird";
+import { readFile } from "fs";
+import mongoose from "mongoose";
+import { join } from "path";
 
 const readAsync = promisify(readFile);
-const configFile = join(process.cwd(), 'cypress.json');
+const configFile = join(process.cwd(), "cypress.json");
 
 mongoose.Promise = bluebird;
 
@@ -14,11 +14,11 @@ mongoose.Promise = bluebird;
 
   await mongoose.connect(
     config.database,
-    { useNewUrlParser: true },
+    { useNewUrlParser: true }
   );
   await mongoose.connection.db.dropDatabase();
 
-  console.log('Testing database dropped');
+  console.log("Testing database dropped");
 
   await mongoose.connection.close();
 })();

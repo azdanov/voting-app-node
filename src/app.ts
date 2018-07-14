@@ -1,9 +1,9 @@
-import express from 'express';
+import express from "express";
 
-import { initErrorHandlers } from './errors';
-import { initMiddleware } from './middleware';
-import { router } from './routes';
-import { setupPassport } from './utilities';
+import { initErrorHandlers } from "./errors";
+import { initMiddleware } from "./middleware";
+import { router } from "./routes";
+import { setupPassport } from "./utilities";
 
 export default () => {
   const app = express();
@@ -12,7 +12,7 @@ export default () => {
 
   setupPassport();
 
-  app.use('/', router);
+  app.use("/", router);
 
   initErrorHandlers(app);
 

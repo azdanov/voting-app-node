@@ -24,10 +24,10 @@ For demo purposes [https://ethereal.email/](https://ethereal.email/) is used for
 
 Docker is used for managing MongoDB on local machine for development.
 
-* `docker-compose up -d` to start in detached mode.
-* `docker ps` to show running containers.
-* `docker-compose stop` to stop all the services.
-* `docker-compose down --rmi local --volumes` to remove all created docker assets for this project.
+- `docker-compose up -d` to start in detached mode.
+- `docker ps` to show running containers.
+- `docker-compose stop` to stop all the services.
+- `docker-compose down --rmi local --volumes` to remove all created docker assets for this project.
 
 ## Scripts
 
@@ -35,16 +35,16 @@ I used [pnpm](https://github.com/pnpm/pnpm) for this project. Any other package 
 
 ### Building
 
-* `pnpm run build` for production (using parcel-bundler)
-* `pnpm run ci` for ci environments or as a backup build system (using rollup / node-sass)
-* `pnpm run develop` for development (using ts-node)
+- `pnpm run build` for production (using parcel-bundler)
+- `pnpm run ci` for ci environments or as a backup build system (using rollup / node-sass)
+- `pnpm run develop` for development (using ts-node)
 
 ### Testing
 
-* `pnpm run test:e2e:open` for end-to-end testing with cypress (make sure the app is accessible on localhost)
-* `pnpm run test` for jest unit tests
+- `pnpm run test:e2e:open` for end-to-end testing with cypress (make sure the app is accessible on localhost)
+- `pnpm run test` for jest unit tests
 
 ### Database
 
-* `pnpm run db:seed` for seeding database with mock data
-* `pnpm run db:reset` for deleting test database
+- `pnpm run db:seed` for seeding database with mock data
+- `pnpm run db:reset` for deleting test database

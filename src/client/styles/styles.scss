@@ -1,4 +1,4 @@
-@import 'bulma';
+@import "bulma";
 
 .hero-body {
   padding-bottom: 2.3em;
@@ -33,7 +33,7 @@ body {
   padding-top: 1.5em;
 }
 
-form[action*='auth'] {
+form[action*="auth"] {
   display: inline-block;
 }
 
