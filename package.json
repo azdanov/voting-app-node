@@ -28,7 +28,7 @@
     "develop": "cross-env NODE_ENV=test npm-run-all clean --parallel watch:**",
     "format": "prettier --write '**/*.{js,ts,html,css,scss,md,json}'",
     "prebuild": "npm run clean",
-    "heroku-prebuild": "npm install",
+    "heroku-prebuild": "yarn install",
     "precommit": "lint-staged",
     "purgecss": "purgecss -c purgecss.config.js -o public",
     "start": "node ./build/index.js",
