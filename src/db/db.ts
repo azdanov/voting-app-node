@@ -10,6 +10,7 @@ export const connect = async (database: string | null) => {
       database,
       { useNewUrlParser: true }
     );
+    mongoose.set("useCreateIndex", true);
     mongoose.Promise = Promise;
     mongoose.connection.on("error", error => {
       logger.error("Problems connecting with the database", error);

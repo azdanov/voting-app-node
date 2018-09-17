@@ -23,6 +23,8 @@ faker.seed(123);
     { useNewUrlParser: true }
   );
 
+  mongoose.set("useCreateIndex", true);
+
   await mongoose.connection.db.dropDatabase();
 
   createUser();

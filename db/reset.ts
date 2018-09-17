@@ -16,6 +16,7 @@ mongoose.Promise = bluebird;
     config.database,
     { useNewUrlParser: true }
   );
+  mongoose.set("useCreateIndex", true);
   await mongoose.connection.db.dropDatabase();
 
   console.log("Testing database dropped");
