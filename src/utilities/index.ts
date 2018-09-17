@@ -1,4 +1,4 @@
-import Hashids from "hashids";
+import * as Hashids from "hashids";
 
 export { assignValidationsToSession } from "./session";
 export { pugHelpers } from "./pugHelpers";
