@@ -3916,9 +3916,9 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
-hashids@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/hashids/-/hashids-1.2.1.tgz#b19d9c9eebca73c393f6e6df25929ca0771a92e2"
+hashids@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/hashids/-/hashids-1.2.2.tgz#28635c7f2f7360ba463686078eee837479e8eafb"
 
 he@^1.0.0:
   version "1.1.1"
