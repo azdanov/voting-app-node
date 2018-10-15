@@ -258,9 +258,9 @@
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.0.8.tgz#d27600e9ba2f371e08695d90a0fe0408d89c7be7"
 
-"@types/chart.js@^2.7.36":
-  version "2.7.36"
-  resolved "https://registry.yarnpkg.com/@types/chart.js/-/chart.js-2.7.36.tgz#561fee60e09acabc25c6414d36554f80dcf33dca"
+"@types/chart.js@^2.7.38":
+  version "2.7.38"
+  resolved "https://registry.yarnpkg.com/@types/chart.js/-/chart.js-2.7.38.tgz#b8590885aea0b71d4e8400af45cd85eab960d528"
 
 "@types/compression@^0.0.36":
   version "0.0.36"
